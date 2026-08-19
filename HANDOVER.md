@@ -268,5 +268,5 @@ Directions as predicted. Gate-crossing values published openly: `deadband = 0.20
 ### Next
 
 1. **Paper B is no longer blocked by the gates.** It remains gated on the model actually being estimated (NumPyro implementation does not exist yet) -- the block moved from "gates fail" to "estimator unbuilt".
-2. Dry runs in the committed order: **F6 next**, then F4, F3 (registered pair), then flag-only F2 and F8.
-3. The papers' calibration statement gains three standing caveats: F5-B false-negative mode, F7 weakened-falsifier status, R4's thin 2050 coverage.
+2. Dry runs in the committed order: ~~F6 next~~ **F6 run 2026-08-20** -- outcome `discrimination_untestable`, flag `threshold_outside_observed_range` (threshold 7.8pp below the series' 36-year minimum; F6 close to unfalsifiable in practice; see `falsifiers/adjudications/dry-run/F6-2001-2010.md` and F6 adapter Amendment 1). Next: **F4**, then F3 (registered pair), then flag-only F2 and F8.
+3. The papers' calibration statement gains four standing caveats: F5-B false-negative mode, F7 weakened-falsifier status, F6 threshold-outside-observed-range, R4's thin 2050 coverage.

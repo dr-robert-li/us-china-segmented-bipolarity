@@ -32,6 +32,8 @@ The pre-registration's prohibition on moving a threshold as it is approached app
 | [`2012.md`](2012.md) | F5 | Hu Jintao to Xi Jinping transition | Negative control | All three `not_met` (correct negative) |
 | [`F1-2003-2024.md`](F1-2003-2024.md) | F1 | US gas-boom build, window 2001--2003 | Expected-positive | `triggered` at R = 2.35 (correct positive) |
 | [`F1-2003-2024.md`](F1-2003-2024.md) | F1 | PRC record expansion, window 2022--2024 | Negative control | `not_triggered` at R = 0.094 (correct negative) |
+| [`F6-2001-2010.md`](F6-2001-2010.md) | F6 | Dot-com graduate-market peak, 1999--2003 | Favourable episode | Zero qualifying years; **discrimination untestable** -- no known positive exists |
+| [`F6-2001-2010.md`](F6-2001-2010.md) | F6 | Post-crisis trough, 2009--2013 | Adverse episode | Zero qualifying years (correct negative) |
 
 ## Outcome of the F5 exercise
 
@@ -49,6 +51,14 @@ The exercise surfaced a defect anyway, in the opposite direction from F5-B's: th
 
 One condition of eight has now failed its dry run (F5-B), one has passed (F1), and six remain untested, not passed.
 
+## Outcome of the F6 exercise -- added 2026-08-20
+
+**A third outcome category: `discrimination_untestable`.** The committed series has never produced a qualifying year in its 1990--2026 span -- the 30 percent threshold sits 7.8 points below the lowest annual mean ever recorded -- and no source establishes that the condition (a reversal of elite overproduction) occurred within the span. There is no known positive to test against; unlike F5-B, no event was missed. The measurand itself validates on ordering (it ranks the known best and worst graduate markets correctly), and the counting machinery ran without defect.
+
+The substantive product is a calibration finding registered as `threshold_outside_observed_range` in `pipeline/adapters/F6.md`, Amendment 1: F6 is close to unfalsifiable in practice on the observed behaviour of its own series, and the papers must carry that alongside the F5-B and F7 caveats.
+
+Score: one failed (F5-B), one passed (F1), one untestable (F6), five untested.
+
 ## Reading order
 
 Each file places the **adverse case before the reasoning**, as `../adjudication.md` requires of determinations. In a dry run the adverse case is written against the exercise's own usefulness as well as against its verdicts, because the strongest objection to a dry run is that selecting the most extreme episode in the record guarantees the answer.
@@ -59,9 +69,9 @@ Registered here before computation, per the design rule above and `../../PRE-REG
 
 | Falsifier | Expected-positive | Negative control | Registered | Status |
 |---|---|---|---|---|
-| F6 | Episode pair to be selected at exercise head, before computation | -- | 2026-08-20 | queued first |
-| F4 | Episode pair to be selected at exercise head, before computation | -- | 2026-08-20 | queued second |
-| F3 | Republic of Korea, 1997 chaebol-banking collapse | Japan, 1990s managed debt-overhang absorption | 2026-08-20 | queued third |
+| F6 | Dot-com peak 1999--2003 | Post-crisis trough 2009--2013 | 2026-08-20 | **run** -- see `F6-2001-2010.md`; discrimination untestable |
+| F4 | Episode pair to be selected at exercise head, before computation | -- | 2026-08-20 | queued next |
+| F3 | Republic of Korea, 1997 chaebol-banking collapse | Japan, 1990s managed debt-overhang absorption | 2026-08-20 | queued after F4 |
 
 **The F3 pair is fixed now** because it was selected by author decision of 2026-08-20 in structured Q&A, on the criterion of known-answer clarity first, structural analogy second. Its limitation is registered with it: no closed PRC positive episode exists, so the exercise tests the *unmanaged-cascade rubric* generically and cannot test the PRC-specific LGFV counting rules. It is a partial discrimination test and will be labelled one. The Argentina-2001/Brazil-1997 pair (closer structural analogy, blurrier known answer) was considered and declined; the 2021--2024 PRC property episode was excluded because its outcome is contested, which disqualifies it as a known answer.
 
