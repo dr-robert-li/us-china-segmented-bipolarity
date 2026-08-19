@@ -283,12 +283,12 @@ The committed order F4, F3, F2, F8 was run to completion the same day. Full outc
 |---|---|---|
 | F1 | **Passed** | `tolerance_basis_unspecified` (blocks automatic verdicts; fix before first ingest) |
 | F2 | Characterised | **Anchoring gap is verdict-determining**: shadow verdict `triggered` vs binding `not_triggered` -- the only outright disagreement in the set. Candidate `F2-ANCHOR-2` registered, earliest 2027. Threshold at the bottom of a 64-year outturn range (inverted F6) |
-| F3 (Clause 2) | **Passed** (generic; pre-registered blind pair) | `seniority_criterion_instrument_mix` watch item |
+| F3 (Clause 2) | **Passed** (generic; the one blind-registered pair -- others disclosed reconnaissance-first) | `seniority_criterion_instrument_mix` watch item |
 | F4 | Untestable | `verdict_input_shape_unpublished` -- the majority rule counts a cell no publication provides; sample rule completed while inert; Jaccoud (2025) located, runs toward trigger, **not substituted** |
 | F5-B | Failed (Phase 6) | `known_false_negative_mode`; shadow numerator published |
 | F6 | Untestable | `threshold_outside_observed_range` -- 7.8pp below the 36-year minimum |
 | F7 | Excluded | Weakened falsifier accepted by amendment; no series exists |
-| F8 | **Passed** -- the only measurand visiting both sides of its threshold in-record | `construction_spread_exceeds_margin` (~1.6pp spread vs ~1.1pp margin; near-threshold verdicts construction-determined) |
+| F8 | **Passed** -- the only measurand visiting both sides of its threshold in-record | `construction_spread_exceeds_margin` (~1.7pp spread vs ~1.0pp margin; near-threshold verdicts construction-determined) |
 
 ### What the papers must now carry, consolidated
 
