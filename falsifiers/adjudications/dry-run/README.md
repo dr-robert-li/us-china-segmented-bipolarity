@@ -34,6 +34,7 @@ The pre-registration's prohibition on moving a threshold as it is approached app
 | [`F1-2003-2024.md`](F1-2003-2024.md) | F1 | PRC record expansion, window 2022--2024 | Negative control | `not_triggered` at R = 0.094 (correct negative) |
 | [`F6-2001-2010.md`](F6-2001-2010.md) | F6 | Dot-com graduate-market peak, 1999--2003 | Favourable episode | Zero qualifying years; **discrimination untestable** -- no known positive exists |
 | [`F6-2001-2010.md`](F6-2001-2010.md) | F6 | Post-crisis trough, 2009--2013 | Adverse episode | Zero qualifying years (correct negative) |
+| [`F4-2014-2018.md`](F4-2014-2018.md) | F4 | Baseline study window, 2014--2018 | Sole constructible (expected-negative) | **Discrimination untestable**; verdict machinery unevaluable from any publication |
 
 ## Outcome of the F5 exercise
 
@@ -59,6 +60,12 @@ The substantive product is a calibration finding registered as `threshold_outsid
 
 Score: one failed (F5-B), one passed (F1), one untestable (F6), five untested.
 
+## Outcome of the F4 exercise -- added 2026-08-20
+
+**`discrimination_untestable`, second instance -- and a defect beneath it.** F4's committed measurand exists only inside the baseline study's 2014--2018 window; no positive episode is documented anywhere on it. Sharper: the six-of-ten majority rule counts per-country exposure-conditional p90/p10 cells that **no publication provides, including the baseline itself** -- registered as `verdict_input_shape_unpublished`. The committed sample rule was found decision-fragile at the deciding rank (0.6 percent between ranks 9 and 10) and was completed -- source, age band, vintage, tie rule -- while provably inert. First successor-monitoring check recorded: Jaccoud (2025) located, headline running toward the trigger, **not substituted** (methodology break, no US, no per-country cells) -- the favourable-source-substitution prohibition's first live application to F4.
+
+Score: one failed (F5-B), one passed (F1), two untestable (F6, F4), four untested.
+
 ## Reading order
 
 Each file places the **adverse case before the reasoning**, as `../adjudication.md` requires of determinations. In a dry run the adverse case is written against the exercise's own usefulness as well as against its verdicts, because the strongest objection to a dry run is that selecting the most extreme episode in the record guarantees the answer.
@@ -70,8 +77,8 @@ Registered here before computation, per the design rule above and `../../PRE-REG
 | Falsifier | Expected-positive | Negative control | Registered | Status |
 |---|---|---|---|---|
 | F6 | Dot-com peak 1999--2003 | Post-crisis trough 2009--2013 | 2026-08-20 | **run** -- see `F6-2001-2010.md`; discrimination untestable |
-| F4 | Episode pair to be selected at exercise head, before computation | -- | 2026-08-20 | queued next |
-| F3 | Republic of Korea, 1997 chaebol-banking collapse | Japan, 1990s managed debt-overhang absorption | 2026-08-20 | queued after F4 |
+| F4 | Baseline study window 2014--2018 (sole constructible) | -- | 2026-08-20 | **run** -- see `F4-2014-2018.md`; discrimination untestable |
+| F3 | Republic of Korea, 1997 chaebol-banking collapse | Japan, 1990s managed debt-overhang absorption | 2026-08-20 | queued next |
 
 **The F3 pair is fixed now** because it was selected by author decision of 2026-08-20 in structured Q&A, on the criterion of known-answer clarity first, structural analogy second. Its limitation is registered with it: no closed PRC positive episode exists, so the exercise tests the *unmanaged-cascade rubric* generically and cannot test the PRC-specific LGFV counting rules. It is a partial discrimination test and will be labelled one. The Argentina-2001/Brazil-1997 pair (closer structural analogy, blurrier known answer) was considered and declined; the 2021--2024 PRC property episode was excluded because its outcome is contested, which disqualifies it as a known answer.
 
