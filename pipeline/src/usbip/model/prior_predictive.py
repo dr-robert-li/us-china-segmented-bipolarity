@@ -99,6 +99,15 @@ CONSTRAINT_RATIO = 0.60
 # ---------------------------------------------------------------------------
 
 
+# Growth-innovation scale hyperparameter, PRIORS.md Amendment 1. Derived by the
+# procedure committed there BEFORE computation: pooled AR(1) residual scale of
+# log capacity growth, both states, 2002-2025, from the snapshotted Ember series
+# (sha256 259e1095...). Per-state residual SDs 0.0247 (CN) and 0.0109 (US);
+# pooled 0.0191 to three significant figures. Not a tuning parameter: changing
+# it requires re-running the committed procedure on new snapshotted data.
+S_V = 0.0191
+
+
 @dataclass(frozen=True)
 class PriorDraw:
     sigma_D: float
@@ -117,6 +126,7 @@ class PriorDraw:
     psi: dict[str, np.ndarray]
     ai_intensity_growth: float
     sigma_u: float = 0.01
+    sigma_v: float = 0.01
 
     SIGMA_TOP_MIN = 0.15
     SIGMA_TOP_MAX = 2.50
@@ -190,9 +200,13 @@ def sample_prior(rng: np.random.Generator) -> PriorDraw:
         # literature supports roughly 18 percent of variance explained.
         psi={s: rng.normal(0.0, 0.10, size=len(INPUTS)) for s in STATES},
         ai_intensity_growth=float(abs(rng.normal(0.03, 0.02))),
-        # u, v ~ Normal(0, sigma_u^2) with sigma_u ~ HalfNormal(0.05). One scale
-        # is drawn per replicate and shared by both shock streams, per PRIORS.md.
+        # u ~ Normal(0, sigma_u^2), sigma_u ~ HalfNormal(0.05): level innovation,
+        # unchanged. v ~ Normal(0, sigma_v^2), sigma_v ~ HalfNormal(S_V): growth
+        # innovation, own scale per PRIORS.md Amendment 1. Runs 001-003 shared
+        # one scale across both streams; the growth stream compounding under
+        # rho_g produced the PP3 runaway recorded in PRIOR-PREDICTIVE-RUN-001.md.
         sigma_u=float(abs(rng.normal(0.0, 0.05))),
+        sigma_v=float(abs(rng.normal(0.0, S_V))),
     )
 
 
@@ -257,11 +271,15 @@ class Shocks:
 
 
 def sample_shocks(
-    rng: np.random.Generator, n_years: int, tau: float, sigma_u: float = 0.01
+    rng: np.random.Generator,
+    n_years: int,
+    tau: float,
+    sigma_u: float = 0.01,
+    sigma_v: float = 0.01,
 ) -> Shocks:
     n_j = len(INPUTS)
     return Shocks(
-        growth={s: rng.normal(0.0, sigma_u, size=(n_years, n_j)) for s in STATES},
+        growth={s: rng.normal(0.0, sigma_v, size=(n_years, n_j)) for s in STATES},
         level={s: rng.normal(0.0, sigma_u, size=(n_years, n_j)) for s in STATES},
         sigma_top=rng.normal(0.0, tau, size=n_years),
     )
@@ -311,7 +329,7 @@ def simulate(
     if shocks is None:
         if rng is None:
             raise ValueError("simulate requires either an rng or pre-drawn shocks")
-        shocks = sample_shocks(rng, n_t, draw.tau, draw.sigma_u)
+        shocks = sample_shocks(rng, n_t, draw.tau, draw.sigma_u, draw.sigma_v)
 
     x: dict[str, np.ndarray] = {}
     xu: dict[str, np.ndarray] = {}
@@ -375,7 +393,14 @@ def simulate(
 R009_ID, R009_VERSION = "R009", "1.0.0"
 
 
-def classify(traj: Trajectory, horizon: int) -> str:
+def classify(
+    traj: Trajectory,
+    horizon: int,
+    *,
+    deadband: float = DEADBAND,
+    reversal_depth: float = REVERSAL_DEPTH,
+    constraint_ratio: float = CONSTRAINT_RATIO,
+) -> str:
     """Map one simulated trajectory to one of R1..R5. Rule R009.
 
     The classifier is **state-swap equivariant**, which is the property PP4
@@ -412,7 +437,7 @@ def classify(traj: Trajectory, horizon: int) -> str:
         )
         for s in STATES
     }
-    if all(ratio[s] < CONSTRAINT_RATIO for s in STATES):
+    if all(ratio[s] < constraint_ratio for s in STATES):
         return "R5"
 
     # R3. The challenger gains early, then gives back at least REVERSAL_DEPTH in
@@ -421,16 +446,16 @@ def classify(traj: Trajectory, horizon: int) -> str:
     third = max(2, t_idx // 3)
     early = float(np.mean(rel[third] - rel[0]))
     mean_rel = np.mean(rel[: t_idx + 1], axis=1)
-    if abs(early) > DEADBAND:
+    if abs(early) > deadband:
         sign = 1.0 if early > 0 else -1.0
         signed = sign * mean_rel
         peak = int(np.argmax(signed))
-        if peak < t_idx and (signed[peak] - signed[t_idx]) >= REVERSAL_DEPTH:
+        if peak < t_idx and (signed[peak] - signed[t_idx]) >= reversal_depth:
             return "R3"
 
     # R4. Divergence by domain: at least one element beyond the deadband in each
     # direction, so no single hierarchy holds across the vector.
-    if np.any(move > DEADBAND) and np.any(move < -DEADBAND):
+    if np.any(move > deadband) and np.any(move < -deadband):
         return "R4"
 
     # R1 / R2. Concentration in one direction. Elements inside the deadband do
@@ -441,9 +466,9 @@ def classify(traj: Trajectory, horizon: int) -> str:
     # Run 001 assigned this case to R4 and PP2 failed as a direct result -- R4
     # became a sink that could not fall below 0.2 under any admissible baseline.
     # See PRIOR-PREDICTIVE-RUN-001.md.
-    if np.any(move > DEADBAND):
+    if np.any(move > deadband):
         return "R1"
-    if np.any(move < -DEADBAND):
+    if np.any(move < -deadband):
         return "R2"
 
     # Nothing moved beyond the deadband in either direction. This is not
@@ -613,7 +638,9 @@ def pp4_symmetry(n_draws: int, seed: int, *, tolerance: float = 0.05) -> GateRes
     swapped_baseline = swap_baseline(SYNTHETIC_BASELINE)
     for _ in range(n_draws):
         draw = sample_prior(rng)
-        shocks = sample_shocks(rng, 2075 - BASE_YEAR + 1, draw.tau, draw.sigma_u)
+        shocks = sample_shocks(
+            rng, 2075 - BASE_YEAR + 1, draw.tau, draw.sigma_u, draw.sigma_v
+        )
         a = classify(simulate(draw, shocks=shocks), horizon)
         b = classify(
             simulate(

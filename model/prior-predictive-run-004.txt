@@ -1,0 +1,5 @@
+PP1: PASS -- all five regimes reachable at their claimed horizons; masses {2050: {'R1': 0.42, 'R2': 0.3075, 'R3': 0.115, 'R4': 0.07, 'R5': 0.0225, 'R0_no_material_change': 0.065}, 2075: {'R1': 0.2825, 'R2': 0.2325, 'R3': 0.2125, 'R4': 0.09, 'R5': 0.175, 'R0_no_material_change': 0.0075}}
+PP2: PASS -- R4 reaches mass 0.065 under the most hostile admissible baseline, so R4 is refutable
+PP3: PASS -- max 2050 input multiple 29.3x (US/D1); 0.2% of draws breach the 20x ceiling
+PP4: PASS -- exact mirror on all 400 paired draws; largest aggregate deviation 0.0000
+PP5: PASS -- no divergence regime above 0.5 prior mass; R1=0.420, R2=0.307

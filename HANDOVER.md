@@ -229,9 +229,44 @@ Everything above stands as written at `93af2b7`. This section records what a con
 
 ### What to do next
 
+**Superseded by section 12 below, same day: item 2 is closed (remedies selected, gates pass), item 1's F3 episode problem is closed (pair registered), and the committed dry-run order is in section 12.** Retained as written for the record.
+
 Unchanged in structure from section 5, minus what closed:
 
 1. **Continue Priority 1**: dry runs for F3, F6, F4, F7, then F2 and F8 (expecting that defects found at F2/F8 can only be flagged, not fixed). F6 is the natural next candidate -- long public series, sustained-condition semantics worth exercising against `pipeline/adjudication.md`'s recompute-never-increment rules. F3's expected-positive episode choice is itself an open problem; do not start there.
 2. **Priority 5** (PP1/PP3 remedy selection) still requires an authored decision; candidates listed in `model/PRIOR-PREDICTIVE-RUN-001.md`, none chosen. Paper B stays blocked behind it.
 3. **Priority 6** writing, unchanged.
 4. Before F1 first ingest: commit the basis-matched cross-check pair, the negative-sum semantics, and the fuel-row summation rule (all registered in `pipeline/adapters/F1.md` Amendment 1).
+
+---
+
+## 12. State update -- 2026-08-20, second session block: all open decisions resolved by Q&A; estimation unblocked
+
+Author Q&A of 2026-08-20 resolved every open decision in section 9. Each selection is a dated amendment carrying its gate-independent ground.
+
+### Decisions and where they landed
+
+| Decision | Selection | Amendment |
+|---|---|---|
+| PP1 remedy | Candidate 3: R5 reported at 2075 only; gate follows claim | `SPECIFICATION.md` A02, `IDENTIFICATION.md` A1 |
+| PP3 remedy | Candidate 1: `sigma_v ~ HalfNormal(s_v)`, procedure committed before computation; `s_v = 0.0191` | `PRIORS.md` A1 |
+| R003 gas partition | Coarse common partition, generation-weighted; fine US factors as sensitivity | R003 A1, v0.2.0 |
+| R003 storage | Excluded from D1; `cap_storage_installed` series; pumped storage stripped from PRC hydro | R003 A1 |
+| R009 sensitivity | Run before estimation -- done | `model/R009-SENSITIVITY-RUN-001.md`, R009 A1 |
+| F7 stance | Weakened falsifier accepted and stated; proxy declined; prospective re-arm condition | F7 A1 |
+| F3 dry-run pair | Korea 1997 / Japan 1990s, partial-test limitation registered | dry-run README |
+| Dry-run order | F6, F4, F3, then flag-only F2 and F8 | dry-run README |
+
+### Run 004: all five gates pass. **Estimation is unblocked.**
+
+PP1 PASS (R5 at 2075 = 0.175; R1--R4 at 2050 all above floor), PP2 PASS (0.065), PP3 PASS (0.2% breach against the 2% bar, max 29.3x), PP4 exact, PP5 PASS. The commit history shows the `s_v` procedure committed before its value was computed. Honest margins: R4's 2050 coverage is 0.070 against a 0.05 floor and dips below it at `deadband = 0.20` per the sensitivity run; PP3's tail still reaches 29.3x inside the rate bar.
+
+### R009 sensitivity findings
+
+Directions as predicted. Gate-crossing values published openly: `deadband = 0.20` starves R4 at 2050; `constraint_ratio = 0.40` starves R5 at 2075; R5's 2075 mass spans 0.037--0.588 across the constraint-ratio sweep, making it the dominant sensitivity. Constants remain frozen.
+
+### Next
+
+1. **Paper B is no longer blocked by the gates.** It remains gated on the model actually being estimated (NumPyro implementation does not exist yet) -- the block moved from "gates fail" to "estimator unbuilt".
+2. Dry runs in the committed order: **F6 next**, then F4, F3 (registered pair), then flag-only F2 and F8.
+3. The papers' calibration statement gains three standing caveats: F5-B false-negative mode, F7 weakened-falsifier status, R4's thin 2050 coverage.

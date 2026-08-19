@@ -135,6 +135,18 @@ class TestSamplerMatchesCommittedPriors(unittest.TestCase):
         self.assertAlmostEqual(s.mean(), 0.05 * np.sqrt(2 / np.pi), delta=0.002)
         self.assertGreater(s.std(), 0.01, "a hard-coded scale has zero variance")
 
+    def test_sigma_v_is_halfnormal_at_the_derived_scale(self) -> None:
+        # sigma_v ~ HalfNormal(S_V), S_V = 0.0191 from the procedure committed
+        # in PRIORS.md Amendment 1 BEFORE computation. Surrogates guarded
+        # against: sharing sigma_u's 0.05 scale (the run-003 PP3 runaway), and
+        # any hard-coded scale (zero variance).
+        s = self._scalar("sigma_v")
+        self.assertAlmostEqual(s.mean(), pp.S_V * np.sqrt(2 / np.pi), delta=0.001)
+        self.assertGreater(s.std(), 0.005, "a hard-coded scale has zero variance")
+        self.assertLess(
+            s.mean(), 0.03, "a 0.05-scale draw would mean the shared prior is back"
+        )
+
     def test_delta_is_sign_free(self) -> None:
         # delta ~ Normal(0, 0.25). A sign restriction here would build the
         # direction of the result into the prior.

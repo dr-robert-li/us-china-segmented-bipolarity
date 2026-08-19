@@ -180,3 +180,39 @@ Run 004 executes the amended gates with the derived `sigma_v`. Its results are a
 
 - model/PRIORS.md, Amendment 1 (internal; the pre-named procedure)
 - model/SPECIFICATION.md, Amendment 02; model/IDENTIFICATION.md, Amendment 1 (internal)
+
+---
+
+## Run 004 -- 2026-08-20 -- all five gates pass; estimation unblocked
+
+n=400, seed 20260819. First run under the amended gates and the derived `sigma_v`. Raw output: `model/prior-predictive-run-004.txt`.
+
+### The derived value, computed after the procedure was committed
+
+The procedure of `PRIORS.md` Amendment 1, executed on the snapshotted Ember series exactly as named: per-state AR(1) residual SDs 0.0247 (CN, fitted rho 0.763) and 0.0109 (US, fitted rho 0.690); pooled `s_v = 0.0191` to three significant figures. Committed as `sigma_v ~ HalfNormal(0.0191)`. The commit history shows the procedure landing before the value.
+
+Two incidental observations, recorded without weight: the CN fitted persistence of 0.763 sits close to the `rho_g ~ Beta(6,2)` prior mean of 0.75, which corroborates a committed prior without having informed it; and the US residual scale is less than half the CN one, so the pooled value is conservative for the US side.
+
+### Gate results
+
+| Gate | Run 003 | Run 004 |
+|---|---|---|
+| PP1 regime coverage | FAIL, R5 at 2050 | **PASS** -- R1..R4 at 2050 (0.420/0.307/0.115/0.070), R5 at 2075 (0.175) |
+| PP2 R4 refutability | PASS at 0.048 | **PASS** at 0.065 |
+| PP3 trajectory sanity | FAIL, 7.5% breach, max 1,598x | **PASS** -- 0.2% breach, max 29.3x, against the 2% bar |
+| PP4 swap symmetry | PASS, exact | **PASS**, exact, largest deviation 0.0000 |
+| PP5 declinism | PASS | **PASS** -- R1 0.420, R2 0.307 |
+
+**The section 4 estimation block is lifted.** Both failures resolved by the amendments recorded above: PP1 by the output-contract restriction (the claim moved, then the gate followed), PP3 by the separated innovation scale at a procedure-derived value. No prior was tuned to a gate: the PP3 remedy's scale was fixed by a procedure committed before computation, and the re-run was reported on the commitment that a failure would be published as such.
+
+### What run 004 does not show
+
+- The PP3 pass is at 0.2% breach against a 2% tolerance, with a maximum draw of 29.3x still above the 20x ceiling. The ceiling is a rate bar, not an envelope; the tail exists and is stated.
+- R4's 2050 mass of 0.070 clears the floor by 0.020 on n=400, and the R009 sensitivity run (`R009-SENSITIVITY-RUN-001.md`) shows it dips below the floor at `deadband = 0.20`. The thesis regime's coverage is real but thin, and the papers say so.
+- PP2's margin (0.065 against 0.2) is comfortable but computed under the same three hostile baselines as before; nothing here strengthens the refutability finding beyond run 003. Per baseline, R4 mass: parity 0.085, CN-dominant 0.065, US-dominant 0.065 -- the reported figure is the minimum, and the two dominance baselines bind jointly. The tie between the dominance baselines is not guaranteed by construction (the baselines are swapped but the state-indexed parameter draws are not mirrored across those calls); it is reported as observed at this seed and draw count.
+
+### Sources for run 004
+
+- model/PRIORS.md, Amendment 1 (internal; procedure and its commit-before-compute discipline)
+- model/prior-predictive-run-004.txt (internal; raw output)
+- model/R009-SENSITIVITY-RUN-001.md (internal; the bracket around these masses)

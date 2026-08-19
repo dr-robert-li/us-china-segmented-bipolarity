@@ -116,3 +116,17 @@ The order is not neutral, and it is chosen against the project's interest: R4 is
 - `model/PRIOR-PREDICTIVE-RUN-001.md` -- the two defects, and the PP1 R5 failure
 - `pipeline/src/usbip/model/prior_predictive.py` -- implementation
 - `DATA-INTEGRITY.md` -- definitional gaps underlying the deadband
+
+---
+
+## Amendment 1 -- 2026-08-20 -- sensitivity run on file; constants unchanged
+
+**Appended, not substituted. No constant moves.** `DEADBAND = 0.10`, `REVERSAL_DEPTH = 0.15`, `CONSTRAINT_RATIO = 0.60` stand exactly as frozen.
+
+The open item "no sensitivity run over the three constants" is closed by `model/R009-SENSITIVITY-RUN-001.md` (400 paired draws, both claimed horizons, one-at-a-time). The predicted directions in this file are confirmed. Two swept values would flip a PP1 verdict -- `deadband = 0.20` starves R4 at 2050, `constraint_ratio = 0.40` starves R5 at 2075 -- and are published there under the shadow-publication rule. `CONSTRAINT_RATIO` is confirmed as the dominant sensitivity: R5's 2075 mass spans 0.037 to 0.588 across 0.40--0.80. The freeze on it binds harder, not softer, in light of that.
+
+Implementation note: `classify()` now accepts the three constants as keyword parameters defaulting to the frozen module values, so the sweep could run without touching them. Default behaviour is bit-identical (verified against run 004); passing non-default values is permitted only for published sensitivity runs, never for a verdict.
+
+### Sources for Amendment 1
+
+- model/R009-SENSITIVITY-RUN-001.md (internal)
