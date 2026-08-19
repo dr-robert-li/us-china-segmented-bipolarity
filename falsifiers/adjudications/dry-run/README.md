@@ -37,6 +37,7 @@ The pre-registration's prohibition on moving a threshold as it is approached app
 | [`F4-2014-2018.md`](F4-2014-2018.md) | F4 | Baseline study window, 2014--2018 | Sole constructible (expected-negative) | **Discrimination untestable**; verdict machinery unevaluable from any publication |
 | [`F3-1997-japan.md`](F3-1997-japan.md) | F3 (Clause 2) | Korea 1997 chaebol-banking collapse | Expected-positive | Analogue `met`, all six criteria engaged (correct positive) |
 | [`F3-1997-japan.md`](F3-1997-japan.md) | F3 (Clause 2) | Japan 1990s managed absorption | Negative control | Analogue `not_met` (correct negative, incl. contained Nov-1997 mini-cascade) |
+| [`F2-1962-2025.md`](F2-1962-2025.md) | F2 (Clause 1) | Full outturn record 1962--2025 | Characterisation (flag-only) | Qualifying state obtains in 63 of 64 years; **anchoring gap is verdict-determining**; shadow `triggered` published |
 
 ## Outcome of the F5 exercise
 
@@ -73,6 +74,12 @@ Score: one failed (F5-B), one passed (F1), two untestable (F6, F4), four unteste
 **The Clause 2 unmanaged-cascade rubric discriminates on the analogue pair** -- the pair pre-registered before any evidence was gathered, making this the set's first blind-registered exercise. Korea 1997 engages all six criteria (`met` analogue); Japan 1990s returns `not_met` despite containing a genuine contained mini-cascade, failing decisively on intervention, disorder, and persistence. Validation is generic only: nothing LGFV-specific is tested, Clause 1 was not exercised. One watch item registered: the public-bond seniority criterion was the weakest discriminator on the archetype (Korea's cascade ran through bank credit and court bankruptcies), an F5-B-pattern risk recorded before it can matter.
 
 Score: one failed (F5-B), two passed (F1, F3-C2 generic), two untestable (F6, F4), two remaining (F2, F8 -- flag-only).
+
+## Outcome of the F2 exercise -- added 2026-08-20
+
+**The mirror image of F6, with a live edge.** Clause 1's qualifying state has obtained in 63 of 64 outturn years since 1962 (1999 sits exactly at the non-exceeding boundary); the threshold lies at the bottom of the observed range, so the clause measures whether the projected decline has arrived, not whether capacity recovered. Sharper: the adapter never specified **which** outturn an evaluation year tests, and the choice is currently verdict-determining -- the latest-elapsed-outturn reading gives FY2025 = 6.2 percent (cross-check basis), Clause 1 `met`, and with Clause 2 already adjudicated `met`, **F2 `triggered`**. The F5-B defect class, running in the opposite direction: the unstated choice currently protects the thesis. Candidate rule `F2-ANCHOR-2` registered not-in-force (earliest 2027); shadow verdict published in the 2026 log under the standing rule -- the only clause in the set where binding and shadow verdicts disagree outright.
+
+Score: one failed (F5-B), two passed (F1, F3-C2 generic), two untestable (F6, F4), one characterised with a live anchoring gap (F2), one remaining (F8 -- flag-only).
 
 ## Reading order
 
