@@ -120,6 +120,7 @@ falsifiers/
   PRE-REGISTRATION.md     The eight conditions, thresholds, classification
   dependence.md           Correlation structure, n_eff, three rejection gates
   log/<year>/             Annual verdicts, one file per condition
+  adjudications/<year>/   Written determinations for every non-computable clause
 snapshots/                Immutable tagged states per published artifact
 ```
 
@@ -137,7 +138,8 @@ snapshots/                Immutable tagged states per published artifact
 | Frontier-compute boundary | Committed |
 | Declared precision basis | Committed |
 | Rules registry | Committed; R003 and R009 specified at v0.1.0 |
-| 2026 baseline falsifier log | Committed, provisional |
+| 2026 baseline falsifier log | Committed; F5 and F2 Clause 2 now adjudicated, remainder provisional |
+| Adjudication records, 2026 | Committed; F5-A, F5-B, F5-C, F2-C2, each with a written adverse case |
 | Pipeline implementation, schema and rules | Committed; 37 tests passing |
 | F1 adapter, executable | Committed; all seven specified tests passing |
 | Ingestion, network fetch | Not started, deliberately out of scope of the derivation modules |
@@ -161,15 +163,19 @@ Summary only. See `falsifiers/log/2026/` for entries and caveats.
 | F2 | `not_triggered` | ~0.1pp |
 | F3 | `not_triggered` | ~39pp on outturn, revised vintage |
 | F4 | `indeterminate` | Source does not exist |
-| F5 | `not_triggered` (provisional) | Not adjudicated |
+| F5 | `not_triggered` | **~1-2 Politburo members** on Sub-clause B |
 | F6 | `not_triggered` | ~12pp |
 | F7 | `indeterminate` | Series unavailable |
 | F8 | `indeterminate` | ~1.1pp below |
 
 No threshold crossings. `n_eff` is zero and no gate has fired.
 
-The set is not well calibrated, and the papers will say so: the two conditions nearest their thresholds are also the two whose measurement is least direct.
+The set is not well calibrated, and the papers will say so: the conditions nearest their thresholds are also the ones whose measurement is least direct. F2 sits ~0.1pp away on a current-year estimate, F8 ~1.1pp away on estimated compute, and F5 one to two Politburo members away on a condition that has **no series at all**. The threshold table understates how much of the set's proximity to falsification rests on definitional and adjudicative choices rather than on measurement.
+
+F5 Sub-clause B is the live limb: a single officially announced expulsion of a full Politburo member inside the counting window satisfies it. It is reviewed on announcement rather than annually.
 
 ## Governing principle
 
-Defensibility comes from stating clearly what observation would prove the thesis wrong, and then being able to show, honestly, that it has not happened yet.
+Defensibility comes from stating clearly what observation would count against the thesis, and then being able to show, honestly, whether it has happened.
+
+*Wording corrected 2026-08-19: the original line used a verb barred by the programme's standing prohibition on teleological and demonstrative language. The correction is recorded rather than made silently.*
