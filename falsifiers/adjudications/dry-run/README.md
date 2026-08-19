@@ -30,6 +30,8 @@ The pre-registration's prohibition on moving a threshold as it is approached app
 |---|---|---|---|---|
 | [`1976.md`](1976.md) | F5 | Succession after the death of Mao Zedong | Expected-positive | A `met`, B `not_met` (**rubric failure**), C `met` |
 | [`2012.md`](2012.md) | F5 | Hu Jintao to Xi Jinping transition | Negative control | All three `not_met` (correct negative) |
+| [`F1-2003-2024.md`](F1-2003-2024.md) | F1 | US gas-boom build, window 2001--2003 | Expected-positive | `triggered` at R = 2.35 (correct positive) |
+| [`F1-2003-2024.md`](F1-2003-2024.md) | F1 | PRC record expansion, window 2022--2024 | Negative control | `not_triggered` at R = 0.094 (correct negative) |
 
 ## Outcome of the F5 exercise
 
@@ -38,6 +40,14 @@ Sub-clauses A and C discriminate between the two episodes. **Sub-clause B does n
 The identified mechanism is the removal-anchoring rule, which counts from the first official public announcement of expulsion. In 1976 that announcement fell outside the window containing the operation. The rule is therefore **anti-correlated with the property Sub-clause B measures**: the more irregular the removal, the later or more absent the official announcement, and the less likely the rubric registers it.
 
 The rule has not been changed, because the better rule would move the live 2026 determination toward triggering. The defect is recorded against the clause instead, and a candidate replacement is registered for 2027 onward. Full reasoning in [`1976.md`](1976.md).
+
+## Outcome of the F1 exercise -- added 2026-08-20
+
+The F1 rubric **discriminates**: `triggered` on the 2003 gas-boom window, `not_triggered` on the 2022--2024 control, robust across both pre-committed ratio constructions and a substitution of the numerator source. None of the three failure conditions occurred.
+
+The exercise surfaced a defect anyway, in the opposite direction from F5-B's: the adapter's 5 percent source-tolerance rule, written without a committed comparison basis, is breached by the definitional gap between installed and net-summer capacity in **both** episode windows and in the current live years -- so as written it blocks automatic verdict emission rather than permitting it. A false-alarm mode, conservative in effect, registered as `tolerance_basis_unspecified` in `pipeline/adapters/F1.md`, Amendment 1, with resolution required before first ingest while the condition sits ~30 points from threshold.
+
+One condition of eight has now failed its dry run (F5-B), one has passed (F1), and six remain untested, not passed.
 
 ## Reading order
 

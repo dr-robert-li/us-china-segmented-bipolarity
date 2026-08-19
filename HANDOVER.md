@@ -1,5 +1,7 @@
 # Handover
 
+> **State update appended 2026-08-20 -- see the final section.** Priorities 2, 3 and 4 are closed, the snapshot rule is in force with tooling, the n_eff caveat is written into `dependence.md`, and the first Priority 1 dry run (F1) is on file and passed. Section 5's list below is retained as written; the final section records what changed.
+
 **State as at commit `93af2b7`, 20 August 2026.** Written so the project can be continued by someone else, or by the same author in a different working environment, without reconstructing context from conversation history.
 
 Read `README.md` first for what the project is. This file covers what state it is in, what is blocked and why, what must not be changed, and what to do next.
@@ -202,3 +204,34 @@ Do not assume any of these has an answer somewhere in the repository.
 ## 10. Audience
 
 Academic contribution and intellectual artifact. Written for peer intellectual consumption, **not** for investment decisions and not for policy planning. Tone follows from that: the methodological failures are the contribution, not an embarrassment to be minimised. Phase 6 is the clearest instance -- the finding that a pre-registered clause cannot distinguish the archetypal positive case from a negative control is more valuable than a clean set of verdicts would have been.
+
+---
+
+## 11. State update -- 2026-08-20
+
+Everything above stands as written at `93af2b7`. This section records what a continuation session closed the same day, so the next continuation does not re-derive it.
+
+### Closed
+
+- **Priority 2 in full.** All three inert fixes landed as dated amendments with the inertness arithmetic stated first: the silent-procedure branch (`pipeline/adjudication.md` Amendment 1 -- `procedure_absent` routes to `indeterminate` under Rule 1), the enumerated-name-list denominator rule (`pipeline/adjudication.md` Amendment 2), and the death-vacancy rate (`pipeline/adapters/F5.md` Amendment 4; 1976 = 23.8%, 2012 = 0%, 2026 = 0%).
+- **Priority 3.** Shadow publication is a standing rule (`falsifiers/PRE-REGISTRATION.md` Amendment 1) and the first shadow value is published (`falsifiers/log/2026/F5.md` Amendment 3): binding 2 of 4, shadow under `F5-B-ANCHOR-2` 3 of 4, both `not_met`, distance one member on the shadow.
+- **Priority 4.** Paired dry runs are required prospectively from evaluation year 2027 and for any new falsifier (`falsifiers/PRE-REGISTRATION.md` Amendment 2). Not retroactive to 2026, as intended.
+- **Known-weakness 6.** The n_eff caveat is now written into `falsifiers/dependence.md` as Amendment 1. Frozen thresholds untouched.
+- **Known-weakness 1, prospectively.** Content-addressed snapshots are in force: `research/snapshots/snapshot.py` stores exact response bytes under `store/<sha256>` and appends to `INDEX.md`. Every URL fetched on 2026-08-20 is snapshotted, including the full Ember yearly CSV (~47 MB, deliberate -- it is F1's committed primary and the exercise is reproducible against the exact bytes).
+- **Priority 1, first instalment.** F1 is dry-run tested and **passed**: `falsifiers/adjudications/dry-run/F1-2003-2024.md`, expected-positive 2003 (`triggered`, R = 2.35), negative control 2024 (`not_triggered`, R = 0.094), robust across constructions and numerator source. Score so far: one clause failed its dry run (F5-B), one passed (F1), six untested.
+
+### Found along the way
+
+- **F1's 5 percent source-tolerance rule has no committed comparison basis** and is breached in both dry-run windows *and in 2022--2024* by the installed-versus-net-summer definitional gap (2025 sits inside tolerance at 4.2 percent). A 2026 evaluation's three-year window contains the breaching years, so as written the rule blocks automatic verdict emission for the live window. Registered as `tolerance_basis_unspecified` (`pipeline/adapters/F1.md` Amendment 1); a basis-matched cross-check pair must be committed before first ingest. One-directional: can block a verdict, cannot flip one.
+- **Negative net additions are real** (US 2015, both sources) and the adapter's semantics for a negative three-year sum are unstated. Registered as an open question, resolution required before first ingest.
+- **Ember publishes no total-capacity row**; `cap_total_installed` must be derived by summing fuel-level rows. Summation rule to be committed at first ingest.
+- **A numbering correction:** the removal provision cited in this file's section 5 as "Article 40 of the 2022 constitution" is **Article 42** in the 2022 revision (Article 40 is now the general discipline article). The provision exists and was followed, so the inertness argument is unaffected. Recorded in `pipeline/adjudication.md` Amendment 1, with the 2022 text snapshotted.
+
+### What to do next
+
+Unchanged in structure from section 5, minus what closed:
+
+1. **Continue Priority 1**: dry runs for F3, F6, F4, F7, then F2 and F8 (expecting that defects found at F2/F8 can only be flagged, not fixed). F6 is the natural next candidate -- long public series, sustained-condition semantics worth exercising against `pipeline/adjudication.md`'s recompute-never-increment rules. F3's expected-positive episode choice is itself an open problem; do not start there.
+2. **Priority 5** (PP1/PP3 remedy selection) still requires an authored decision; candidates listed in `model/PRIOR-PREDICTIVE-RUN-001.md`, none chosen. Paper B stays blocked behind it.
+3. **Priority 6** writing, unchanged.
+4. Before F1 first ingest: commit the basis-matched cross-check pair, the negative-sum semantics, and the fuel-row summation rule (all registered in `pipeline/adapters/F1.md` Amendment 1).
