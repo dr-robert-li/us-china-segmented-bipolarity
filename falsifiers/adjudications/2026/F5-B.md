@@ -15,7 +15,11 @@ adjudication:
   qualifying_removals_counted: 2
   distance: one member
   dissent: []
-  amendments: []
+  amendments:
+    - id: 1
+      date: 2026-08-19
+      scope: citation audit corrections
+      determination_changed: false
 ```
 
 **Determination.** `not_met`, at a distance of **one member**.
@@ -166,7 +170,42 @@ It does not pass cleanly on specification compliance, because the adapter's wind
 
 ## Amendments
 
-None.
+### Amendment 1 -- 2026-08-19 -- citation audit corrections
+
+A post-publication audit of this record's citations found three defects. All three are corrected here by appended amendment rather than by editing the body above, and none changes the `not_met` determination.
+
+**1. The denominator's load-bearing clause was attributed to a source that does not state it.**
+
+The Reasoning section asserts "24 full members **including** the 7-member Standing Committee" and cites the International Department of the CPC Central Committee. That page was re-fetched. It states that "Twenty-four members of the Political Bureau of the CPC Central Committee were also elected at the session" and separately names the seven Standing Committee members ([IDCPC](https://www.idcpc.org.cn/english2023/tjzl/cpcjj/leadershipof20thCentralCommittee/)). It does **not** state whether the twenty-four include the Standing Committee, and does not enumerate the twenty-four by name. The word "also" is, if anything, weak evidence for the additive reading -- twenty-four **in addition to** seven, for thirty-one.
+
+This matters because the two readings give different thresholds: `ceil(0.15 * 24) = 4` against `ceil(0.15 * 31) = 5`. The inclusive reading is the **less** favourable one for this determination.
+
+The inclusive reading is nevertheless correct, and is now supported by sources that state it explicitly rather than by inference: the Organisation for Research on China and Asia records that "24 members were appointed in the Politburo of CPC and seven out of these 24 were appointed to the Politburo Standing Committee" ([ORCA](https://orcasia.org/pages/20cc/overview)); the Geopolitics and Security Studies Centre records that "the Politburo has shrunk from 25 to 24 members" while "the size of the Standing Committee has remained unchanged and still consists of 7 people" ([GSSC](https://www.gssc.lt/wp-content/uploads/2022/11/National-Congress-of-the-CPC.pdf)); and a European policy brief tabulates the twenty-four with the seven Standing Committee members inside the table ([DWARC / China Horizons](https://chinahorizons.eu/images/docs/policy_brief/DWARC_Policy_Brief_The_20th_Congress_of_the_CCP_FINAL.pdf)). A contemporaneous press description of the body as "23 in total, including seven Standing Committee members" after He Weidong's expulsion is consistent ([Chosun, 4 Mar 2026](https://www.chosun.com/english/world-en/2026/03/04/KQGFGN4VHFDNZGHLDBISYSTPAA/)).
+
+The standing of the two denominator sources in the table above is therefore **reversed**: the enumeration is what establishes the count, and the primary Party organ corroborates the total only. This is recorded rather than quietly restated, because a record that cites a primary source for a claim the source does not make is defective even when the claim is true, and the defect is worse here than a wrong number would be -- it would have survived a reader checking whether the source existed, and failed only against a reader checking what it said.
+
+**2. The election date is imprecise.** The body reads "elected 22--23 October 2022". The 20th National Congress sat 16--22 October 2022 and the Politburo was elected the following day, at the first plenary session of the 20th Central Committee, on **23 October 2022** ([DWARC / China Horizons](https://chinahorizons.eu/images/docs/policy_brief/DWARC_Policy_Brief_The_20th_Congress_of_the_CCP_FINAL.pdf)). The election date is not load-bearing for any threshold.
+
+**3. The second member under investigation was left unnamed, and is now named.** The body adopts the CRS formulation "one member expelled, with two members under investigation" at data-as-of 27 April 2026 without identifying the second. The two are **Zhang Youxia**, announced 24 January 2026, and **Ma Xingrui**, announced 3 April 2026 ([Reuters, 3 Apr 2026](https://www.reuters.com/world/china/chinese-politburo-member-ma-xingrui-under-investigation-by-anti-graft-watchdog-2026-04-03/)). Ma was subsequently expelled and is already counted in the numerator, so naming him changes nothing arithmetically; the CRS snapshot simply predates his expulsion.
+
+**A candidate for the second name is explicitly ruled out.** Liu Zhenli, Chief of Staff of the CMC Joint Staff Department, was placed under investigation alongside Zhang Youxia in the same announcement ([Reuters, 24 Jan 2026](https://www.reuters.com/world/china/china-investigating-senior-military-officials-zhang-youxia-liu-zhenli-says-2026-01-24/)). He is **not** a full Politburo member: he does not appear in the enumeration of the twenty-four ([20th Central Committee membership list](https://en.wikipedia.org/wiki/20th_Central_Committee_of_the_Chinese_Communist_Party)), and is described throughout as a Central Military Commission member. He therefore counts toward neither numerator nor denominator. This is checked and recorded because if he were a Politburo member the numerator picture would move, and an unchecked assumption in that position is the kind of thing that later looks like convenience.
+
+**What the amendment does not change.** The determination remains `not_met`. Denominator 24, threshold 4, counted removals 2, distance one to two members. Under the anchoring rule adopted in the same commit as this record -- first official public announcement of expulsion -- announced investigations count zero regardless of how many there are or whom they name.
+
+**One external framing is worth recording against this clause.** Bloomberg headlined the Ma Xingrui investigation "China Probes Politburo Member in Widest Purge Since 1976" ([Bloomberg, 3 Apr 2026](https://www.bloomberg.com/news/articles/2026-04-03/china-probes-politburo-member-in-widest-purge-since-1976)), carried also by the [Straits Times](https://www.straitstimes.com/asia/east-asia/china-probes-politburo-member-in-widest-purge-since-1976). That comparison is a journalistic judgement, not a measurement, and it is not evidence for the clause. It is recorded because the historical episode it names is the one this project uses to test whether the Sub-clause B rubric discriminates at all.
+
+#### Sources for Amendment 1
+
+- https://www.idcpc.org.cn/english2023/tjzl/cpcjj/leadershipof20thCentralCommittee/
+- https://orcasia.org/pages/20cc/overview
+- https://www.gssc.lt/wp-content/uploads/2022/11/National-Congress-of-the-CPC.pdf
+- https://chinahorizons.eu/images/docs/policy_brief/DWARC_Policy_Brief_The_20th_Congress_of_the_CCP_FINAL.pdf
+- https://www.chosun.com/english/world-en/2026/03/04/KQGFGN4VHFDNZGHLDBISYSTPAA/
+- https://www.reuters.com/world/china/chinese-politburo-member-ma-xingrui-under-investigation-by-anti-graft-watchdog-2026-04-03/
+- https://www.reuters.com/world/china/china-investigating-senior-military-officials-zhang-youxia-liu-zhenli-says-2026-01-24/
+- https://en.wikipedia.org/wiki/20th_Central_Committee_of_the_Chinese_Communist_Party
+- https://www.bloomberg.com/news/articles/2026-04-03/china-probes-politburo-member-in-widest-purge-since-1976
+- https://www.straitstimes.com/asia/east-asia/china-probes-politburo-member-in-widest-purge-since-1976
 
 ---
 
@@ -187,5 +226,5 @@ None.
 - https://www.prcleader.org/post/why-is-xi-still-purging-his-generals
 - https://www.brookings.edu/articles/assessing-chinas-fourth-plenum-policy-continuity-personnel-turmoil/
 - https://www.journalofdemocracy.org/online-exclusive/why-xi-jinping-is-purging-chinas-top-leaders/
-- https://www.airuniversity.af.edu/Portals/10/CASI/documents/Research/Other-Topics/2026-07-13%20PLA%20Corruption.pdf
+- https://www.airuniversity.af.edu/Portals/10/CASI/documents/Research/Other-Topics/2026-07-13%20PLA%20Corruption.pdf?ver=3FCdY-htIjQJMdbipAVSgg==
 - https://www.csis.org/analysis/assessing-xis-unprecedented-purges-chinas-military-key-developments-and-potential

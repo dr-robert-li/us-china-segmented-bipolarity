@@ -114,7 +114,7 @@ None.
 
 ## Sources, full URLs
 
-- https://www.airuniversity.af.edu/Portals/10/CASI/documents/Research/Other-Topics/2026-07-13%20PLA%20Corruption.pdf
+- https://www.airuniversity.af.edu/Portals/10/CASI/documents/Research/Other-Topics/2026-07-13%20PLA%20Corruption.pdf?ver=3FCdY-htIjQJMdbipAVSgg==
 - https://www.csis.org/analysis/assessing-xis-unprecedented-purges-chinas-military-key-developments-and-potential
 - http://eng.mod.gov.cn/2025xb/N/T/16439159.html
 - http://eng.mod.gov.cn/2025xb/N/T/16439139.html

@@ -11,7 +11,10 @@ adjudication:
   authored_by: dr-robert-li
   authored_at: 2026-08-19
   dissent: []
-  amendments: []
+  amendments:
+    - id: 1
+      date: 2026-08-19
+      effect: determination unchanged; recorded specification limitation narrowed on dry-run evidence
 ```
 
 **Determination.** `not_met`, on affirmative evidence that the incumbent continued in office through procedurally regular events, not on absence of contrary reporting.
@@ -84,9 +87,30 @@ The Party Charter's silence on General Secretary term limits is sourced to a US 
 
 **The specification is contestable, and that is the finding worth carrying forward.** If the paramount position's tenure is governed by a norm rather than a procedure, Sub-clause A may be incapable of firing under any realistic scenario short of a coup -- in which case it is Sub-clause C, not A, that carries the load, and the disjunction is narrower in practice than the pre-registered wording suggests. This is recorded as a limitation of the pre-registration. **It is not repaired**, because widening a clause after observing that it is hard to satisfy is precisely the move the pre-registration exists to prevent.
 
+**Amendment 1 narrows this paragraph. The paragraph above is left standing as written; the correction is appended below rather than substituted into it.**
+
 ## Amendments
 
-None.
+### Amendment 1 -- 2026-08-19 -- the unfalsifiability concern is overstated
+
+**Determination unchanged: `not_met`.** What changes is the recorded limitation.
+
+The dry run at `../dry-run/1976.md` exercised this sub-clause against the succession following the death of Mao Zedong and returned **`met`**, on affirmative documentary evidence:
+
+- The CPC Constitution adopted 28 August 1973 assigned the election of the Chairman of the Central Committee to the Central Committee **in plenary session**, under Article 9 ([1973 CCP Constitution](https://www.marxists.org/subject/china/documents/cpc/CONSTITUTION_CPC.htm); [Peking Review 35--36, 1973](https://www.marxists.org/subject/china/peking-review/1973/PR1973-35-36.pdf)).
+- On 7 October 1976 the Politburo alone resolved that Hua Guofeng would hold the Chairmanship. The Central Committee ratified it at the Third Plenum of 16--21 July 1977, some nine months later ([Teiwes and Sun](https://www.bannedthought.net/China/MaoEra/GPCR/BourgeoisCommentary/China'sOctoberCoupThatEndedTheMaoistEra-Sun-Teiwes.pdf)).
+
+A constitutional text naming an organ, a different organ performing the act, and a dated interval between the act and its ratification are exactly the elements the clause asks for. **Sub-clause A is not unfalsifiable. It is falsifiable, and it has been falsified against a historical case.**
+
+The accurate limitation is narrower and is substituted for the earlier one:
+
+> Sub-clause A is falsifiable in principle. It is hard to satisfy under the post-1982 constitutional arrangement specifically, because the Party Chairmanship -- the office whose filling the 1973 text governed by explicit procedure -- was abolished, and the offices that now carry paramount authority have been filled by the procedures that govern them. The clause is quiet because the procedure has held. That is a substantive finding about the object of study and not a defect in the instrument.
+
+The operative half of the earlier concern survives: **Sub-clause C, not A, carries the practical load** in a system where the succession constraint at the top is a norm rather than a rule. The 1976 exercise supports that too, since C also returned `met` there. What does not survive is the stronger claim that A cannot fire at all.
+
+**Recording this cuts against the project's interest and is recorded for that reason.** An unfalsifiable clause is a more striking methodological finding than a clause that is merely quiet, and the earlier wording was the more publishable of the two. It was also wrong, and the correction is appended rather than substituted into the original paragraph.
+
+See `../../log/2026/F5.md`, Amendment 2, and `../dry-run/README.md` for the dry-run conventions.
 
 ---
 
@@ -99,3 +123,9 @@ None.
 - https://english.www.gov.cn/news/202510/23/content_WS68fa3825c6d00ca5f9a06fbe.html
 - https://www.reuters.com/world/china/two-senior-communist-party-officials-absent-top-chinese-political-event-2026-03-04/
 - https://jamestown.org/late-stalinism-in-beijing/
+
+### Added by Amendment 1
+
+- https://www.marxists.org/subject/china/documents/cpc/CONSTITUTION_CPC.htm
+- https://www.marxists.org/subject/china/peking-review/1973/PR1973-35-36.pdf
+- https://www.bannedthought.net/China/MaoEra/GPCR/BourgeoisCommentary/China'sOctoberCoupThatEndedTheMaoistEra-Sun-Teiwes.pdf

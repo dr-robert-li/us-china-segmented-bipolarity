@@ -121,6 +121,10 @@ falsifiers/
   dependence.md           Correlation structure, n_eff, three rejection gates
   log/<year>/             Annual verdicts, one file per condition
   adjudications/<year>/   Written determinations for every non-computable clause
+  adjudications/dry-run/  Rubric exercises against closed historical episodes.
+                          Not determinations. Excluded from the annual index.
+  adjudications/CITATION-AUDIT-2026-08-19.md
+                          Language and citation audit of the Phase 5 records
 snapshots/                Immutable tagged states per published artifact
 ```
 
@@ -140,6 +144,9 @@ snapshots/                Immutable tagged states per published artifact
 | Rules registry | Committed; R003 and R009 specified at v0.1.0 |
 | 2026 baseline falsifier log | Committed; F5 and F2 Clause 2 now adjudicated, remainder provisional |
 | Adjudication records, 2026 | Committed; F5-A, F5-B, F5-C, F2-C2, each with a written adverse case |
+| Dry-run rubric exercises | Committed; 1976 expected-positive and 2012 negative control. **F5 Sub-clause B fails to discriminate** |
+| Citation and language audit | Committed; six citation defects corrected by amendment, no determination changed |
+| Page snapshots at fetch time | **Not implemented.** Identified as a method gap by the citation audit; not retrofitted |
 | Pipeline implementation, schema and rules | Committed; 37 tests passing |
 | F1 adapter, executable | Committed; all seven specified tests passing |
 | Ingestion, network fetch | Not started, deliberately out of scope of the derivation modules |
@@ -163,7 +170,7 @@ Summary only. See `falsifiers/log/2026/` for entries and caveats.
 | F2 | `not_triggered` | ~0.1pp |
 | F3 | `not_triggered` | ~39pp on outturn, revised vintage |
 | F4 | `indeterminate` | Source does not exist |
-| F5 | `not_triggered` | **~1-2 Politburo members** on Sub-clause B |
+| F5 | `not_triggered` | **~1-2 Politburo members** on Sub-clause B, flagged `known_false_negative_mode` |
 | F6 | `not_triggered` | ~12pp |
 | F7 | `indeterminate` | Series unavailable |
 | F8 | `indeterminate` | ~1.1pp below |
@@ -173,6 +180,10 @@ No threshold crossings. `n_eff` is zero and no gate has fired.
 The set is not well calibrated, and the papers will say so: the conditions nearest their thresholds are also the ones whose measurement is least direct. F2 sits ~0.1pp away on a current-year estimate, F8 ~1.1pp away on estimated compute, and F5 one to two Politburo members away on a condition that has **no series at all**. The threshold table understates how much of the set's proximity to falsification rests on definitional and adjudicative choices rather than on measurement.
 
 F5 Sub-clause B is the live limb: a single officially announced expulsion of a full Politburo member inside the counting window satisfies it. It is reviewed on announcement rather than annually.
+
+**That limb now carries a demonstrated defect.** Exercised against the 1976 succession -- the archetypal case of extra-constitutional removal in the record -- Sub-clause B returns `not_met`, and it returns `not_met` on the 2012 negative control as well. It does not discriminate between them. The cause is the committed anchoring rule, which counts from the first official announcement of expulsion: an irregular removal is announced late or not at all, so the rule is anti-correlated with what the clause measures. A better rule exists and has **not** been adopted, because it would move the live 2026 determination toward triggering, and the pre-registration's bar on changing a rule as its threshold is approached is direction-neutral. It is registered instead as a candidate taking effect no earlier than evaluation year 2027. See `falsifiers/adjudications/dry-run/` and `pipeline/adapters/F5.md`, Amendment 3.
+
+A Sub-clause B `not_met` should therefore be read as "not registered by an instrument now known to be insensitive to this event class", not as "no purge-scale event occurred".
 
 ## Governing principle
 
