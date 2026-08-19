@@ -157,3 +157,26 @@ Internal specification and priors:
 - `model/IDENTIFICATION.md` -- PP1 to PP5 definitions
 - `pipeline/rules/R009-regime-classification.md` -- classifier, constants, frozen priority order
 - `model/prior-predictive-run-003.txt` -- raw run output
+
+---
+
+## Amendment 1 -- 2026-08-20 -- both remedies selected; grounds recorded before results
+
+**Appended, not substituted.** The deferral in section 4 is closed. Both selections were made by author decision of 2026-08-20 in structured Q&A, on the grounds below, each statable without reference to which option makes a gate pass. Gate effects are stated openly alongside, per this file's own practice of naming the cheapest-passing option as such.
+
+### PP1: candidate 3, restrict the output contract
+
+R5 is not reported at 2050; it is reported at 2075 only, where run 003 gives it 0.207 prior mass. Ground: the design cannot populate dual systemic constraint by 2050 under the committed ceilings, so a 2050 posterior for R5 would be a number the prior structure cannot inform; the contract should claim only what the design can speak to. Candidate 1 was declined as procedurally contaminated by this file's own open note (choosing the gate horizon while looking); candidate 2 was declined because it moves falsifier-adjacent ceilings with no independent ground on record. PP1 is restated to check each regime at its earliest claimed horizon: `SPECIFICATION.md` Amendment 02, `IDENTIFICATION.md` Amendment 1.
+
+### PP3: candidate 1, separate innovation scales with the derivation pre-named
+
+`sigma_v` on the growth innovation gets its own prior, `HalfNormal(s_v)`, with `s_v` produced by a procedure committed in `PRIORS.md` Amendment 1 **before** being computed: AR(1) residual scale, pooled across both states, from the snapshotted Ember capacity series. The value is whatever the procedure yields, and PP3's re-run is reported pass or fail. Candidate 2 was declined because rejection-sampling at the ceiling makes PP3 unfailable by construction. The section 3.2 warning stands: the dimensional argument for separate scales is also the argument that passes the gate, which is why the scale is procedure-derived rather than judgement-chosen, and why the commit order (procedure, then value) is verifiable in history.
+
+### Run 004 follows
+
+Run 004 executes the amended gates with the derived `sigma_v`. Its results are appended below this amendment once computed, whatever they are. The section 4 estimation block remains in force until run 004 is on file and every gate passes.
+
+### Sources for Amendment 1
+
+- model/PRIORS.md, Amendment 1 (internal; the pre-named procedure)
+- model/SPECIFICATION.md, Amendment 02; model/IDENTIFICATION.md, Amendment 1 (internal)

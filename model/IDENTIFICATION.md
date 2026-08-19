@@ -189,3 +189,24 @@ The distinction matters most in the fourth row. A model that cannot learn `delta
 - Kennedy, Fin-de-Siècle America, *NYRB*, 28 June 1990 — https://www.nybooks.com/articles/1990/06/28/fin-de-siecle-america/
 - Cox, thirty-five-year retrospective on Kennedy, LSE US Centre — https://blogs.lse.ac.uk/usappblog/2023/12/04/long-read-for-over-30-years-paul-kennedys-the-rise-and-fall-of-the-great-powers-has-been-the-backdrop-of-the-shifting-debate-over-american-power/
 - Henningsen, Henningsen and van der Werf, *Energy Economics* 82, 2019 — https://backend.orbit.dtu.dk/ws/files/149724340/melju_1_s2.0_S0140988317304395_main.pdf
+
+---
+
+## Amendment 1 -- 2026-08-20 -- PP1 checks coverage at the earliest claimed horizon
+
+**Appended, not substituted.** Induced by `SPECIFICATION.md` Amendment 02, which restricts the output contract to report R5 at 2075 only. Selected by author decision of 2026-08-20 in structured Q&A.
+
+### The change
+
+PP1's failure condition, "any of `R1..R5` receives prior mass below 0.05", is restated: **each regime must receive prior mass of at least 0.05 at the earliest horizon at which the output contract claims it** -- `R1..R4` at 2050, `R5` at 2075. The `R0_no_material_change` bucket remains exempt and remains reported.
+
+### Why this is not the horizon-conditional remedy rejected as contaminated
+
+Candidate 1 in `PRIOR-PREDICTIVE-RUN-001.md` section 3.1 moved the gate's horizon while leaving the claim in place -- choosing the evaluation horizon while looking at which choice passes, as that file's own open note warned. Here the *claim* moved first, on the stated ground that the design cannot populate R5 at 2050, and the gate follows the claim because a gate testing a claim not made protects nothing. The distinction is procedural and it is the whole content of the selection: contract first, gate second.
+
+The open weakness recorded in `PRIOR-PREDICTIVE-RUN-001.md` -- that the specification never said why PP1 evaluated at 2050 -- is closed by this restatement: the gate horizon per regime is now derived from the output contract rather than chosen freely.
+
+### Sources for Amendment 1
+
+- model/SPECIFICATION.md, Amendment 02 (internal)
+- model/PRIOR-PREDICTIVE-RUN-001.md, section 3.1 and section 4 (internal)

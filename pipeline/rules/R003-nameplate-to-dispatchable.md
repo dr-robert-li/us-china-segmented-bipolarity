@@ -3,7 +3,7 @@
 ```yaml
 rule:
   rule_id: R003
-  version: 0.1.0
+  version: 0.2.0  # bumped by Amendment 1, 2026-08-20; 0.1.0 text below stands unedited
   name: Nameplate to dispatchable via published capacity factors
   applies_to: [D1, Y_throughput]
   inputs: [cap_installed_by_technology, capacity_factor_by_technology]
@@ -199,3 +199,43 @@ The first two are why this rule is at 0.1.0. A rule whose partition choice can m
 - Xinhua, Q1 2026 installed capacity and utilisation hours -- https://english.news.cn/20260423/766d32839b164738a5c1cc23ff5bb26a/c.html
 - S&P Global, CEC 2023 coal and solar utilisation hours -- https://www.spglobal.com/energy/en/news-research/latest-news/energy-transition/013124-coal-still-accounted-for-nearly-60-of-chinas-electricity-supply-in-2023-cec
 - Marinelli, on the China solar capacity-factor denominator error -- https://www.linkedin.com/posts/mattiamarinelli_i-got-my-feed-flooded-by-posts-claiming-that-activity-7209825909749514240-Ytd7
+
+---
+
+## Amendment 1 -- 2026-08-20 -- gas partition and storage committed; version 0.2.0
+
+**Appended, not substituted.** Both selections by author decision of 2026-08-20 in structured Q&A, resolving the two open items that bear on the numbers. R003 still feeds no falsifier (F1 remains exempt), so nothing here bears on a threshold; the rule gates the model.
+
+### Gas partition: the coarse common partition
+
+The US gas fleet is aggregated to a **single generation-weighted capacity factor**, matching the coarseness of the PRC partition (coal, gas). The four-way EIA factors (combined cycle, gas turbine, steam turbine, internal combustion) continue to be ingested and are **published alongside as a sensitivity**, so that projection-year divergence between the partitions is visible rather than assumed away.
+
+Grounds:
+
+1. **Symmetry.** One partition applied to both states, inventing no assumption about the PRC gas plant mix that no published series supports.
+2. **Observed-year neutrality, by algebra.** A generation-weighted aggregate factor reproduces `sum_g(nameplate_g * cf_g)` exactly, so `D1` is unchanged in every observed year. The choice binds only in projection years, where a frozen aggregate factor meets a shifted fleet mix -- and there the sensitivity publication carries the divergence.
+
+The generation weights are those of the observed year being converted, recomputed per year; a projection year uses the weights of the latest observed year, flagged `frozen_mix`.
+
+### Storage: excluded from D1
+
+Storage is not generation and a capacity factor is the wrong instrument for it.
+
+1. **PRC pumped storage is stripped from the hydro line.** Mechanical: its utilisation hours are published separately (1,217 h in 2024), so conventional hydro (3,683 h) enters D1 and pumped storage does not.
+2. **US grid batteries are excluded from D1.**
+3. **Storage capacity is recorded as its own series**, `cap_storage_installed`, feeding no capacity factor. Its analytical home is grid-constraint evidence alongside curtailment, which section 4.4 already routes to `D2`.
+
+### Test additions
+
+7. **Aggregation identity.** For any observed year, the aggregated gas factor times total gas nameplate equals the sum of the four-way products to machine precision.
+8. **Storage exclusion.** A fleet containing pumped storage or batteries produces a D1 that is invariant to their capacity, and `cap_storage_installed` carries them.
+9. **Frozen-mix flag.** A projection-year conversion using held-over generation weights carries `frozen_mix`.
+
+### What remains open, and why the rule is 0.2.0 rather than 1.0.0
+
+The two documentation-only items stand (LBNL own-use vintage; the 6,000 kW floor). The rule reaches 1.0.0 when its implementation exists with tests 1--9 passing, not before.
+
+### Sources for Amendment 1
+
+- pipeline/rules/R003-nameplate-to-dispatchable.md, sections 2, 3 and 7 (internal; the factor tables and the open items resolved)
+- https://www.nea.gov.cn/20250121/097bfd7c1cd3498897639857d86d5dac/c.html (the separately published pumped-storage and conventional-hydro hours; already cited in section 3)

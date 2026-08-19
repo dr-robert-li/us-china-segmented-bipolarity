@@ -346,3 +346,26 @@ One expectation was refuted in the course of specifying it. The standard objecti
 - NEA, 2024 national electric power industry statistics — https://www.nea.gov.cn/20250121/097bfd7c1cd3498897639857d86d5dac/c.html
 - LBNL, Excess Capacity in China's Power System — https://eta-publications.lbl.gov/sites/default/files/lbnl1006638.pdf
 - China Energy Portal, statistical reporting system for renewable energy — https://chinaenergyportal.org/statistical-reporting-system-for-renewable-energy/
+
+---
+
+## Amendment 02 -- 2026-08-20 -- output contract restricted: R5 reported at 2075 only
+
+**Appended, not substituted.** Selected by author decision of 2026-08-20 in structured Q&A, from the three candidates recorded in `PRIOR-PREDICTIVE-RUN-001.md` section 3.1.
+
+### The change
+
+Section 9 item 1 is superseded prospectively: the model emits posterior mass on `R1..R4` (plus the `R0_no_material_change` bucket) at every reported horizon, and posterior mass on `R5` **at 2075 only**, carrying the low-confidence label section 9 already attaches to that horizon.
+
+**Ground, statable without reference to any gate:** under the committed ceiling table and growth priors, dual systemic constraint does not typically arise until the 2060s. A regime the design cannot populate at 2050 is not identified there, and reporting a posterior for it at 2050 would present a number the prior structure cannot inform. The honest contract reports R5 where the design can speak to it. This is the option that changes what is *claimed* rather than any gate, prior, or constant -- the ground on which it was selected over the two alternatives, both of which move quantities that bear on gates or falsifier-adjacent ceilings.
+
+**Gate effect, stated openly:** PP1's R5 coverage test becomes moot at 2050 because the claim it protected is no longer made there. The gate follows the claim: PP1 now checks each regime's coverage at the earliest horizon at which the contract claims it -- `R1..R4` at 2050, `R5` at 2075. See the same-day amendment to `IDENTIFICATION.md`. R5's prior mass at 2075 is 0.207 on run 003, so this is not a vacuous relocation; had R5 also been starved at 2075, PP1 would fail there and the design would have no horizon at which to claim the regime.
+
+### What this does not change
+
+The five-regime partition stands. R5 remains in the regime set, remains classifiable by R009, and remains reported at 2075. Papers describing the architecture state that the 2050 horizon speaks to four regimes and why.
+
+### Sources for Amendment 02
+
+- model/PRIOR-PREDICTIVE-RUN-001.md, section 3.1 (internal; candidate list, R5 masses by horizon)
+- model/IDENTIFICATION.md, Amendment 1 (internal; the PP1 restatement this contract change induces)

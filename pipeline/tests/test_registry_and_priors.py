@@ -223,3 +223,21 @@ class TestClassifierInvariants(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestPP1ClaimHorizons(unittest.TestCase):
+    """PP1 checks each regime at its earliest claimed horizon.
+
+    SPECIFICATION.md Amendment 02 restricts the output contract to report R5 at
+    2075 only; IDENTIFICATION.md Amendment 1 makes the gate follow the claim.
+    """
+
+    def test_claim_horizon_map_matches_the_amended_contract(self) -> None:
+        self.assertEqual(
+            pp.PP1_CLAIM_HORIZON,
+            {"R1": 2050, "R2": 2050, "R3": 2050, "R4": 2050, "R5": 2075},
+        )
+
+    def test_gate_evaluates_both_claimed_horizons(self) -> None:
+        res = pp.pp1_regime_coverage(30, 7)
+        self.assertEqual(sorted(res.values["masses"]), [2050, 2075])

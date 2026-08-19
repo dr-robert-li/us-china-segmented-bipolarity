@@ -237,3 +237,45 @@ A headline result that flips under any of S1 through S10 is reported as **prior-
 - Total factor productivity of Chinese industrial firms, 2007-2017, *Applied Economics* — https://www.tandfonline.com/doi/full/10.1080/00036846.2021.1954592
 - Where has all the dynamism gone?, *Journal of Development Economics* 181, 2026 — https://ideas.repec.org/a/eee/deveco/v181y2026ics0304387826000039.html
 - The structural-demographic theory revisited — https://pmc.ncbi.nlm.nih.gov/articles/PMC10621949/
+
+---
+
+## Amendment 1 -- 2026-08-20 -- separate innovation scales; derivation procedure committed before computation
+
+**Appended, not substituted.** Selected by author decision of 2026-08-20 in structured Q&A, from the two live candidates recorded in `PRIOR-PREDICTIVE-RUN-001.md` section 3.2. Candidate 3 (widen the PP3 ceiling) was rejected in advance and was not offered. Candidate 2 (truncate the joint prior) was declined on a ground independent of any outcome: rejection-sampling at the 20x ceiling converts PP3 from a check on the prior into a constraint of the prior, making the gate unfailable by construction, and a gate that cannot fail is not a gate.
+
+### The change
+
+The committed line
+
+```
+u, v ~ Normal(0, sigma_u^2), sigma_u ~ HalfNormal(0.05)
+```
+
+is superseded prospectively by
+
+```
+u ~ Normal(0, sigma_u^2),  sigma_u ~ HalfNormal(0.05)     level innovation, unchanged
+v ~ Normal(0, sigma_v^2),  sigma_v ~ HalfNormal(s_v)      growth innovation, own scale
+```
+
+**Ground, statable without reference to any gate:** a shock to a growth rate and a shock to a level are not the same kind of quantity, and there was never a substantive reason for their scales to share a prior. The shared scale was a drafting economy, not a modelling claim. This is recorded together with its hazard: the same argument passes the failing gate cheaply, which is exactly why the scale `s_v` is not chosen by judgement but by the pre-named procedure below, committed **before** the computation is run.
+
+### The derivation procedure for s_v, named before computing
+
+1. **Data.** Ember yearly total installed generation capacity for the United States and China, 2000--2025, computed by summing the nine fuel-level capacity rows per country-year from the content-addressed snapshot already committed to this repository (`research/snapshots/store/259e1095ee8ffeaf0aff37ad557916ae1823a2da13312da50ba4cec6b4574c3b.csv`). This is the only input-adjacent series in the repository with a committed snapshot; it is D1-adjacent, covers both states from a single harmonised source, and its byte-identity is verifiable.
+2. **Growth rates.** `g_t = ln(C_t) - ln(C_{t-1})` per state, 2001--2025.
+3. **AR(1) fit.** Per state, ordinary least squares on `g_t = c + rho * g_{t-1} + v_t`, t = 2002--2025.
+4. **Pooled scale.** `s_v = sqrt( (SSR_US + SSR_CN) / (n_US + n_CN - 4) )`, rounded to three significant figures.
+5. **Commitment.** `sigma_v ~ HalfNormal(s_v)` at whatever value step 4 yields. PP3 is re-run and the result is reported, **pass or fail**. If PP3 still fails, the failure is reported and estimation remains blocked; the procedure is not re-run with a different series or a different estimator.
+
+The procedure is committed to the repository before step 2 is executed. The computed value and the re-run results are recorded in a follow-up amendment referencing this one, so a reader can verify the order from the commit history.
+
+### Limitation, recorded now
+
+`s_v` is elicited from one series -- generation capacity -- and applied to the growth innovations of all six inputs. Capacity growth is smoother than plausible paths for frontier compute or robot density, so `s_v` may understate growth-shock scale for the frontier bundle. That asymmetry is accepted because the alternative -- one elicited scale per input -- would require five more series the repository does not hold to snapshot standard, and it is recorded here so the sensitivity-run schedule can test it.
+
+### Sources for Amendment 1
+
+- research/snapshots/store/259e1095ee8ffeaf0aff37ad557916ae1823a2da13312da50ba4cec6b4574c3b.csv (internal snapshot; Ember yearly full release)
+- model/PRIOR-PREDICTIVE-RUN-001.md, section 3.2 (internal; the candidate list and the diagnostic counterfactual)

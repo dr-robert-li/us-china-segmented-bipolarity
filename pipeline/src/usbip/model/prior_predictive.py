@@ -494,25 +494,34 @@ def swap_baseline(
     return {"US": dict(baseline["CN"]), "CN": dict(baseline["US"])}
 
 
+# Earliest horizon at which the output contract claims each regime.
+# SPECIFICATION.md Amendment 02: R5 is reported at 2075 only; R1..R4 at 2050.
+# PP1 checks coverage where the claim is made (IDENTIFICATION.md Amendment 1).
+PP1_CLAIM_HORIZON = {"R1": 2050, "R2": 2050, "R3": 2050, "R4": 2050, "R5": 2075}
+
+
 def pp1_regime_coverage(n_draws: int, seed: int) -> GateResult:
-    """Any of R1..R5 receiving prior mass below 0.05 fails."""
-    mass = regime_masses(n_draws, seed)
+    """Each regime must have >= 0.05 prior mass at its earliest claimed horizon."""
+    masses = {
+        h: regime_masses(n_draws, seed, horizon=h)
+        for h in sorted(set(PP1_CLAIM_HORIZON.values()))
+    }
     # The no-material-change bucket is not a regime and is exempt from the
     # coverage floor. It is reported so that it cannot quietly absorb draws.
     starved = {
-        k: v
-        for k, v in mass.items()
-        if v < 0.05 and k != "R0_no_material_change"
+        f"{k}@{h}": masses[h][k]
+        for k, h in PP1_CLAIM_HORIZON.items()
+        if masses[h][k] < 0.05
     }
     return GateResult(
         "PP1",
         not starved,
         (
-            f"all five regimes reachable; masses {mass}"
+            f"all five regimes reachable at their claimed horizons; masses {masses}"
             if not starved
-            else f"regimes below 0.05 prior mass: {starved}"
+            else f"regimes below 0.05 prior mass at their claimed horizon: {starved}"
         ),
-        {"masses": mass},
+        {"masses": masses},
     )
 
 

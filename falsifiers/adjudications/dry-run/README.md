@@ -52,3 +52,17 @@ One condition of eight has now failed its dry run (F5-B), one has passed (F1), a
 ## Reading order
 
 Each file places the **adverse case before the reasoning**, as `../adjudication.md` requires of determinations. In a dry run the adverse case is written against the exercise's own usefulness as well as against its verdicts, because the strongest objection to a dry run is that selecting the most extreme episode in the record guarantees the answer.
+
+## Registered exercises, not yet run -- added 2026-08-20
+
+Registered here before computation, per the design rule above and `../../PRE-REGISTRATION.md` Amendment 2. Episode pairs and failure conditions are fixed at registration; the failure conditions are the three standard ones above unless a narrower one is added at the head of the exercise file.
+
+| Falsifier | Expected-positive | Negative control | Registered | Status |
+|---|---|---|---|---|
+| F6 | Episode pair to be selected at exercise head, before computation | -- | 2026-08-20 | queued first |
+| F4 | Episode pair to be selected at exercise head, before computation | -- | 2026-08-20 | queued second |
+| F3 | Republic of Korea, 1997 chaebol-banking collapse | Japan, 1990s managed debt-overhang absorption | 2026-08-20 | queued third |
+
+**The F3 pair is fixed now** because it was selected by author decision of 2026-08-20 in structured Q&A, on the criterion of known-answer clarity first, structural analogy second. Its limitation is registered with it: no closed PRC positive episode exists, so the exercise tests the *unmanaged-cascade rubric* generically and cannot test the PRC-specific LGFV counting rules. It is a partial discrimination test and will be labelled one. The Argentina-2001/Brazil-1997 pair (closer structural analogy, blurrier known answer) was considered and declined; the 2021--2024 PRC property episode was excluded because its outcome is contested, which disqualifies it as a known answer.
+
+F6 and F4 are queued with pairs deliberately unfixed: fixing an episode pair requires the series reconnaissance that is the first step of each exercise, and naming a pair here without it would be registration theatre. Each exercise file must fix its pair and failure conditions at its head before computing, and the sequence F6, F4, F3, then flag-only F2 and F8, is the committed order.
