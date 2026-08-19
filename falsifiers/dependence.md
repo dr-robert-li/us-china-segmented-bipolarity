@@ -242,3 +242,35 @@ A verdict stable across all four settings is reported as a verdict. A verdict th
 - No condition may be moved between clusters after any crossing.
 
 The purpose of the freeze rules is narrow and worth stating plainly: to remove the analyst's ability to change the scoring after seeing the score.
+
+---
+
+## Amendment 1 -- 2026-08-20 -- caveat: `n_eff` assumes every falsifier is a live test
+
+**Appended, not substituted. Nothing frozen moves.** The Gate 2 posterior threshold of 0.25 and the `n_eff` threshold of 1.8 are frozen by the revision rules above and are not changed, recomputed, or reinterpreted by this amendment. This is a recorded caveat on how much the gates can be read as guaranteeing, and it runs **against** the project's falsifiability claim, which is why it must be recorded rather than left implicit.
+
+### The assumption, made explicit
+
+```
+n_eff = k / (1 + (k - 1) * rho_bar)
+```
+
+treats each of the `k` crossings as one unit of evidence, discounted only for correlation with the others. That presupposes each falsifier is a **live test**: that its counting rules can actually register the event class its condition describes.
+
+### Why the assumption is now known to fail for one clause
+
+F5 Sub-clause B carries a demonstrated false-negative mode, registered 2026-08-19 (`../pipeline/adapters/F5.md`, Amendment 3): its committed anchoring rule returns `not_met` on the archetypal historical positive case, because the rule is anti-correlated with the irregularity the clause measures. A clause that can fail to see its own event class contributes **less than one** live test to the set -- and, symmetrically, its *non*-crossing contributes less than one unit of corroboration.
+
+The consequence runs in one direction. F5 is less able to cross than the arithmetic assumes, so the set's effective independence is overstated and the rejection gates are **harder to fire than `n_eff` implies**. The gates cannot err toward rejecting the thesis through this defect; they can only err toward sparing it.
+
+### What follows, and what does not
+
+- Every Gate 2 report in which F5 participates carries this caveat alongside the `n_eff` arithmetic.
+- The papers state it wherever the eight-condition architecture is described.
+- **No recomputation follows.** Down-weighting F5 inside `n_eff` would require choosing a discount factor after observing the defect, which is scoring-after-seeing-the-score -- the exact move the freeze rules exist to prevent. The honest treatment is the arithmetic as committed plus this caveat in the open.
+- If `F5-B-ANCHOR-2` is adopted for 2027 under its registered conditions, the caveat narrows to evaluation years 2026 and earlier; it is not deleted.
+
+### Sources for Amendment 1
+
+- pipeline/adapters/F5.md, Amendment 3 (internal; the registered false-negative mode and its directionality note)
+- falsifiers/adjudications/dry-run/1976.md (internal; the demonstration)

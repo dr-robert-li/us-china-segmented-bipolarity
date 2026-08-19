@@ -157,3 +157,74 @@ A quantitative `not_met` short-circuits, because the condition is conjunctive an
 - No substitution of a more favourable source set after a determination has been drafted.
 
 The last prohibition is the hardest to enforce technically and is recorded here so that a reader can at least ask whether it was observed.
+
+---
+
+## Amendment 1 -- 2026-08-20 -- the silent-procedure branch
+
+**Appended, not substituted. Stated first, because it is the only thing that makes this amendment admissible: this change is inert for every live 2026 determination.** The constitutional documents in force in 2026 contain an express removal provision -- Article 42 of the Party Constitution as revised 22 October 2022, quoted below -- and the 2026 removals followed its published route, so no live clause routes through the branch this amendment adds. The change is made while it decides nothing.
+
+### The defect
+
+Clauses of the form "departure from the procedures set out in the documents in force at the time" -- F5 Sub-clause A is the instance in the set -- presuppose that a governing procedure exists. The dry run at `../falsifiers/adjudications/dry-run/2012.md` found the presupposition can fail: the 1973 Party Constitution contained **no** provision governing removal of a Politburo member -- no quorum, no majority requirement, no ratification route. "Departure from procedure" is not *false* in that situation. It is **undefined**, and the rubric as written did not distinguish the two.
+
+Routing the silent case to `not_met` would let a constitution's silence protect the thesis, which is exactly the asymmetry Rule 1 exists to close: `not_met` requires affirmative evidence, and the absence of a procedure is not affirmative evidence that procedure was followed.
+
+### The rule, committed
+
+Where a clause tests departure from a procedure, adjudication first determines whether the documents in force at the time contain a procedure governing the event class at issue:
+
+| Finding | Routing |
+|---|---|
+| Procedure exists and was followed | `not_met` |
+| Procedure exists and was departed from | `met` (subject to the clause's other requirements) |
+| **No procedure governs the event class** | **`indeterminate`**, per Rule 1 |
+
+The `procedure_absent` routing is `indeterminate`, not `not_met`. Its resolution condition, required by Rule 3, is: identification of a document in force at the time that does govern the event class, or a determination on some other limb of the same condition that does not depend on procedural departure.
+
+The finding of absence must itself meet the affirmative-evidence bar: silence is established by examination of the full document in force, cited, not by failure to locate a provision.
+
+### Application to the current documents
+
+For the event class "removal of a member or alternate member of the Central Committee" the document in force since 22 October 2022 is not silent. Article 42 of the Party Constitution provides that any such removal, disciplinary probation, or expulsion "must be approved by a two-thirds majority vote at a plenary meeting of the Party committee to which the member or alternate member belongs", with a provision for the Political Bureau to decide first "while awaiting confirmation at the plenary meeting" when the plenary is not in session ([Full text of Constitution of Communist Party of China, revised 22 October 2022, China Military Online](http://eng.chinamil.com.cn/CHINA_209163/TopStories_209189/10195159.html); snapshot `sha256:a4c640bf1de4d0958fb8193e7405dd294ee3bd1fdac0fbdae3af2e706d13e95c`, recorded in `../research/snapshots/INDEX.md`).
+
+**A numbering correction is recorded here so it does not propagate.** The equivalent provision was Article 40 in the 2007 and 2012 texts, and internal working notes have referred to "Article 40 of the 2022 constitution". In the 2022 revision Article 40 is the general discipline article; the removal provision is **Article 42**. The provision's existence, which is what the inertness statement above rests on, is unaffected.
+
+### Sources for Amendment 1
+
+- http://eng.chinamil.com.cn/CHINA_209163/TopStories_209189/10195159.html (snapshot sha256 a4c640bf1de4d0958fb8193e7405dd294ee3bd1fdac0fbdae3af2e706d13e95c)
+- https://www.marxists.org/subject/china/documents/cpc/CONSTITUTION_CPC.htm (1973 text, silence on removal; as cited in the 2012 dry run)
+- http://www.china.org.cn/english/congress/229722.htm (2007 text, Article 40; as cited in the 2012 dry run)
+- falsifiers/adjudications/dry-run/2012.md (internal; the open specification question this amendment resolves)
+
+---
+
+## Amendment 2 -- 2026-08-20 -- denominators from enumerated name lists
+
+**Appended, not substituted. Inert for every live 2026 determination:** the 2026 F5 denominator of 24 was already established from an enumerated membership list corroborated by a third-party tabulation, and this amendment confirms that number rather than changing it. `ceil(0.15 * 24) = 4` before and after.
+
+### The recurring failure
+
+An official aggregate figure that admits an additive reading has now produced the same ambiguity three times:
+
+1. **1973.** The State Council record's phrasing -- "9 Politburo Standing Committee members, 21 Politburo members, and 4 alternate members" -- admits a reading of 34. Only the enumerated 21-name list in the contemporaneous communiqué establishes that the 9 sit inside the 21. See `../falsifiers/adjudications/dry-run/1976.md`.
+2. **2007.** Whether the 17th Politburo had alternates is not establishable from the aggregate record; the enumerated official name list settles the full-member count at 25. See `../falsifiers/adjudications/dry-run/2012.md`.
+3. **2022.** The primary Party source states a count of 24 alongside a separate list of 7 Standing Committee members without stating whether the 7 are inside the 24. See Amendment 1 to `../falsifiers/adjudications/2026/F5-B.md`.
+
+A threshold computed from a misread aggregate can be wrong by a factor that changes the threshold, in either direction, in either year.
+
+### The rule, committed
+
+Wherever a clause's arithmetic takes the membership of a named body as a denominator:
+
+- The denominator is established from an **enumerated name list** in a primary source.
+- Official aggregate figures **corroborate the total only**. An aggregate may never alone establish a denominator, and where an aggregate conflicts with an enumerated list, the list governs and the conflict is recorded.
+- Where no enumerated list is obtainable, the denominator is not established and the clause's arithmetic returns `indeterminate` for want of it, per Rule 1.
+
+### Sources for Amendment 2
+
+- https://www.gov.cn/test/2007-08/28/content_729620.htm (the 1973 aggregate admitting an additive reading; as cited in the 1976 dry run)
+- https://www.marxists.org/subject/china/china-reconstructs/1973/CR1973-11-Sup.pdf (the enumerated 21-name list resolving it)
+- http://www.china.org.cn/english/congress/229262.htm (the 2007 enumerated name list)
+- https://www.idcpc.org.cn/english2023/tjzl/cpcjj/leadershipof20thCentralCommittee/ (the 2022 primary source with the inside-or-outside ambiguity)
+- falsifiers/adjudications/2026/F5-B.md, Amendment 1 (internal)
