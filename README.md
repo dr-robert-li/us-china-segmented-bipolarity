@@ -18,6 +18,18 @@ The net direction of overall divergence is **indeterminate a priori** and must b
 
 The expected headline result is **segmented bipolarity** -- capability dividing by domain rather than resolving into a single hierarchy -- which is horizon-robust in a way that any directional claim is not.
 
+## Three propositions
+
+Tracked and scored separately, because the eight falsification conditions do not bear on them equally.
+
+| ID | Proposition |
+|---|---|
+| **P1** | Relative position diverges in China's favour on generation, transmission and robotics deployment |
+| **P2** | Those are precisely the dimensions the AI-robotics transition disproportionately rewards |
+| **P3** | Capability divides by domain rather than resolving into a single hierarchy |
+
+Crossings in the PRC-fragility cluster refute P1 while leaving P3 intact, because the peaking-power reading is nested as a parameter region rather than opposed. See `falsifiers/dependence.md`.
+
 ## Central empirical object
 
 Whether the frontier bundle and the deployment bundle are complements, substitutes, or alternating bottlenecks, in a two-level nested production structure:
@@ -89,14 +101,21 @@ papers/
                           thesis nested as a parameter region
 essay/                    Consolidated long-form essay for expert circulation
 model/                    State-space specification and diagnostics
-pipeline/                 F1-F8 ingestion adapters, normalisation,
-                          threshold evaluation, adjudication
+pipeline/
+  schema.md               Canonical record schemas and layer discipline
+  adjudication.md         Qualitative-clause rubric, sustained-condition rules
+  rules/                  Registered transformation rules, semver
+  definitions/            Boundary decisions: frontier compute, precision basis
+  adapters/               F1-F8 adapter specifications
 data/
   raw/                    Append-only. Never edited in place.
   normalised/             Schema-conformed, provenance-tagged
   derived/                Dispatchable adjustment, rolling averages, ratios
   adjudicated/            Human-reviewed compound and qualitative conditions
-falsifiers/               Pre-registration and the annual log
+falsifiers/
+  PRE-REGISTRATION.md     The eight conditions, thresholds, classification
+  dependence.md           Correlation structure, n_eff, three rejection gates
+  log/<year>/             Annual verdicts, one file per condition
 snapshots/                Immutable tagged states per published artifact
 ```
 
@@ -106,12 +125,38 @@ snapshots/                Immutable tagged states per published artifact
 |---|---|
 | Pre-registration of F1-F8 | Committed |
 | Data-integrity protocol | Committed |
+| Dependence structure and rejection gates | Committed |
 | Audience and horizon mandate | Settled |
-| Ingestion adapters (F1, F3, F7, F8) | Specification pending |
-| Adjudication rules (F2, F4, F6) | Open |
-| Measurement model | Not started |
+| Canonical schema | Committed |
+| Adjudication framework | Committed |
+| Adapter specifications, all eight conditions | Committed |
+| Frontier-compute boundary | Committed |
+| Declared precision basis | Committed |
+| Rules registry | Committed; R003 outstanding |
+| 2026 baseline falsifier log | Committed, provisional |
+| Ingestion implementation | Not started |
+| Model specification | Not started |
 | Estimation | Not started |
 | Papers and essay | Not started |
+
+## Current falsifier position
+
+Summary only. See `falsifiers/log/2026/` for entries and caveats.
+
+| ID | Verdict | Distance to threshold |
+|---|---|---|
+| F1 | `not_triggered` | ~30pp |
+| F2 | `not_triggered` | ~0.1pp |
+| F3 | `not_triggered` | ~63pp on outturn |
+| F4 | `indeterminate` | Source does not exist |
+| F5 | `not_triggered` (provisional) | Not adjudicated |
+| F6 | `not_triggered` | ~12pp |
+| F7 | `indeterminate` | Series unavailable |
+| F8 | `indeterminate` | ~1.1pp below |
+
+No threshold crossings. `n_eff` is zero and no gate has fired.
+
+The set is not well calibrated, and the papers will say so: the two conditions nearest their thresholds are also the two whose measurement is least direct.
 
 ## Governing principle
 
