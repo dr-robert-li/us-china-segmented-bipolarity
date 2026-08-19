@@ -1,0 +1,204 @@
+# Handover
+
+**State as at commit `93af2b7`, 20 August 2026.** Written so the project can be continued by someone else, or by the same author in a different working environment, without reconstructing context from conversation history.
+
+Read `README.md` first for what the project is. This file covers what state it is in, what is blocked and why, what must not be changed, and what to do next.
+
+---
+
+## 1. What exists
+
+Six phases are committed. Each was one commit.
+
+| Commit | Phase | What landed |
+|---|---|---|
+| `93af2b7` | 6 | Dry-run adjudications (1976, 2012); citation and language audit; F5-B false-negative mode registered |
+| `417cddf` | 5 | The two self-compliance breaches closed: F5 sub-clause adjudications and the F2 Clause 2 adverse case |
+| `5043ab6` | 4 | Paper A and B outlines, essay outline, Paper A section 3 drafted |
+| `2d87dff` | 3 | Pipeline implementation, rules R003 and R009, prior-predictive gates run |
+| `a7eb4a4` | 2 | Model specification, political stress, priors, identification |
+| `79846b0` | 1 | Rules registry, precision basis, 2026 baseline falsifier log |
+| `3e7047e`, `0e172e3`, `6c3550b` | -- | Adjudication framework, compute boundary, initial structure |
+
+Tests: 37 passing. Run them with
+
+```
+cd pipeline && PYTHONPATH=src python3 -m unittest discover -s tests -t .
+```
+
+There is no `pytest` in the environment used to date. Dependencies observed: Python 3.14, numpy 2.5.2, scipy 1.18.0.
+
+---
+
+## 2. The invariants -- read before changing anything
+
+These are the rules that make the project's claim work. A continuation that breaks one of them has produced a different project with the same file names.
+
+1. **Thresholds and counting rules do not move as they are approached.** Not in either direction. A change that makes the project's own thesis easier to support is not more acceptable than one that makes it harder -- if anything less, because the incentive to make it is stronger and the supporting reasoning will feel more compelling to the person making it. This is the rule F5-B is currently being held to at a cost. See section 4.
+
+2. **Amendments append. They never overwrite.** Every correction so far is an appended `## Amendment N` block with a date and a statement of what changed and what did not. The superseded text stays visible. `falsifiers/adjudications/2026/F5-A.md` is the pattern to copy: the original limitation paragraph is left standing, with the narrowing appended below and a pointer inserted.
+
+3. **Corrections are recorded, not repaired.** Where the project failed to comply with its own rules, the failure is written down as a failure. `falsifiers/adjudications/CITATION-AUDIT-2026-08-19.md` records that the audit itself under-reported on its first pass.
+
+4. **No favourable source substitution, no deadline extension, no reclassification to dodge a verdict.**
+
+5. **Three standing prohibitions on all output.** No asymmetric epistemic standards -- the bar for evidence supporting the thesis is the bar for evidence against it. No teleology -- the words *inexorable*, *inevitable* and *proves* do not appear as claims about the thesis; the five retained `prove`-family matches and the reasoning for each are in the citation audit. No unengaged opponents -- a steel-manned counter-position appears wherever the supporting claim is made, and it is written *before* the reasoning that answers it, not after.
+
+6. **Adjudication Rule 1, the symmetric bar.** "Insufficient evidence that the condition occurred" is `indeterminate`, never `not_met`. `not_met` requires affirmative evidence. This matters because `not_met` protects the thesis and `indeterminate` does not.
+
+7. **Adjudication Rule 2, adverse interest.** The strongest case for the opposite of the determination is written first and published regardless of where the reasoning lands.
+
+8. **Official PRC and US statements are evidence of a position, never of a fact.**
+
+9. **The Gate 2 posterior threshold of 0.25 and the `n_eff` threshold of 1.8 in `falsifiers/dependence.md` are frozen and may not be changed at all.**
+
+10. **The repository is public by design.** Third-party auditability is the pre-registration mechanism. Do not make it private, and do not rewrite history.
+
+---
+
+## 3. Current position
+
+No threshold crossings. `n_eff` is zero. No gate has fired.
+
+| ID | Verdict | Distance | Note |
+|---|---|---|---|
+| F1 | `not_triggered` | ~30pp | Moved away |
+| F2 | `not_triggered` | ~0.1pp | Current-year estimate, not elapsed outturn |
+| F3 | `not_triggered` | ~39pp | Revised vintage |
+| F4 | `indeterminate` | -- | The source series does not exist |
+| F5 | `not_triggered` | 1-2 Politburo members | Flagged `known_false_negative_mode` |
+| F6 | `not_triggered` | ~12pp | Moved away |
+| F7 | `indeterminate` | -- | PRC manufacturing TFP series not continuously available |
+| F8 | `indeterminate` | ~1.1pp below | Estimated compute |
+
+**The set is not well calibrated and the papers must say so.** The two conditions nearest their thresholds -- F2 and F8 -- are also the two whose measurement is least direct. F5 is one to two members away on a condition with no series at all. More of the architecture's weight rests on definitional choices than the threshold table suggests.
+
+---
+
+## 4. Three live blockers
+
+### 4.1 Estimation is blocked by two failing prior-predictive gates
+
+Canonical run 003, n=400, seed 20260819: **PP1 FAIL, PP2 PASS, PP3 FAIL, PP4 PASS, PP5 PASS.** Full diagnosis in `model/PRIOR-PREDICTIVE-RUN-001.md`.
+
+- **PP1** fails on R5 only, at 0.000 mass against a 0.05 floor. Dual systemic constraint does not typically arise until the 2060s under the committed ceiling table, and the gate evaluates at 2050. Three candidate readings are recorded; **none has been chosen.**
+- **PP3** fails on trajectory sanity. The tail reaches 1,598x against a pre-registered 20x ceiling. Widening the ceiling was rejected in advance.
+
+**No prior has been adjusted to make a gate pass, and none may be.** The specification commits to reporting failures rather than tuning. Remedies must be selected on grounds statable without reference to the gate outcome, and the selection must be a dated amendment.
+
+Read the note in that file about run 002: a plausible, quantitative, well-formed diagnosis of a structural model limitation turned out to be a sampler typo. The prior predictive did not catch it; an audit of the sampler against `PRIORS.md` did. Treat any elegant diagnosis with suspicion until the code is read.
+
+**Paper B drafting is held behind this.** Do not start it.
+
+### 4.2 F5 Sub-clause B has a demonstrated false-negative mode
+
+The dry runs in `falsifiers/adjudications/dry-run/` paired an expected-positive episode with a negative control and named the failure conditions before computing.
+
+| Sub-clause | 1976 | 2012 | Discriminates? |
+|---|---|---|---|
+| A | `met` | `not_met` | Yes |
+| B | **`not_met`** | `not_met` | **No** |
+| C | `met` | `not_met` | Yes |
+
+The anchoring rule counts from the first official announcement of expulsion. That date is **anti-correlated** with the irregularity the clause measures: orderly removals are announced promptly and count, irregular ones are announced late and do not. The clause is least sensitive to exactly the events it exists to detect.
+
+The better rule -- effective loss of office -- is registered as `F5-B-ANCHOR-2` in `pipeline/adapters/F5.md`, Amendment 3, **not in force, earliest effect evaluation year 2027**. It is not adopted because it would take the live 2026 numerator from 2 to 3 against a threshold of 4. Invariant 1 governs.
+
+**Do not adopt it early. Do not retire the clause.** Deleting a clause known to be insensitive also deletes the record of the failure, which is the most valuable output of Phase 6.
+
+### 4.3 R003 sits at v0.1.0 and its partition choice can move a headline input
+
+`pipeline/rules/R003-nameplate-to-dispatchable.md`. Two open items bear on the numbers rather than the documentation: the PRC technology partition is coarser than the US partition and the reconciliation choice moves US `D1`, and the treatment of storage is undecided. F1 is exempt, so this blocks the model rather than the dashboard.
+
+---
+
+## 5. What to do next, and why in this order
+
+The naive order -- work on the conditions nearest their thresholds -- is **inverted** by invariant 1. The closer a clause is to firing, the less you are permitted to change it. So the fix window closes as urgency rises.
+
+### Priority 1 -- dry-run the distant conditions while their fix window is still open
+
+F3 (~39pp), F6 (~12pp), F1 (~30pp), F4 and F7. One clause of eight has been discrimination-tested and it failed; the other seven are untested, not passed. Each needs the paired design in `falsifiers/adjudications/dry-run/README.md`: an expected-positive episode, a negative control, failure conditions named before computing.
+
+**Do F2 and F8 as well, but expect that any defect found cannot be fixed.** At 0.1pp and 1.1pp their fix windows are arguably already shut. A defect found there gets carried as a flag plus a published shadow value, and that asymmetry belongs in the papers rather than in a referee report.
+
+### Priority 2 -- the fixes that are provably inert for 2026
+
+These do not touch a live number, so invariant 1 does not bite. All three were identified by the dry runs.
+
+1. **The silent-constitution branch.** The 1973 Party Constitution contained no removal provision. "Departure from procedure" is not false when no procedure exists -- it is undefined, and Rule 1 makes that `indeterminate`. Add a `procedure_absent` branch to Sub-clause A routing in `pipeline/adjudication.md`. Inert because Article 40 of the 2022 constitution exists and was followed. Recorded as an open specification question in `dry-run/2012.md`.
+2. **The denominator source rule.** An official aggregate capable of an additive reading, resolvable only by an enumerated name list, has now caused the same failure three times -- 1976, 2007, 2022. Generalise: denominators come from enumerated name lists; aggregates corroborate the total only. Inert, because it confirms the 21 and 24 already in use.
+3. **The death-vacancy rate.** Five of 21 seats fell vacant by death in the 1976 window -- 24 percent, above the threshold alone. Excluding deaths is correct but its magnitude is invisible. Report the rate alongside every Sub-clause B verdict. Adds a published quantity without touching the numerator.
+
+### Priority 3 -- the shadow-publication rule
+
+The prohibition in invariant 1 binds the **determination**, not publication. Nothing prevents computing `F5-B-ANCHOR-2` each year and publishing both values side by side with the binding one labelled. Make it a standing rule: any clause carrying a registered candidate rule publishes the shadow value.
+
+This preserves pre-registration exactly while removing the false negative's power to mislead. Concealing the second number is what would make the flag cosmetic.
+
+### Priority 4 -- add discrimination testing to the pre-registration, prospectively
+
+No clause reported as a determination without paired dry runs on file. F5-B failed because it was pre-registered without ever being exercised against a case with a known answer. Applies to 2027 onward and to any new falsifier; it cannot be applied retrospectively to the 2026 determinations without invalidating them, which is not the intent.
+
+### Priority 5 -- select the PP1 and PP3 remedies
+
+See 4.1. Requires a dated amendment with reasons statable independently of gate outcomes.
+
+### Priority 6 -- writing
+
+Paper A sections 1, 2 and 4 through 9 are undrafted; section 3 is committed. Essay movements 1 through 7 are undrafted. Paper B is held behind 4.1.
+
+---
+
+## 6. Conventions -- match these exactly
+
+- **Plain-text arithmetic in fenced blocks or backticks. No LaTeX anywhere.**
+- Markdown tables for anything comparative.
+- Inline citations as `[Source name](full URL)`. Never a bare URL, never "source" or "link" as anchor text.
+- Every file ends with a `## Sources` section, or `## Sources, full URLs`, listing full URLs as plain text. Amendments add their own `### Added by Amendment N` or `### Sources for Amendment N` subsection rather than editing the main list.
+- Em-dashes are written as `--` in files authored from Phase 1 onward.
+- Verdict vocabulary is fixed: `not_triggered`, `triggered`, `indeterminate` at the falsifier level; `not_met`, `met` at the clause level.
+- Adjudications carry a YAML front block. Required keys: `adjudication_id`, `falsifier_id`, `clause`, `evaluation_year`, `determination`, `adverse_case`, `reasoning`, `sources`, `resolution_condition`, `contestable`, `contestable_note`, `authored_by`, `authored_at`, `dissent`, `amendments`.
+- An `indeterminate` must name its resolution condition.
+- Three independent sources minimum for anything other than `indeterminate`, and at least one contrary source wherever one exists.
+
+---
+
+## 7. Where the evidence is
+
+`research/` holds the raw evidence bases -- roughly 2,750 lines across five files, several hundred fetched URLs, with gap sections recording what was sought and not found. **They are unvetted working notes, not findings**, and `research/README.md` says so in terms. Where a note conflicts with a published determination, the determination governs.
+
+They are in the repository so that continuation does not require re-fetching everything, and so a reader can see what was gathered before it was filtered.
+
+---
+
+## 8. Known weaknesses -- where a referee will go first
+
+Listed because a handover that omits them is not a handover.
+
+1. **No page was snapshotted at fetch time.** Content drift is undetectable. Registered as a method gap and deliberately not retrofitted, since capturing snapshots now would imply verification on the original date. **Start doing this immediately for all new work** -- content-addressed, with the text hash recorded at fetch. That also solves the next item.
+2. **A mechanical link check cannot distinguish a blocked host from a dead page.** Eight Reuters URLs return 401 to any automated checker, as do CBO, congress.gov, IMF, NYT, loc.gov and airuniversity. Their content is asserted on the strength of having been fetched during research. A reader without an equivalent fetch path has to take those on trust, which is a real weakness in a project whose whole claim is auditability.
+3. **Single-source dependencies.** Sub-clause A's scholarly characterisation of the 2012 transition rests on Alice Miller alone, in an analytical publication rather than a peer-reviewed one. "No dissent found" is not "no dissent exists."
+4. **One quotation set is read through a partisan archive mirror** and was not checked against the journal of record. Flagged in `dry-run/1976.md`.
+5. **F5's disjunction has a seam.** The reduction of the Central Military Commission from seven members to two -- the most consequential civil-military event in the window -- passes through F5 without satisfying any limb. Sub-clause B by routing, where it does not reach the threshold; Sub-clause C finds it out of scope. Not repaired, because widening a clause after observing it is hard to satisfy is the move invariant 1 exists to prevent. See `falsifiers/adjudications/2026/F5-C.md`.
+6. **`n_eff` assumes each falsifier is a live test.** A clause with a demonstrated false-negative mode contributes less than one, so the set's effective independence is overstated and the rejection gates are harder to fire than the arithmetic implies. The Gate 2 thresholds are frozen, so this is recorded as a caveat on the gates rather than a recomputation. **Not yet written into `falsifiers/dependence.md`.**
+7. **F2's 5.9% is a current-year estimate inside a projection publication, not elapsed outturn.** Under the outturn-only rule it returns `not_met` even at 6.1%. The rule's first live application worked against the falsifier, which is the honest test of whether it was written for the right reason -- but it means F2's ~0.1pp distance is softer than it looks.
+
+---
+
+## 9. What is not decided
+
+Do not assume any of these has an answer somewhere in the repository.
+
+- The PP1 and PP3 remedies. Candidates are listed; none is chosen.
+- The R003 PRC and US technology partition, and the treatment of storage.
+- Whether an R009 sensitivity run is required before estimation.
+- F8's method items.
+- Whether F7 can proceed at all, given that the PRC manufacturing TFP series does not exist continuously.
+- Whether `F5-B-ANCHOR-2` will in fact be adopted in 2027. It is registered with a condition attached: both dry runs must be re-run under it and published first, and if the negative control fires under the new anchoring the candidate is rejected and the registration closes unadopted.
+
+---
+
+## 10. Audience
+
+Academic contribution and intellectual artifact. Written for peer intellectual consumption, **not** for investment decisions and not for policy planning. Tone follows from that: the methodological failures are the contribution, not an embarrassment to be minimised. Phase 6 is the clearest instance -- the finding that a pre-registered clause cannot distinguish the archetypal positive case from a negative control is more valuable than a clean set of verdicts would have been.

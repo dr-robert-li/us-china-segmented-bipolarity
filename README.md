@@ -126,7 +126,11 @@ falsifiers/
   adjudications/CITATION-AUDIT-2026-08-19.md
                           Language and citation audit of the Phase 5 records
 snapshots/                Immutable tagged states per published artifact
+research/                 Raw evidence bases. Unvetted working notes, not findings
+HANDOVER.md               Continuation state: invariants, blockers, ordered next actions
 ```
+
+**Continuing this work, or picking it up cold: read `HANDOVER.md`.** It records the invariants that must not be broken, the three live blockers, the ordered next actions with the reasoning for the order, and the known weaknesses a referee would attack first.
 
 ## Status
 
