@@ -14,7 +14,7 @@ All entries here are **provisional** and are superseded by the first pipeline ru
 |---|---|---|---|---|---|
 | F1 | `not_triggered` | ~9.8% (2025) | 40% | ~30pp | Moved away from threshold in 2025 |
 | F2 | `not_triggered` | ~5.9% (2026 est.) | 6.0% | ~0.1pp | Estimate, not outturn; cannot trigger |
-| F3 | `not_triggered` | 117.0% (2024) | 180% | ~63pp | Short-circuits; no Clause 2 adjudication required |
+| F3 | `not_triggered` | 141.5% (2025), revised vintage | 180% | ~38.5pp | Short-circuits; see Amendment 01 in `F3.md` for the 18pp vintage revision |
 | F4 | `indeterminate` | none | -- | -- | Named source does not exist |
 | F5 | `not_triggered` (provisional) | none | -- | -- | No formal adjudication authored yet |
 | F6 | `not_triggered` | ~42% (Q2 2026) | <30% | ~12pp | Run length 0; moved away |

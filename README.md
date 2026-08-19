@@ -100,7 +100,11 @@ papers/
   paper-b-application/    Estimation, complementarity test, peaking-power
                           thesis nested as a parameter region
 essay/                    Consolidated long-form essay for expert circulation
-model/                    State-space specification and diagnostics
+model/
+  SPECIFICATION.md        Hierarchical Bayesian state-space model
+  POLITICAL-STRESS.md     Turchin PSI adopted verbatim, with its critiques
+  PRIORS.md               Every prior, its source, and its sensitivity run
+  IDENTIFICATION.md       What is identified, backtests, asymmetric criterion
 pipeline/
   schema.md               Canonical record schemas and layer discipline
   adjudication.md         Qualitative-clause rubric, sustained-condition rules
@@ -135,7 +139,10 @@ snapshots/                Immutable tagged states per published artifact
 | Rules registry | Committed; R003 outstanding |
 | 2026 baseline falsifier log | Committed, provisional |
 | Ingestion implementation | Not started |
-| Model specification | Not started |
+| Model specification | Committed |
+| Political-stress specification | Committed, PSI adopted verbatim with critiques |
+| Priors and mandatory sensitivity list | Committed |
+| Identification and backtest protocol | Committed |
 | Estimation | Not started |
 | Papers and essay | Not started |
 
@@ -147,7 +154,7 @@ Summary only. See `falsifiers/log/2026/` for entries and caveats.
 |---|---|---|
 | F1 | `not_triggered` | ~30pp |
 | F2 | `not_triggered` | ~0.1pp |
-| F3 | `not_triggered` | ~63pp on outturn |
+| F3 | `not_triggered` | ~39pp on outturn, revised vintage |
 | F4 | `indeterminate` | Source does not exist |
 | F5 | `not_triggered` (provisional) | Not adjudicated |
 | F6 | `not_triggered` | ~12pp |
