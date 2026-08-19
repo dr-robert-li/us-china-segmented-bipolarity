@@ -68,7 +68,7 @@ IMF primary documents for the Korea programme were sought and are blocked to aut
 | Criterion | Finding | Basis |
 |---|---|---|
 | **Scale** | **Partially engaged, once.** Sequential failures over a decade (jusen 1995-96; Sanyo, Hokkaido Takushoku, Yamaichi in November 1997; LTCB 1998), with one three-week cluster in November 1997 | Nakaso |
-| **Instrument seniority** | **Weakly engaged.** One interbank default (Sanyo), "relatively small in amount"; no sequence of missed payments on public bonds or senior instruments across issuers | Nakaso p. 2088-2091 |
+| **Instrument seniority** | **Weakly engaged.** One interbank default (Sanyo), "relatively small in amount"; no sequence of missed payments on public bonds or senior instruments across issuers | Nakaso, section on the failure of Sanyo Securities and the lessons-learnt discussion |
 | **Intervention** | **Not engaged -- decisive.** After the Sanyo default paralysed interbank markets, the Bank "had to intervene on a large scale" and the disruption was contained; for Yamaichi "the Bank of Japan stepped in directly from the beginning" and "successfully avoided market disruption". Authorities acted and succeeded | Nakaso |
 | **Contagion** | **Engaged briefly, then contained.** Three weeks of interbank paralysis; no spread into a sustained closure of any issuer class | Nakaso |
 | **Disorder** | **Not engaged.** Losses ran through orderly frameworks: court reorganisation for Sanyo, the Deposit Insurance Corporation for depository institutions -- "up to March 2000, 110 deposit-taking institutions were dissolved under the deposit insurance system" -- and public funds (¥685 billion for the jusen resolution, ¥60,000 billion later for the banking system) under legislation | Nakaso |
