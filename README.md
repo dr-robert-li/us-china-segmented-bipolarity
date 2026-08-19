@@ -147,7 +147,9 @@ snapshots/                Immutable tagged states per published artifact
 | Identification and backtest protocol | Committed |
 | Prior-predictive gates | Run and committed; **PP1 and PP3 fail at the committed priors** |
 | Estimation | **Blocked** by the two failing gates, pending a dated amendment |
-| Papers and essay | Not started |
+| Paper A, measurement and method | Outline committed; section 3 drafted |
+| Paper B, application | Outline committed; **drafting held** until the failing gates pass |
+| Consolidated essay | Outline committed |
 
 ## Current falsifier position
 
