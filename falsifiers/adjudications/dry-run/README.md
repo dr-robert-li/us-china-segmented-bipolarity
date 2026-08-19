@@ -35,6 +35,8 @@ The pre-registration's prohibition on moving a threshold as it is approached app
 | [`F6-2001-2010.md`](F6-2001-2010.md) | F6 | Dot-com graduate-market peak, 1999--2003 | Favourable episode | Zero qualifying years; **discrimination untestable** -- no known positive exists |
 | [`F6-2001-2010.md`](F6-2001-2010.md) | F6 | Post-crisis trough, 2009--2013 | Adverse episode | Zero qualifying years (correct negative) |
 | [`F4-2014-2018.md`](F4-2014-2018.md) | F4 | Baseline study window, 2014--2018 | Sole constructible (expected-negative) | **Discrimination untestable**; verdict machinery unevaluable from any publication |
+| [`F3-1997-japan.md`](F3-1997-japan.md) | F3 (Clause 2) | Korea 1997 chaebol-banking collapse | Expected-positive | Analogue `met`, all six criteria engaged (correct positive) |
+| [`F3-1997-japan.md`](F3-1997-japan.md) | F3 (Clause 2) | Japan 1990s managed absorption | Negative control | Analogue `not_met` (correct negative, incl. contained Nov-1997 mini-cascade) |
 
 ## Outcome of the F5 exercise
 
@@ -66,6 +68,12 @@ Score: one failed (F5-B), one passed (F1), one untestable (F6), five untested.
 
 Score: one failed (F5-B), one passed (F1), two untestable (F6, F4), four untested.
 
+## Outcome of the F3 exercise -- added 2026-08-20
+
+**The Clause 2 unmanaged-cascade rubric discriminates on the analogue pair** -- the pair pre-registered before any evidence was gathered, making this the set's first blind-registered exercise. Korea 1997 engages all six criteria (`met` analogue); Japan 1990s returns `not_met` despite containing a genuine contained mini-cascade, failing decisively on intervention, disorder, and persistence. Validation is generic only: nothing LGFV-specific is tested, Clause 1 was not exercised. One watch item registered: the public-bond seniority criterion was the weakest discriminator on the archetype (Korea's cascade ran through bank credit and court bankruptcies), an F5-B-pattern risk recorded before it can matter.
+
+Score: one failed (F5-B), two passed (F1, F3-C2 generic), two untestable (F6, F4), two remaining (F2, F8 -- flag-only).
+
 ## Reading order
 
 Each file places the **adverse case before the reasoning**, as `../adjudication.md` requires of determinations. In a dry run the adverse case is written against the exercise's own usefulness as well as against its verdicts, because the strongest objection to a dry run is that selecting the most extreme episode in the record guarantees the answer.
@@ -78,7 +86,7 @@ Registered here before computation, per the design rule above and `../../PRE-REG
 |---|---|---|---|---|
 | F6 | Dot-com peak 1999--2003 | Post-crisis trough 2009--2013 | 2026-08-20 | **run** -- see `F6-2001-2010.md`; discrimination untestable |
 | F4 | Baseline study window 2014--2018 (sole constructible) | -- | 2026-08-20 | **run** -- see `F4-2014-2018.md`; discrimination untestable |
-| F3 | Republic of Korea, 1997 chaebol-banking collapse | Japan, 1990s managed debt-overhang absorption | 2026-08-20 | queued next |
+| F3 | Republic of Korea, 1997 chaebol-banking collapse | Japan, 1990s managed debt-overhang absorption | 2026-08-20 | **run** -- see `F3-1997-japan.md`; discriminates |
 
 **The F3 pair is fixed now** because it was selected by author decision of 2026-08-20 in structured Q&A, on the criterion of known-answer clarity first, structural analogy second. Its limitation is registered with it: no closed PRC positive episode exists, so the exercise tests the *unmanaged-cascade rubric* generically and cannot test the PRC-specific LGFV counting rules. It is a partial discrimination test and will be labelled one. The Argentina-2001/Brazil-1997 pair (closer structural analogy, blurrier known answer) was considered and declined; the 2021--2024 PRC property episode was excluded because its outcome is contested, which disqualifies it as a known answer.
 
