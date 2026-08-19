@@ -38,6 +38,8 @@ The pre-registration's prohibition on moving a threshold as it is approached app
 | [`F3-1997-japan.md`](F3-1997-japan.md) | F3 (Clause 2) | Korea 1997 chaebol-banking collapse | Expected-positive | Analogue `met`, all six criteria engaged (correct positive) |
 | [`F3-1997-japan.md`](F3-1997-japan.md) | F3 (Clause 2) | Japan 1990s managed absorption | Negative control | Analogue `not_met` (correct negative, incl. contained Nov-1997 mini-cascade) |
 | [`F2-1962-2025.md`](F2-1962-2025.md) | F2 (Clause 1) | Full outturn record 1962--2025 | Characterisation (flag-only) | Qualifying state obtains in 63 of 64 years; **anchoring gap is verdict-determining**; shadow `triggered` published |
+| [`F8-2021-2025.md`](F8-2021-2025.md) | F8 | PRC public-HPC leadership era, 2021 | Expected-negative | Ratio 109.6%, condition not satisfied (correct negative) |
+| [`F8-2021-2025.md`](F8-2021-2025.md) | F8 | Post-export-control buildout, 2025 | Expected-positive | Ratio 17.3%, condition satisfied (correct positive); construction spread exceeds live margin |
 
 ## Outcome of the F5 exercise
 
@@ -80,6 +82,12 @@ Score: one failed (F5-B), two passed (F1, F3-C2 generic), two untestable (F6, F4
 **The mirror image of F6, with a live edge.** Clause 1's qualifying state has obtained in 63 of 64 outturn years since 1962 (1999 sits exactly at the non-exceeding boundary); the threshold lies at the bottom of the observed range, so the clause measures whether the projected decline has arrived, not whether capacity recovered. Sharper: the adapter never specified **which** outturn an evaluation year tests, and the choice is currently verdict-determining -- the latest-elapsed-outturn reading gives FY2025 = 6.2 percent (cross-check basis), Clause 1 `met`, and with Clause 2 already adjudicated `met`, **F2 `triggered`**. The F5-B defect class, running in the opposite direction: the unstated choice currently protects the thesis. Candidate rule `F2-ANCHOR-2` registered not-in-force (earliest 2027); shadow verdict published in the 2026 log under the standing rule -- the only clause in the set where binding and shadow verdicts disagree outright.
 
 Score: one failed (F5-B), two passed (F1, F3-C2 generic), two untestable (F6, F4), one characterised with a live anchoring gap (F2), one remaining (F8 -- flag-only).
+
+## Outcome of the F8 exercise -- added 2026-08-20
+
+**The share arithmetic discriminates**, and F8 is the only condition in the set whose measurand demonstrably visits both sides of its threshold in the observed record: PRC/US 109.6 percent in 2021 (correct negative), 17.3 percent in 2025 (correct positive) on the public Epoch tracked-cluster construction. The flag is quantitative: the spread between admissible constructions (~1.6 points) exceeds the live distance to threshold (~1.1 points), so any near-threshold verdict is construction-determined until the adapter's open method items are closed -- registered as `construction_spread_exceeds_margin`, direction-neutral.
+
+**Final score, all eight conditions examined:** F5-B failed; F1, F3-C2 (generic), and F8 passed; F6 and F4 untestable; F2 characterised with a verdict-determining anchoring gap and a disagreeing shadow verdict; F7 excluded (no series exists -- weakened-falsifier status accepted by amendment). The programme's Priority 1 is complete: every clause has now been either discrimination-tested, shown untestable with the reason registered, or excluded with the reason published.
 
 ## Reading order
 

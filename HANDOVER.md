@@ -270,3 +270,33 @@ Directions as predicted. Gate-crossing values published openly: `deadband = 0.20
 1. **Paper B is no longer blocked by the gates.** It remains gated on the model actually being estimated (NumPyro implementation does not exist yet) -- the block moved from "gates fail" to "estimator unbuilt".
 2. Dry runs in the committed order: ~~F6 next~~ **F6 run 2026-08-20** -- outcome `discrimination_untestable`, flag `threshold_outside_observed_range` (threshold 7.8pp below the series' 36-year minimum; F6 close to unfalsifiable in practice; see `falsifiers/adjudications/dry-run/F6-2001-2010.md` and F6 adapter Amendment 1). Next: **F4**, then F3 (registered pair), then flag-only F2 and F8.
 3. The papers' calibration statement gains four standing caveats: F5-B false-negative mode, F7 weakened-falsifier status, F6 threshold-outside-observed-range, R4's thin 2050 coverage.
+
+---
+
+## 13. State update -- 2026-08-20, third session block: Priority 1 complete, all eight conditions examined
+
+The committed order F4, F3, F2, F8 was run to completion the same day. Full outcomes in `falsifiers/adjudications/dry-run/README.md`; per-adapter flags in each adapter's Amendment 1.
+
+### Final dry-run scoreboard
+
+| Condition | Outcome | Load-bearing flag |
+|---|---|---|
+| F1 | **Passed** | `tolerance_basis_unspecified` (blocks automatic verdicts; fix before first ingest) |
+| F2 | Characterised | **Anchoring gap is verdict-determining**: shadow verdict `triggered` vs binding `not_triggered` -- the only outright disagreement in the set. Candidate `F2-ANCHOR-2` registered, earliest 2027. Threshold at the bottom of a 64-year outturn range (inverted F6) |
+| F3 (Clause 2) | **Passed** (generic; pre-registered blind pair) | `seniority_criterion_instrument_mix` watch item |
+| F4 | Untestable | `verdict_input_shape_unpublished` -- the majority rule counts a cell no publication provides; sample rule completed while inert; Jaccoud (2025) located, runs toward trigger, **not substituted** |
+| F5-B | Failed (Phase 6) | `known_false_negative_mode`; shadow numerator published |
+| F6 | Untestable | `threshold_outside_observed_range` -- 7.8pp below the 36-year minimum |
+| F7 | Excluded | Weakened falsifier accepted by amendment; no series exists |
+| F8 | **Passed** -- the only measurand visiting both sides of its threshold in-record | `construction_spread_exceeds_margin` (~1.6pp spread vs ~1.1pp margin; near-threshold verdicts construction-determined) |
+
+### What the papers must now carry, consolidated
+
+The eight-condition set decomposes as: three clauses with demonstrated discrimination (F1, F3-C2 generically, F8), one demonstrated false-negative (F5-B), two thresholds outside their measurands' observed ranges in opposite directions (F6 never reached, F2 never left), one condition whose live verdict currently depends on an unspecified anchoring with a published disagreeing shadow (F2), and two conditions that cannot currently resolve at all (F4, F7). The set's effective size and independence are both materially below eight, in directions now individually quantified. This paragraph, or its equivalent, belongs in Paper A's calibration section and the essay.
+
+### Next
+
+1. **Writing** (Priority 6): Paper A sections 1, 2, 4-9; essay movements 1-7. The calibration material above is drafted evidence for section 4-adjacent content.
+2. **Estimator build** for Paper B (gates pass; NumPyro implementation does not exist).
+3. **Before F1 first ingest**: basis-matched cross-check pair, negative-sum semantics, fuel-row summation rule (F1 Amendment 1).
+4. **2027 annual review queue**: F5-B-ANCHOR-2 and F2-ANCHOR-2 both become eligible, each with published re-run conditions; F2 shadow needs committed-series (CBO) confirmation at next access.
