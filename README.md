@@ -136,14 +136,17 @@ snapshots/                Immutable tagged states per published artifact
 | Adapter specifications, all eight conditions | Committed |
 | Frontier-compute boundary | Committed |
 | Declared precision basis | Committed |
-| Rules registry | Committed; R003 outstanding |
+| Rules registry | Committed; R003 and R009 specified at v0.1.0 |
 | 2026 baseline falsifier log | Committed, provisional |
-| Ingestion implementation | Not started |
+| Pipeline implementation, schema and rules | Committed; 37 tests passing |
+| F1 adapter, executable | Committed; all seven specified tests passing |
+| Ingestion, network fetch | Not started, deliberately out of scope of the derivation modules |
 | Model specification | Committed |
 | Political-stress specification | Committed, PSI adopted verbatim with critiques |
 | Priors and mandatory sensitivity list | Committed |
 | Identification and backtest protocol | Committed |
-| Estimation | Not started |
+| Prior-predictive gates | Run and committed; **PP1 and PP3 fail at the committed priors** |
+| Estimation | **Blocked** by the two failing gates, pending a dated amendment |
 | Papers and essay | Not started |
 
 ## Current falsifier position

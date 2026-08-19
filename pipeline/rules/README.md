@@ -45,18 +45,23 @@ Rule versions are frozen for a condition once that condition has crossed its thr
 |---|---|---|---|
 | **R001** | Net additions by differencing year-end totals | F1 | Specified in `adapters/F1.md` |
 | **R002** | Ratio of three-year sums | F1 | Specified in `adapters/F1.md` |
-| **R003** | Nameplate to dispatchable via published capacity factors | `Y_throughput` series | Not yet specified |
+| **R003** | Nameplate to dispatchable via published capacity factors | `Y_throughput` series | Specified in `rules/R003-nameplate-to-dispatchable.md`, v0.1.0 |
 | **R004** | Precision normalisation to declared dense basis | F8 | Specified in `definitions/precision-basis.md` |
 | **R005** | Frontier-capable filter, rolling factor of eight | F8 | Specified in `definitions/frontier-compute.md` |
 | **R006** | Robot-density decomposition into stock and employment terms | F7 | Specified in `adapters/F7.md` |
 | **R007** | PSI component construction and PRC operationalisation | `stress` series | Specified in `model/POLITICAL-STRESS.md` |
 | **R008** | IFR robot-density break adjustment; stock term substituted across the NBS denominator revision | `D3`, F7 | Specified in `model/SPECIFICATION.md` |
+| **R009** | Trajectory to regime label | model output | Specified in `rules/R009-regime-classification.md`, v0.1.0 |
 
 Rules R001, R002, R004, R005, R006, R007 and R008 have their substance committed in the files named above. This registry records their identifiers, versions and dependency edges; it does not restate them, because a rule stated twice is a rule that can diverge from itself.
 
 R008 was registered on discovering that the IFR China robot-density series is not comparable across the World Robotics 2024 and 2025 vintages, following a National Bureau of Statistics revision to the manufacturing-employment denominator. Reported density falls from 470 to 166 per 10,000 while absolute stock rises past two million units. The rule substitutes the stock term for the density ratio across the break.
 
-R003 is the notable gap. The dispatchable conversion is mandated by `DATA-INTEGRITY.md` for every series feeding the capability vector, and it has no committed rule. It is not required by any falsifier adapter -- F1 is explicitly exempt -- so it blocks the model rather than the dashboard.
+R003 was the notable gap and is now specified, at version **0.1.0** rather than 1.0.0. It sits below 1.0 because two of its open items bear on the numbers it produces rather than only on its documentation: the PRC technology partition is coarser than the US partition and the reconciliation choice moves US `D1`, and the treatment of storage is undecided. A rule whose partition choice can move a headline input is not at 1.0 merely because it runs.
+
+R009 was registered during Phase 3, by amendment to `model/SPECIFICATION.md`. It is the classifier that maps a simulated trajectory to a regime label, and it exists as a registered rule rather than as model internals because two prior-predictive gates turned on its behaviour: PP2 failed at run 001 because the classifier made the thesis regime a sink, and PP1 currently fails on a branch governed by one of its constants. A parameter that can determine whether a gate passes belongs in the registry.
+
+Both are at 0.1.0 and both have sourced or judgement-bearing parameters, which is why each has a standalone file. R001, R002 and R004 to R008 have their substance committed in the files named in the table.
 
 ---
 

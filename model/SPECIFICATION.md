@@ -283,3 +283,66 @@ Stated here so that it need not be discovered by a reader.
 - IFR, China tops world record of 2 million factory robots — https://ifr.org/downloads/press_docs/2025-09-25-IFR_press_release_China_in_English.pdf
 - van der Werf, Production Functions for Climate Policy Modeling — https://d-nb.info/1128231875/34
 - Shen and Whalley, Capital-Labor-Energy Substitution in Nested CES Production Functions for China, NBER WP 19104 — https://www.nber.org/system/files/working_papers/w19104/w19104.pdf
+
+
+---
+
+## Amendment 01 — 19 August 2026
+
+Appended, not substituted. The sections above stand as originally committed; where this amendment and the original text differ, both readings are on the record and the divergence is stated here.
+
+### 01.1 Registration of R009, regime classification
+
+The output contract in section 3 names five regimes and does not specify the procedure mapping a simulated trajectory to one of them. That procedure is now registered as rule **R009**, version 0.1.0, specified in `pipeline/rules/R009-regime-classification.md` and implemented in `pipeline/src/usbip/model/prior_predictive.py`.
+
+It is registered as a rule rather than left as model internals because its behaviour determined a gate outcome. PP2 failed at run 001 because the classifier sent every unclassifiable trajectory to R4, making the thesis regime a sink that could not be pushed below 0.2 prior mass by any adversarially chosen baseline. A component that can decide whether the central claim is refutable is not an implementation detail.
+
+Three constants are registered with it: `DEADBAND` 0.10, `REVERSAL_DEPTH` 0.15, `CONSTRAINT_RATIO` 0.60. None is sourced and no sensitivity run over them exists. `CONSTRAINT_RATIO` governs the R5 branch, which currently fails PP1, so it is a parameter whose adjustment would make a failing gate pass; it is frozen and the failure is reported.
+
+Two substantive divergences from the text above:
+
+- **R3 is defined generically as challenger peaking**, not as PRC peaking. Under the state swap that PP4 tests, "PRC peaking" would have to become "US peaking", which is not in the regime set, so the PRC-specific label breaks equivariance while the concept does not. The PRC reading is recovered by observing which state is the challenger in the data.
+- **A sixth label, `R0_no_material_change`, is added** and exempted from the PP1 coverage floor. The five regimes are described above as an exhaustive partition and they are not: a world in which neither state moves materially beyond the deadband is a possible world and is none of the five. It carries 0.385 prior mass at the 2030 horizon, which is itself worth stating — claims about relative position on a 2030 horizon are substantially claims about measurement noise.
+
+### 01.2 Declaration of ENGINEERING_CEILING_MULTIPLE
+
+Section 5 commits `xbar[j] ~ LogNormal(log(ceiling[j]), 0.6)` without declaring the ceilings. They are declared here, as multiples of each input's 2026 baseline:
+
+| Input | Multiple |
+|---|---:|
+| D1 generation capacity | 4.0 |
+| D2 transmission | 4.0 |
+| D3 industrial robotics | 5.0 |
+| F1 frontier compute | 8.0 |
+| F2 R&D intensity | 6.0 |
+| F3 advanced manufacturing | 3.0 |
+
+Declared during Phase 3 because the implementation had drawn `uniform(3, 30) * baseline` for every input, contradicting the committed form. The values are ordered on the reasoning that compute has the most headroom and R&D intensity as a share of output the least, and they are judgement calls rather than sourced figures.
+
+Lowering them is named in `model/PRIOR-PREDICTIVE-RUN-001.md` section 3.1 as a candidate remedy for the PP1 failure that has **not** been taken. Any future change requires a dated amendment with justification independent of gate outcomes, since a lower ceiling would bring both states into constraint by 2050 and so make PP1 pass.
+
+### 01.3 Prior-predictive outcome, and the consequence for estimation
+
+Section 10 commits that the gates are run before estimation and that failures are reported rather than resolved by adjusting priors until they pass. The gates have been run. **PP1 and PP3 fail at the committed priors and estimation is blocked.** Full disclosure, including two implementation defects, one prior-transcription defect, and a false diagnosis produced by the last of these, is in `model/PRIOR-PREDICTIVE-RUN-001.md`.
+
+Both failures localise to `PRIORS.md` section 4 rather than to Blocks E, P or M. Candidate remedies are enumerated there and none has been chosen; the choice is deferred to a further dated amendment and will be made on grounds independent of which option makes a gate pass. The failing configuration is committed as-is so the amendment can be read against it.
+
+### 01.4 R003 specified
+
+`DATA-INTEGRITY.md` mandates the nameplate-to-dispatchable conversion for every series entering `Y_throughput`, and the rule was outstanding. It is now specified at version 0.1.0 in `pipeline/rules/R003-nameplate-to-dispatchable.md`, with US capacity factors from EIA Tables 6.7.A and 6.7.B, PRC factors implied from CEC and NEA utilisation hours, and published LBNL own-use adjustments applied to PRC gross capacity.
+
+The rule carries a prohibition: because PRC factors derive from a differently scoped statistic, it refuses to produce a cross-state dispatchable ratio. Relative position enters through the measurement block, where a definitional gap is represented as uncertainty rather than absorbed into a ratio.
+
+One expectation was refuted in the course of specifying it. The standard objection to comparing the two statistics is that PRC utilisation hours use a year-end capacity denominator. The published Chinese methodology is explicitly an average, calendar-time weighted, and EIA's annual figure is likewise a time-weighted average of monthly values, so on that dimension the official figures are comparable. The denominator error is real only in third-party recomputation. The refutation is recorded because the same reasoning would have justified an adjustment factor that is not warranted.
+
+### Sources for this amendment
+
+- `pipeline/rules/R009-regime-classification.md`
+- `pipeline/rules/R003-nameplate-to-dispatchable.md`
+- `model/PRIOR-PREDICTIVE-RUN-001.md`
+- `model/prior-predictive-run-003.txt`
+- EIA, Electric Power Monthly Table 6.7.A — https://www.eia.gov/electricity/monthly/xls/table_6_07_a.xlsx
+- EIA, Electric Power Monthly Table 6.7.B — https://www.eia.gov/electricity/monthly/xls/table_6_07_b.xlsx
+- NEA, 2024 national electric power industry statistics — https://www.nea.gov.cn/20250121/097bfd7c1cd3498897639857d86d5dac/c.html
+- LBNL, Excess Capacity in China's Power System — https://eta-publications.lbl.gov/sites/default/files/lbnl1006638.pdf
+- China Energy Portal, statistical reporting system for renewable energy — https://chinaenergyportal.org/statistical-reporting-system-for-renewable-energy/

@@ -1,0 +1,20 @@
+USBIP prior-predictive run 003
+priors: PRIORS.md as committed (HalfNormal/Gamma/Beta, no uniform surrogates)
+n_draws=400  seed=20260819  rules R009 v0.1.0
+
+regime mass by horizon
+  2030: R1=0.343  R2=0.245  R3=0.005  R4=0.022  R5=0.000  R0_no_material_change=0.385
+  2040: R1=0.440  R2=0.290  R3=0.138  R4=0.072  R5=0.003  R0_no_material_change=0.058
+  2050: R1=0.395  R2=0.223  R3=0.230  R4=0.098  R5=0.025  R0_no_material_change=0.030
+  2075: R1=0.290  R2=0.172  R3=0.275  R4=0.052  R5=0.207  R0_no_material_change=0.003
+
+gates
+  PP1: FAIL -- regimes below 0.05 prior mass: {'R5': 0.025}
+  PP2: PASS -- R4 reaches mass 0.048 under the most hostile admissible baseline, so R4 is refutable
+  PP3: FAIL -- max 2050 input multiple 892.7x (CN/D2); 5.8% of draws breach the 20x ceiling
+  PP4: PASS -- exact mirror on all 400 paired draws; largest aggregate deviation 0.0000
+  PP5: PASS -- no divergence regime above 0.5 prior mass; R1=0.395, R2=0.223
+
+Traceback (most recent call last):
+  File "<stdin>", line 22, in <module>
+TypeError: simulate() got an unexpected keyword argument 'horizon'
