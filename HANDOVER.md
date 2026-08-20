@@ -300,3 +300,20 @@ The eight-condition set decomposes as: three clauses with demonstrated discrimin
 2. **Estimator build** for Paper B (gates pass; NumPyro implementation does not exist).
 3. **Before F1 first ingest**: basis-matched cross-check pair, negative-sum semantics, fuel-row summation rule (F1 Amendment 1).
 4. **2027 annual review queue**: F5-B-ANCHOR-2 and F2-ANCHOR-2 both become eligible, each with published re-run conditions; F2 shadow needs committed-series (CBO) confirmation at next access.
+
+---
+
+## 14. State update -- 2026-08-20, fourth session block: F1 and F8 pre-ingest decisions closed by Q&A
+
+Committed sequencing for the remainder: F1 tidy-up, F8 method items, estimator build, then writing (Paper A drafting may start any time from here; Paper B writing waits on clean estimation).
+
+### Closed
+
+- **F1 Amendment 2** (`pipeline/adapters/F1.md`): all three pre-ingest decisions selected by author Q&A, every candidate provably inert for both dry-run verdicts and the live ~30-point distance. Cross-check pair committed basis-matched -- EIA nameplate-basis annual total (US) and NEA/NBS year-end installed (PRC; 4.7 percent from Ember at end-2024, noted while inert). Negative-sum semantics: negative numerator sum is `not_triggered` plus a mandatory `negative_numerator` flag; sensitivity mean-of-ratios clamps negative annual ratios to zero with the undamped mean published alongside; non-positive denominator sum is `indeterminate`. Summation rule: pinned nine-fuel whitelist validated against Clean-plus-Fossil aggregates, verified on the committed snapshot across all 52 country-years. Tests 10-12 added. Remaining before first ingest: confirmations only (exact EIA table id, Ember PRC basis, `definitional_boundary` recording).
+- **F8's three open method items** (`pipeline/definitions/frontier-compute.md` Amendment 1; `pipeline/adapters/F8.md` Amendment 2; R010/R011 registered at 0.1.0). Construction B committed as the enumerated tracked-cluster stock (the dry-run construction; coverage uncertainty replaces shipment-and-utilisation uncertainty in the band); intermediated-access band by bounded enumeration `[0, U]`, U citable-components-only; bilateral construction committed from cluster-level attribution. The stale precision-basis entry was already resolved by `precision-basis.md`. Integrity handling recorded in the amendment itself: selections are post-observation (as the boundary file itself was), the Construction B selection's thesis-favourable direction (~1.0pp to ~2.7pp margin) was disclosed in the Q&A before selection, and all indeterminacy guards stand. Persistence clock pinned: starts 2025. `construction_spread_exceeds_margin` stays open until a first-ingest sensitivity grid. Publication block moved from "method unspecified" to "first ingest not yet run".
+
+### Next
+
+1. **Estimator build** for Paper B (NumPyro; gates pass at run 004).
+2. **Writing**: Paper A can start now; Paper B after estimation runs clean.
+3. F1 first-ingest confirmations and F8 first ingest (grid, coverage snapshot, band enumeration) when ingest begins.
