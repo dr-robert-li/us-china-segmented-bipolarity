@@ -156,3 +156,70 @@ Two cautions. The proxy measures AI supercomputer performance rather than fronti
 - Establish the shipment and utilisation estimation method, and its own error characterisation.
 - Determine whether a defensible bilateral construction is available from published sources, or whether share-of-global must be used with a stated conversion.
 - Characterise the intermediated-access band. This is the largest single source of uncertainty in the condition and currently has no committed estimation method.
+
+**Status note, 2026-08-20.** The first item was resolved by `precision-basis.md` (dense BF16/FP16 tensor, governing R004). The remaining three are resolved by Amendment 1 below.
+
+---
+
+## Amendment 1 -- 2026-08-20 -- the three remaining open items resolved: Construction B estimation method, intermediated-access band, bilateral construction
+
+**Appended, not substituted. No threshold, factor, precision-basis, attribution-rule, or verdict-rule changes.** All selections were made by author decision of 2026-08-20 in structured Q&A; candidates and grounds recorded below.
+
+### Scope: why this is permissible while the F8 fix window is shut
+
+The F8 dry run of the same date was flag-only, because the live proxy sits ~1 point from the threshold. That scope bound the *dry-run exercise*: defects it found are flagged, not fixed. This amendment is the separate authored-decision path -- it completes items this file pre-registered as pending selection "at first implementation", before any F8 verdict has ever been emitted. No published figure exists to recompute; the registry's recomputation obligation is not in play.
+
+**Post-observation acknowledgment.** These selections are made with the ratio path known -- the ~19 percent proxy and the 17.3 percent tracked-cluster value for 2025 alike. That was equally true when this file was first committed ("the ratio currently sits at roughly 19 percent" is in the original text), and the remedy is the same one the file itself prescribes: commitment in a diff-visible file, the mandatory sensitivity grid, and `indeterminate` wherever constructions or bands disagree. None of those guards is touched here, and all remain binding.
+
+**Direction disclosure.** Committing the tracked-cluster construction moves the live position from the ~19 percent proxy to 17.3 percent -- further below the threshold, in the thesis-favourable direction (margin ~1.0 point to ~2.7 points). This direction was disclosed in the Q&A text *before* the author selected, and the selection grounds below are statable without reference to any verdict. The A-versus-B direction-disagreement rule (verdict `indeterminate`, both published) is the standing guard against this choice ever suppressing a contrary construction.
+
+### Resolution 1 -- Construction B is the tracked-cluster stock
+
+**Committed.** Construction B is estimated as the cumulative installed 16-bit OP/s of tracked AI clusters from the third-party AI-supercomputers dataset family the adapter already names as primary -- concretely, the Epoch AI supercomputers dataset construction demonstrated end-to-end in the dry run (`falsifiers/adjudications/dry-run/F8-2021-2025.md`, snapshot sha256 3c158f22...): clusters flagged for standard analysis, status Existing or Decommissioned, operational by year-end, decommissioned clusters removed from later years, throughput on the R004 declared dense basis.
+
+**Verdict-blind grounds.** The stock is *enumerated rather than estimated*: no shipment volume, destination attribution, or utilisation rate needs to be modelled, which removes the three least observable quantities in the alternative. The dataset is public, snapshot-able byte-exactly under the standing snapshot rule, country-attributed at cluster level, and records decommission dates.
+
+**Error characterisation.** The dominant error source is coverage asymmetry -- tracked clusters are a subset of installed capacity, and tracking completeness differs by jurisdiction and era (documented in the dry run for 2019--2021). Coverage uncertainty **replaces** shipment-and-utilisation uncertainty as the first component of the Step 4 band in `adapters/F8.md`. At first ingest, the dataset's own published coverage estimates are snapshotted and carried as the coverage component of the band; if the publisher states none for a period, the coverage component is bounded by the Construction A comparison and the bound is logged as such.
+
+**Candidates declined.** Shipment-flow accumulation (analyst vendor-shipment estimates by destination x depreciation x assumed utilisation): destination attribution is unverifiable in the export-control era, utilisation is unobserved, and the error is uncharacterisable -- it fails the requirement this item exists to satisfy. A hybrid with a shipment-flow upper-bound check: adds machinery without need, since Construction A is already the mandated cross-check in the sensitivity grid.
+
+**Persistence-clock consequence, stated rather than left implicit.** On the committed construction the condition first holds in **2025** (2024 = 20.6 percent, 2025 = 17.3 percent). The "remains below" clock therefore starts at 2025, resolving dry-run Finding 3 (clock start was construction-dependent) by commitment. The clock is still recomputed from scratch at every evaluation per the adapter's persistence semantics.
+
+### Resolution 2 -- the intermediated-access band is estimated by bounded enumeration
+
+**Committed.** The band on the PRC figure is `[0, U]`, where:
+
+- The **lower bound is zero**, coinciding with mandated sensitivity setting 5 (no adjustment).
+- The **upper bound U** is the sum of *citable public reporting only*: documented PRC-linked offshore and intermediated cloud capacity, and documented diversion reporting, each converted to the R004 declared dense basis. A component with no citable quantity is **excluded and logged**, never guessed at. Each component in U carries its source, snapshot hash, and conversion record.
+- U is re-enumerated at every evaluation year; revisions to prior components are logged, not silently absorbed.
+
+**Grounds.** This is the only candidate whose every component is auditable to a source. It contains no modelled parameter, so it cannot smuggle a point estimate in through an assumption -- the prohibition on point estimates for this quantity is preserved structurally, not just procedurally.
+
+**Candidates declined.** A proportional band (fixed percentage of US-operated offshore capacity assumed PRC-accessible): the percentage is an arbitrary modelled parameter, exactly the false precision the prohibition targets. Deferral (zero-adjustment lower bound only, provisional monitoring output indefinitely): leaves the condition unable to publish a verdict through 2032, which converts F8 into a second F7 by inaction rather than by argument.
+
+**Known ceiling, stated.** Bounded enumeration undercounts by construction -- unreported intermediated access is invisible to it. That bias is one-directional and disclosed: U is a floor on the true upper bound, and the band is reported with that caveat wherever F8 figures appear.
+
+### Resolution 3 -- the bilateral construction is available and committed
+
+**Committed.** The bilateral ratio is computed directly from cluster-level country attribution aggregated to national totals. No share-of-global conversion enters the primary construction. The dry run demonstrated this end-to-end: national aggregates for both countries from one dataset, no global denominator.
+
+**Grounds.** A share-of-global construction imports rest-of-world coverage error into a bilateral quantity. The direct bilateral is strictly less exposed and was demonstrated feasible on the committed source.
+
+**Candidate declined.** Share-of-global with stated conversion (the ~14.1/74.5 proxy style): retained only as the historical context of the illustrative baseline above; never the primary.
+
+### What this amendment does not do
+
+- It does **not** close `construction_spread_exceeds_margin` (registered against `adapters/F8.md`). Committing one construction does not shrink the spread across the mandated sensitivity grid -- settings 1 through 5 are still all reported, and the flag closes only when a first-ingest grid shows the committed construction's near-threshold verdicts survive the alternatives.
+- It does **not** permit publication yet. The specification-level block ("F8 should not emit a published verdict until...") is closed, but publication waits on first ingest actually running: the five-setting grid computed, coverage estimates snapshotted, U enumerated. The block moved from "method unspecified" to "first ingest not yet run".
+- It does **not** alter the reclassification note's direction constraint, the prohibitions list, or any persistence semantics.
+
+### Registry
+
+The two derivations committed here are registered as **R010** (tracked-cluster stock construction, feeding `compute_frontier_stock`) and **R011** (intermediated-access bounded-enumeration band, feeding `compute_intermediated_band`) in `pipeline/rules/README.md`, both at 0.1.0: specified, but their error characterisation and enumeration are not yet exercised at a first ingest, and a rule whose coverage component has never been computed is not at 1.0 merely because it is written down.
+
+### Sources for Amendment 1
+
+- Author Q&A of 2026-08-20 (structured; three selections, all recommended options adopted; direction of the Construction B selection disclosed in the question text before selection)
+- falsifiers/adjudications/dry-run/F8-2021-2025.md (internal; the demonstrated construction, the ratio path, Findings 2 and 3)
+- https://epoch.ai/data/charts/supercomputers/insights/gpu_clusters.csv (snapshot sha256 3c158f22fff0c55816b7235e909d6994c51d27a84469955d326289c71224237a)
+- pipeline/definitions/precision-basis.md (internal; the R004 basis and conversion table)

@@ -52,8 +52,12 @@ Rule versions are frozen for a condition once that condition has crossed its thr
 | **R007** | PSI component construction and PRC operationalisation | `stress` series | Specified in `model/POLITICAL-STRESS.md` |
 | **R008** | IFR robot-density break adjustment; stock term substituted across the NBS denominator revision | `D3`, F7 | Specified in `model/SPECIFICATION.md` |
 | **R009** | Trajectory to regime label | model output | Specified in `rules/R009-regime-classification.md`, v0.1.0 |
+| **R010** | Tracked-cluster stock construction (Construction B) | `compute_frontier_stock`, F8 | Specified in `definitions/frontier-compute.md` Amendment 1, v0.1.0 |
+| **R011** | Intermediated-access bounded-enumeration band | `compute_intermediated_band`, F8 | Specified in `definitions/frontier-compute.md` Amendment 1, v0.1.0 |
 
 Rules R001, R002, R004, R005, R006, R007 and R008 have their substance committed in the files named above. This registry records their identifiers, versions and dependency edges; it does not restate them, because a rule stated twice is a rule that can diverge from itself.
+
+R010 and R011 were registered 2026-08-20 by `definitions/frontier-compute.md` Amendment 1, both at **0.1.0**: specified, but the coverage-error characterisation (R010) and the band enumeration (R011) have not yet been exercised at a first ingest, and a rule whose coverage component has never been computed is not at 1.0 merely because it is written down.
 
 R008 was registered on discovering that the IFR China robot-density series is not comparable across the World Robotics 2024 and 2025 vintages, following a National Bureau of Statistics revision to the manufacturing-employment denominator. Reported density falls from 470 to 166 per 10,000 while absolute stock rises past two million units. The rule substitutes the stock term for the density ratio across the break.
 
