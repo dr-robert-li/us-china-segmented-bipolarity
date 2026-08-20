@@ -34,15 +34,33 @@ D2 is retained deliberately: it is the third demonstration in this programme's r
 
 ## 4. SBC pilot
 
-Launched on the D3 configuration's floor: N = 24 replications, per-replication truth drawn from the prior (base seed 20260821, per-rep seeds recorded), 2 x (1000+300) at target 0.95, ranks computed on every-5th-draw thinned samples for `delta`, `rho_g`, `sigma_D`, `sigma_F`, `sigma_u`, `sigma_v`, `sigma_top0`; per-replication divergence counts recorded and divergent replications flagged rather than silently pooled. Results: PLACEHOLDER
+Launched on the D3 configuration's floor: N = 24 replications, per-replication truth drawn from the prior (base seed 20260821, per-rep seeds recorded), 2 x (1000+300) at target 0.95, ranks computed on every-5th-draw thinned samples for `delta`, `rho_g`, `sigma_D`, `sigma_F`, `sigma_u`, `sigma_v`, `sigma_top0`; per-replication divergence counts recorded and divergent replications flagged rather than silently pooled.
+
+### Results (`model/sbc-pilot-run-002.json`; median 127 s per fit)
+
+**Divergences across random truths:** 19 of 24 replications ran clean; five diverged (counts 1, 1, 1, 5, 29). The pilot ran at half the demonstration's warmup (1000 vs 2000) for budget, and the residual divergences are attributed there first: the full sweep must run at demonstration-grade adaptation, and any replication that still diverges is excluded-and-reported, not pooled.
+
+**Rank statistics (normalised rank u = rank/n; uniform implies mean 0.50, sd 0.289, expected extreme count -- u below 0.05 or above 0.95 -- of 2.4 at N = 24):**
+
+| Parameter | mean u | sd u | extremes |
+|---|---|---|---|
+| `delta` | 0.51 | 0.27 | 2 |
+| `rho_g` | 0.56 | 0.31 | 4 |
+| `sigma_D` | 0.59 | 0.28 | 2 |
+| `sigma_F` | 0.43 | 0.29 | 5 |
+| `sigma_u` | 0.49 | 0.29 | 3 |
+| `sigma_v` | 0.45 | 0.27 | 0 |
+| `sigma_top0` | 0.56 | 0.30 | 5 |
+
+**No detectable miscalibration at pilot power.** Every mean sits near 0.5, every sd near the uniform 0.289, and the extreme counts (0-5 against an expectation of 2.4, binomial sd about 1.5) contain nothing beyond two-sigma noise. `delta`'s ranks are as uniform as any -- the computational-correctness check the pilot exists for passes on precisely the parameter identification says is barely learned, which is the correct dissociation: SBC tests the machinery, not the identification. Stated with equal weight: N = 24 cannot detect subtle miscalibration, and none of these numbers upgrades the pilot into the full-sweep obligation.
 
 One D3 caveat recorded en route: the single-truth recovery table of D3 (three scalar misses at 90 percent) is not evidence of miscalibration -- a single truth cannot be -- and the floor's rejection sampling means D3's truth differs from run 001's despite the shared seed. The rank statistics here, not any single-truth table, are the calibration evidence.
 
-**Pilot, not the obligation.** N = 24 replications cannot test rank uniformity with any power; hundreds can. The full simulation-based-calibration sweep at published-run scale remains the open obligation carried from run 001. What the pilot does establish: the fit machinery survives repeated truths drawn across the prior (not one hand-picked seed), per-replication divergence counts are on record, and rank statistics are computed on thinned draws (rank on autocorrelated draws is biased; the thinning step is recorded in the settings block of `sbc_pilot.json`).
+**Pilot, not the obligation.** N = 24 replications cannot test rank uniformity with any power; hundreds can. The full simulation-based-calibration sweep at published-run scale remains the open obligation carried from run 001. What the pilot does establish: the fit machinery survives repeated truths drawn across the prior (not one hand-picked seed), per-replication divergence counts are on record, and rank statistics are computed on thinned draws (rank on autocorrelated draws is biased; the thinning step is recorded in the settings block of `model/sbc-pilot-run-002.json`).
 
 ## 5. Environment
 
-Unchanged from run 001 (numpyro 0.21.0, jax 0.11.1 CPU, Python 3.13.12, x64) except `SIGMA_Z_FLOOR` as above. Seeds: demonstration 20260820 (same truth as run 001, deliberately -- the comparison isolates the floor); SBC pilot base seed 20260821, per-replication seeds `base + 1000*i` recorded per row.
+Unchanged from run 001 (numpyro 0.21.0, jax 0.11.1 CPU, Python 3.13.12, x64) except `SIGMA_Z_FLOOR` as above. Seeds: demonstration 20260820 (run 001's seed; the floor's rejection sampling shifts the generator stream, so the D2/D3 truth differs from run 001's despite the shared seed -- see the section 4 caveat); SBC pilot base seed 20260821, per-replication seeds `base + 1000*i` recorded per row.
 
 ## 6. What remains before real estimation
 
