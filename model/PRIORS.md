@@ -279,3 +279,30 @@ The procedure is committed to the repository before step 2 is executed. The comp
 
 - research/snapshots/store/259e1095ee8ffeaf0aff37ad557916ae1823a2da13312da50ba4cec6b4574c3b.csv (internal snapshot; Ember yearly full release)
 - model/PRIOR-PREDICTIVE-RUN-001.md, section 3.2 (internal; the candidate list and the diagnostic counterfactual)
+
+---
+
+## Amendment 2 -- 2026-08-20 -- initial-state priors for the estimation window
+
+**Appended, not substituted.** Selected by author decision of 2026-08-20 in structured Q&A, closing registered gap 1 of `model/ESTIMATION-SYNTHETIC-RUN-001.md`. No estimation has run, so no selection here can be reverse-engineered from an outcome; the choice is sampler geometry more than inference, and the ground below says why.
+
+### The commitment
+
+For each input j and state i, at the first year t0 with admissible data for that series:
+
+```
+log x[j,i,t0] ~ Normal( log z0[j,i], 0.5 )     anchored series
+log x[j,i,t0] ~ Normal( log z0[j,i], 1.0 )     anchor-absent series
+g[j,i,t0]     ~ Normal( gstar[j,i], sigma_v / sqrt(1 - rho_g^2) )
+```
+
+where `z0[j,i]` is the earliest admissible observation of the highest-tier source for that series, on the committed definitional basis.
+
+**Ground, statable without reference to any outcome.** The measurement block sees the first observation regardless, so a data-derived prior location adds no information the likelihood does not already carry -- it only starts the sampler where the posterior mass will be. The scales (0.5 anchored, 1.0 anchor-absent) are judgement calls and labelled as such; both are diffuse relative to any plausible measurement error. The initial growth state takes its AR(1) stationary distribution rather than being pinned at `gstar`, because pinning it would understate early-window growth uncertainty by exactly the amount the process's own persistence implies; the stationary form is the process's own statement about an unobserved past.
+
+**Declined:** fully diffuse locations (Normal(0, 10) in logs) -- a no-peeking purism that costs sampler geometry and gains nothing, since the first observation enters the likelihood either way; `g0 = gstar` (the synthetic-run expedient) -- understates early-window uncertainty.
+
+### Sources for Amendment 2
+
+- model/ESTIMATION-SYNTHETIC-RUN-001.md (internal; registered gap 1, and the synthetic-scope choice this supersedes for real estimation)
+- Author Q&A of 2026-08-20 (structured; recommended option adopted)

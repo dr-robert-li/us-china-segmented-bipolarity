@@ -63,6 +63,8 @@ Per the register-don't-invent convention (F1 Amendment 1 pattern). Both need an 
 1. **Initial-state priors for the latent inputs** at the start of an estimation window. SPECIFICATION.md defines the evolution equation and a 2026 synthetic baseline but never a prior on the window's initial latents. Synthetic-scope choice: `log x0 ~ Normal(log baseline, 0.3)`.
 2. **The AI-intensity evolution process.** Section 7 names the indicators but no process. Synthetic-scope choice: the deterministic exponential from `prior_predictive.py`.
 
+**Status note, 2026-08-20, later the same day.** Both gaps closed by author Q&A: gap 1 by `PRIORS.md` Amendment 2 (anchored locations, stationary `g0`), gap 2 by `SPECIFICATION.md` Amendment 03 (stochastic local trend, adopted at the next full gate re-run). The synthetic-scope choices above stand as the record of what this run used.
+
 ## What this run is not
 
 - Not a fit to data. No observed series exists in the pipeline yet.

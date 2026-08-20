@@ -45,6 +45,9 @@ REGISTERED: dict[str, str] = {
     # band enumeration (R011) have not yet been exercised at a first ingest.
     "R010": "0.1.0",
     "R011": "0.1.0",
+    # Registered 2026-08-20; rules/R012-naive-benchmark.md. Below 1.0 because
+    # the innovation scales are specified by procedure but never yet computed.
+    "R012": "0.1.0",
 }
 
 

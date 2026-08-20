@@ -32,7 +32,7 @@ The identification problem this creates is stated rather than hidden: a free bia
 
 ## 4.3 Rules as versioned objects
 
-Every transformation from published statistic to model input is a registered rule with a semantic version and a source list; a derived figure whose governing rule is not registered is not publishable. Eleven rules are registered at the time of writing. Versioning is semantic in a specific sense: a patch changes documentation, a minor version cannot alter any published verdict, a major version can -- and a major bump requires the affected verdicts to be recomputed under both versions with both published. Silent re-derivation of published figures is prohibited outright.
+Every transformation from published statistic to model input is a registered rule with a semantic version and a source list; a derived figure whose governing rule is not registered is not publishable. Twelve rules are registered at the time of writing. Versioning is semantic in a specific sense: a patch changes documentation, a minor version cannot alter any published verdict, a major version can -- and a major bump requires the affected verdicts to be recomputed under both versions with both published. Silent re-derivation of published figures is prohibited outright.
 
 The load-bearing rule for this paper is the conversion from nameplate generation capacity to dispatchable capacity, because it is where the definitional-divergence argument becomes concrete rather than rhetorical.
 

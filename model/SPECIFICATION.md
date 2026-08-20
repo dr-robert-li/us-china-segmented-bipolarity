@@ -369,3 +369,24 @@ The five-regime partition stands. R5 remains in the regime set, remains classifi
 
 - model/PRIOR-PREDICTIVE-RUN-001.md, section 3.1 (internal; candidate list, R5 masses by horizon)
 - model/IDENTIFICATION.md, Amendment 1 (internal; the PP1 restatement this contract change induces)
+
+---
+
+## Amendment 03 -- 2026-08-20 -- AI-intensity evolution process committed
+
+**Appended, not substituted.** Selected by author decision of 2026-08-20 in structured Q&A, closing registered gap 2 of `model/ESTIMATION-SYNTHETIC-RUN-001.md`. Section 7 names the indicators measuring `AI_intensity[t]` but commits no evolution process; the prior-predictive implementation used a deterministic exponential as a scope-limited stand-in, disclosed there.
+
+### The commitment
+
+Per state, `log(1 + AI_intensity[i,t])` follows the same local-linear-trend state-space form as the Block E inputs -- own long-run growth, own persistence inherited from `rho_g`, own innovation stream with its own scale -- measured through the section 7 indicator block (frontier-capable compute stock under the committed boundary, decomposed robot stock, manufacturing output per unit of installed automation), each indicator entering Block M with the usual loading, bias, and noise terms.
+
+**Ground, statable without reference to any outcome.** Two, both structural. First, the identical-functional-form commitment in section 5 exists to prevent asymmetry smuggled in through equations; a latent that drives the mechanism parameter deserves the same discipline as the latents it interacts with. Second, and decisive: `AI_intensity` feeds `sigma_top[t]` through `delta`, the parameter that carries P2. A deterministic path has zero process noise over fifty years, which would understate `delta`'s posterior width -- in the direction of overstating the mechanism evidence. The stochastic form is the conservative choice for the programme's own hypothesis, which is the direction the standing prohibitions require errors to lean.
+
+**Declined:** the deterministic exponential (parsimonious, but anti-conservative for P2 as above, and it forces indicator disagreement into the bias terms because the latent cannot move); a shared-global-trend-plus-state-offsets form (adds a cross-state coupling no committed text motivates).
+
+The prior-predictive harness retains its deterministic exponential for the gates already run -- their record stands as computed -- and adopts this form at the next full re-run, reported either way.
+
+### Sources for Amendment 03
+
+- model/ESTIMATION-SYNTHETIC-RUN-001.md (internal; registered gap 2)
+- Author Q&A of 2026-08-20 (structured; recommended option adopted)
