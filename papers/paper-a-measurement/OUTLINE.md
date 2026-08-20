@@ -138,15 +138,15 @@ This section also reports three implementation defects found while running the g
 
 | Section | Status |
 |---|---|
-| 1 Claims and non-claims | Outlined |
-| 2 Introduction | Outlined, sources gathered |
+| 1 Claims and non-claims | **Drafted** -- `S1-claims.md` (2026-08-20) |
+| 2 Introduction | **Drafted** -- `S2-introduction.md` (2026-08-20) |
 | 3 The capability vector | **Drafted** -- `S3-capability-vector.md` |
-| 4 Measurement model | Outlined, sources gathered |
-| 5 Pre-registration | Outlined, sources gathered, objections enumerated |
-| 6 Identification | Outlined; content exists in `model/IDENTIFICATION.md` |
-| 7 Prior-predictive checking | Outlined; content exists in `model/PRIOR-PREDICTIVE-RUN-001.md` |
-| 8 Cannot establish | Outlined |
-| 9 Open questions | Outlined |
+| 4 Measurement model | **Drafted** -- `S4-measurement-model.md` (2026-08-20) |
+| 5 Pre-registration | **Drafted** -- `S5-pre-registration.md` (2026-08-20); adds 5.5, the falsifier calibration record from the dry-run programme |
+| 6 Identification | **Drafted** -- `S6-identification.md` (2026-08-20) |
+| 7 Prior-predictive checking | **Drafted** -- `S7-prior-predictive.md` (2026-08-20); supersedes this outline's section 7 text, which was written while the gates were failing -- the drafted section reports the full failure-remedy-pass arc through run 004 |
+| 8 Cannot establish | **Drafted** -- `S8-cannot-establish.md` (2026-08-20) |
+| 9 Open questions | **Drafted** -- `S9-open-questions.md` (2026-08-20) |
 
 Section 3 was drafted first deliberately. It carries the paper's only genuinely contestable methodological claim, so drafting it first exposes the weakest point to criticism earliest rather than latest.
 
