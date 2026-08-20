@@ -118,3 +118,7 @@ Two reviewers returned substantive reviews: codex (source-grounded, full repo ac
 3. S6.2: harmonise the analogue count with IDENTIFICATION.md or state the inclusion rule (LOW, verified).
 4. S6.3/S8: add the prior-dominance consequence for Paper B as an anticipated primary result (MEDIUM).
 5. S9 question 3: consider proposing a concrete benchmark candidate rather than only posing the question (ollama suggestion, optional).
+
+### Disposition -- 2026-08-20, author decision
+
+A1-A3 applied (verified fixes). A4 applied (S6.3 consequence paragraph, S8 fifth item), author-reviewed. **A5 declined as prose, with recorded reason:** a benchmark named in the paper without registration is a soft commitment made outside the project's candidates-grounds-Q&A machinery -- the same shape as F1's unregistered-series defect -- and would anchor the later registration anyway. Benchmark selection is routed to prospective registration instead (queued in HANDOVER); S9 question 3 gains a sentence citing the registration once it exists.
