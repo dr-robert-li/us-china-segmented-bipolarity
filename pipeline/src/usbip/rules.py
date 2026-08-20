@@ -40,6 +40,11 @@ REGISTERED: dict[str, str] = {
     # sensitivity run, and because its R5 branch is implicated in a failing
     # prior-predictive gate. See rules/R009-regime-classification.md.
     "R009": "0.1.0",
+    # Registered 2026-08-20 by definitions/frontier-compute.md Amendment 1.
+    # Below 1.0 because the coverage-error characterisation (R010) and the
+    # band enumeration (R011) have not yet been exercised at a first ingest.
+    "R010": "0.1.0",
+    "R011": "0.1.0",
 }
 
 
