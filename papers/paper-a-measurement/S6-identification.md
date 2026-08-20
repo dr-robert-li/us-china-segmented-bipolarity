@@ -14,6 +14,8 @@ The model is fitted on great-power dyads, of which six to eight exist -- five un
 
 The same tradition supplies the empirical justification for the programme's basic commitments: subsequent testing of power-transition theory with alternative capability measures found that "the strength of the evidence depends importantly on how power is measured and the set of cases analyzed" ([de Soysa, Oneal and Park, *JCR* 41(4)](https://journals.sagepub.com/doi/10.1177/0022002797041004002)). Results turning on the capability measure and the case set is a documented failure mode; the explicit vector and the published case set are responses to it.
 
+The count is also the discipline's, not only this programme's. Section 3.4 records that the leading peaking-power argument's own stated selection rule yields nine cases, three of which its author sets aside as overdetermined -- a load-bearing base of roughly five to six. The programme's analogue count is the field's actual evidentiary standard stated openly, not an unusually thin base confessed to; what distinguishes the treatments is that here the count constrains the vocabulary ("calibration, not validation"), which is a constraint the surrounding literature does not usually accept from the same arithmetic.
+
 ## 6.3 What is identified, and by what
 
 | Object | Identified | By what |

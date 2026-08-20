@@ -69,7 +69,7 @@ The model class is not novel and the paper says so. The contribution is the appl
 
 **4.2 What is measured versus what is latent.** Observed series are noisy, definitionally divergent indicators of latent capability on each element. The measurement block carries a bias term and a scale term per state per element, and the identification of each is stated separately, per element, in section 6.
 
-**4.3 Rules as versioned objects.** Every transformation from published statistic to model input is a registered rule with a semantic version, an author, and a source list. Nine are registered at the time of writing. The load-bearing one for this paper is the conversion from nameplate generation capacity to dispatchable capacity, which is where the definitional-divergence argument becomes concrete rather than rhetorical.
+**4.3 Rules as versioned objects.** Every transformation from published statistic to model input is a registered rule with a semantic version, an author, and a source list. Nine were registered when this outline was committed; the registry has since grown and the drafted `S4-measurement-model.md` carries the current count. The load-bearing one for this paper is the conversion from nameplate generation capacity to dispatchable capacity, which is where the definitional-divergence argument becomes concrete rather than rhetorical.
 
 **4.4 The refusal, stated as a property of the rule.** The dispatchable-capacity rule refuses to emit a cross-state ratio, because United States capacity factors and PRC capacity factors are computed from differently scoped statistics. Relative position on that element enters through the measurement block as uncertainty. The objection -- that this produces intervals too wide to be informative -- is answered by reporting the interval and letting the reader judge, not by narrowing it.
 
@@ -111,6 +111,8 @@ This section reproduces, in paper form, the per-quantity identification statemen
 ---
 
 ## 7. Prior-predictive checking, reported including its failures
+
+**Superseded by the drafted section (2026-08-20).** The paragraphs below describe the state at outline time -- two gates failing, estimation blocked -- and are retained for the record. The gates now pass at run 004 after dated amendments selected on gate-independent grounds, and `S7-prior-predictive.md` reports the full failure-remedy-pass arc, which is the section's content.
 
 Five prior-predictive gates were specified before estimation and run before any data entered the model. Two reject the committed priors. The failing configuration is committed rather than replaced, and estimation is blocked pending a dated amendment. Full disclosure is in `model/PRIOR-PREDICTIVE-RUN-001.md`.
 
