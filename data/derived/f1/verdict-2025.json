@@ -1,0 +1,46 @@
+{
+  "falsifier_id": "F1",
+  "evaluation_year": 2025,
+  "threshold": 0.4,
+  "verdict": "not_triggered",
+  "observed_value": 0.08340776788739329,
+  "distance_to_threshold": 0.31659223211260673,
+  "sensitivity": {
+    "mean_of_annual_ratios": 0.08434736111811127,
+    "mean_of_annual_ratios_undamped": 0.08434736111811127,
+    "committed_construction": "ratio_of_three_year_sums",
+    "constructions_straddle_threshold": false,
+    "rules": {
+      "R001": "1.0.0",
+      "R002": "1.1.0"
+    }
+  },
+  "flags": [],
+  "notes": [
+    "USA 2025: no cross-check observation; source_disagreement cannot be evaluated for this year",
+    "cap_total_installed/CHN 2022: primary 2428 vs nea_annual_release 2560, gap 5.16% exceeds tolerance 5.00%"
+  ],
+  "disagreements": [
+    "cap_total_installed/USA 2022: primary 1225 vs eia_860_existcapacity 1254, gap 2.30% within tolerance 5.00%",
+    "cap_total_installed/USA 2023: primary 1254 vs eia_860_existcapacity 1281, gap 2.03% within tolerance 5.00%",
+    "cap_total_installed/USA 2024: primary 1294 vs eia_860_existcapacity 1325, gap 2.34% within tolerance 5.00%",
+    "cap_total_installed/CHN 2022: primary 2428 vs nea_annual_release 2560, gap 5.16% exceeds tolerance 5.00%",
+    "cap_total_installed/CHN 2023: primary 2781 vs nea_annual_release 2920, gap 4.75% within tolerance 5.00%",
+    "cap_total_installed/CHN 2024: primary 3193 vs nea_annual_release 3350, gap 4.68% within tolerance 5.00%",
+    "cap_total_installed/CHN 2025: primary 3727 vs nea_annual_release 3890, gap 4.20% within tolerance 5.00%"
+  ],
+  "blocked_years": [
+    2022
+  ],
+  "code_sha": "1d328c68cb1190bdda3776ad30237c5f10013e5d",
+  "snapshots": {
+    "ember": "259e1095ee8ffeaf0aff37ad557916ae1823a2da13312da50ba4cec6b4574c3b",
+    "eia": "faefdee9e0fade582bcde6c74634aff9406db6d577758fbb18ab2bb71e94c262",
+    "nea": {
+      "2022": "36851905f66d2a4878650f6dece48968cb5695e8f7e382c3329afbb48c172bbf",
+      "2023": "1d85498a600b8201a138c068e6780a0e838a9d35cc0c22bed7ee0b45ba00b5ba",
+      "2024": "21a36b4d4addc64a641266c953870034573a43bb3a3dccb43d1e1b7a7cbeddcf",
+      "2025": "59cf855315b4150bde55dadb4586732985e9521def3c3c2182f8ad15c22f5eea"
+    }
+  }
+}

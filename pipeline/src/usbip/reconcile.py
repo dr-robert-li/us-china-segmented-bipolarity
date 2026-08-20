@@ -62,6 +62,32 @@ def compare(
     if crosscheck.value == 0:
         raise SchemaError("reconcile: cross-check value is zero; gap undefined")
 
+    # F1 adapter test 8 (Amendment 1): a cross-check whose capacity basis does
+    # not match the primary's must fail validation rather than silently raise
+    # or suppress source_disagreement. The basis travels as a flag of the form
+    # ``capacity_basis=<name>``; where the primary declares one, the cross-check
+    # must declare a matching family. An undeclared cross-check basis is the
+    # original defect (net summer compared against installed), not a pass.
+    def _capacity_basis(obs: Observation) -> str | None:
+        for f in obs.flags:
+            if f.startswith("capacity_basis="):
+                return f.split("=", 1)[1]
+        return None
+
+    pb, cb = _capacity_basis(primary), _capacity_basis(crosscheck)
+    if pb is not None:
+        if cb is None:
+            raise SchemaError(
+                f"reconcile: primary declares capacity_basis={pb} but the "
+                f"cross-check declares none; tolerance comparison would measure "
+                f"an unstated definitional gap (F1 test 8)"
+            )
+        if cb != pb:
+            raise SchemaError(
+                f"reconcile: capacity basis mismatch {pb} vs {cb}; "
+                f"basis-matched pair required (F1 Amendment 2)"
+            )
+
     gap = abs(primary.value - crosscheck.value) / abs(crosscheck.value)
     return Disagreement(
         series_id=primary.series_id,

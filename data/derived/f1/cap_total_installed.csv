@@ -1,0 +1,16 @@
+series_id,geography,year,value_gw,source,flags
+cap_total_installed,USA,2022,1224.9,ember,capacity_basis=nameplate_family
+cap_total_installed,USA,2023,1254.5,ember,capacity_basis=nameplate_family
+cap_total_installed,USA,2024,1293.8,ember,capacity_basis=nameplate_family
+cap_total_installed,USA,2025,1333.2,ember,capacity_basis=nameplate_family
+cap_total_installed,USA,2022,1253.7,eia_860_existcapacity,capacity_basis=nameplate_family
+cap_total_installed,USA,2023,1280.6,eia_860_existcapacity,capacity_basis=nameplate_family
+cap_total_installed,USA,2024,1324.7,eia_860_existcapacity,capacity_basis=nameplate_family
+cap_total_installed,CHN,2022,2427.8,ember,capacity_basis=nameplate_family
+cap_total_installed,CHN,2023,2781.2,ember,capacity_basis=nameplate_family
+cap_total_installed,CHN,2024,3193.2,ember,capacity_basis=nameplate_family
+cap_total_installed,CHN,2025,3726.5,ember,capacity_basis=nameplate_family
+cap_total_installed,CHN,2022,2560.0,nea_annual_release,capacity_basis=nameplate_family;coarse_precision_1e8_kw
+cap_total_installed,CHN,2023,2920.0,nea_annual_release,capacity_basis=nameplate_family;coarse_precision_1e8_kw
+cap_total_installed,CHN,2024,3350.0,nea_annual_release,capacity_basis=nameplate_family;coarse_precision_1e8_kw
+cap_total_installed,CHN,2025,3890.0,nea_annual_release,capacity_basis=nameplate_family;coarse_precision_1e8_kw

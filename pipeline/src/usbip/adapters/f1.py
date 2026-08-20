@@ -69,13 +69,18 @@ SERIES = {
             "All generating technologies, nameplate rating, at year end. "
             "Harmonised across both geographies by the primary source so that "
             "numerator and denominator of the F1 ratio share one methodology. "
-            "Whether the PRC series is grid-connected or installed is an OPEN "
-            "ITEM in adapters/F1.md and must be resolved and recorded here at "
-            "first fetch; the two differ and the difference is not negligible. "
-            "US utility-scale-only coverage would exclude behind-the-meter "
-            "solar, which is Hazard 1 in the adapter and is the reason a single "
-            "harmonised source is primary for both countries rather than each "
-            "national agency being authoritative for its own half."
+            "RESOLVED at first fetch, 2026-08-21 (Ember methodology snapshot "
+            "sha256 4044e49f...): Ember capacity is a nameplate-family "
+            "composite -- GEM for coal and gas (gross, plants >50 MW) and "
+            "IRENA for all other fuels -- for the PRC as for other countries; "
+            "it is NOT the NEA grid-connected census, and the ~4.7-5.2 percent "
+            "Ember-versus-NEA gap is definitional (GEM's 50 MW floor, IRENA "
+            "lag), not error. Cross-check bases, per Amendment 2: US = EIA-860 "
+            "existcapacity_annual Nameplate Capacity column (snapshot "
+            "faefdee9...), basis nameplate; PRC = NEA year-end grid-connected "
+            "installed (snapshots per year in ingest_f1.py), coarse precision "
+            "1e8 kW. All three carry capacity_basis=nameplate_family for the "
+            "reconcile basis guard (test 8)."
         ),
         net_or_gross=None,
         coverage_caveats=(
@@ -161,12 +166,18 @@ def check_subset_trap(additions: Mapping[int, float], geography: str) -> list[st
     floor = SUBSET_TRAP_FLOOR_GW.get(geography)
     if floor is None:
         return []
+    # Only POSITIVE values below the floor are subset-trap evidence: a subset
+    # of additions is still non-negative, so a negative differenced value
+    # cannot be a subset read -- it is a real retirements-exceed-additions
+    # year and routes to the negative_numerator semantics of Amendment 2
+    # instead. (Surfaced by test 9: US 2015 is -2.2 GW on both sources and
+    # must not be blocked as an implausible subset.)
     return [
         f"{geography} {year}: net additions {value:.1f} GW below the "
         f"plausibility floor of {floor:.0f} GW; possible subset-read-as-total. "
         f"Verdict emission blocked for the affected window."
         for year, value in sorted(additions.items())
-        if value < floor
+        if 0 <= value < floor
     ]
 
 
@@ -234,6 +245,11 @@ def evaluate(
         flags.append("source_disagreement")
     if any("vintage_conflict" in o.flags for o in derived):
         flags.append("vintage_conflict")
+    if ratio.negative_numerator:
+        # Amendment 2 Decision 2: mandatory flag so "US additions were
+        # negative" is published as a finding distinct from a small ratio.
+        flags.append("negative_numerator")
+        notes.append(f"{evaluation_year}: {ratio.note}")
 
     # Verdict logic, in the order the specification imposes.
     if ratio.committed is None:
@@ -285,6 +301,7 @@ def evaluate(
         inputs=tuple(sorted(o.obs_id for o in derived)),
         sensitivity={
             "mean_of_annual_ratios": ratio.sensitivity,
+            "mean_of_annual_ratios_undamped": ratio.sensitivity_undamped,
             "committed_construction": "ratio_of_three_year_sums",
             "constructions_straddle_threshold": ratio.straddles_threshold,
             "rules": {R001_ID: R001_VERSION, R002_ID: R002_VERSION},

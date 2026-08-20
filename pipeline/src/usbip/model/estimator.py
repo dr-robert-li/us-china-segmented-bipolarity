@@ -71,6 +71,13 @@ ANCHOR_ABSENT = ("F1", "F2", "F3")
 ANCHOR_SIGMA = 0.02  # tier-1: no bias term, small fixed noise scale
 BIAS_PRIOR_SD = 0.10
 X0_PRIOR_SD = 0.30  # registered gap 1: synthetic-scope choice
+# Floor on the biased-series noise scale, applied IDENTICALLY in the model
+# prior and the synthetic truth generator (SBC semantics require the two to
+# match). Divergence diagnosis (run 002) localised the funnel to sigma_z
+# components collapsing toward zero; the floor is defended as measurement
+# realism -- log-scale noise below 1 percent is not a property of any real
+# published series -- not as a sampler convenience.
+SIGMA_Z_FLOOR = 0.01
 
 # Capability elements observed in the synthetic measurement block. Observing
 # only the inputs would leave Block P without any likelihood contribution and
@@ -225,7 +232,8 @@ def model(
     )
     b = jnp.concatenate([b_anchored, jnp.zeros((n_s, 3))], axis=-1)  # (n_s, n_j)
     sigma_z = numpyro.sample(
-        "sigma_z", dist.HalfNormal(0.05).expand([n_j]).to_event(1)
+        "sigma_z",
+        dist.TruncatedNormal(0.0, 0.05, low=SIGMA_Z_FLOOR).expand([n_j]).to_event(1),
     )
     numpyro.sample(
         "z_biased",
@@ -270,7 +278,15 @@ def make_synthetic(draw, T: int, seed: int) -> SyntheticData:
     b = np.concatenate(
         [rng.normal(0.0, BIAS_PRIOR_SD, size=(2, 3)), np.zeros((2, 3))], axis=-1
     )
-    sigma_z = np.abs(rng.normal(0.0, 0.05, size=len(INPUTS)))
+    # Truncated half-normal above SIGMA_Z_FLOOR, matching the model prior
+    # exactly (rejection sampling; acceptance ~0.92 so this terminates fast).
+    sigma_z = np.empty(len(INPUTS))
+    for j in range(len(INPUTS)):
+        while True:
+            draw_val = abs(rng.normal(0.0, 0.05))
+            if draw_val >= SIGMA_Z_FLOOR:
+                sigma_z[j] = draw_val
+                break
 
     z_anchor = log_x[:, :, :3] + rng.normal(0, ANCHOR_SIGMA, size=log_x[:, :, :3].shape)
     z_biased = (

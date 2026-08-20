@@ -55,6 +55,7 @@ Rule versions are frozen for a condition once that condition has crossed its thr
 | **R010** | Tracked-cluster stock construction (Construction B) | `compute_frontier_stock`, F8 | Specified in `definitions/frontier-compute.md` Amendment 1, v0.1.0 |
 | **R011** | Intermediated-access bounded-enumeration band | `compute_intermediated_band`, F8 | Specified in `definitions/frontier-compute.md` Amendment 1, v0.1.0 |
 | **R012** | Driftless per-element random-walk benchmark | model output, all horizons | Specified in `rules/R012-naive-benchmark.md`, v0.1.0 |
+| **R013** | `cap_total_installed` by pinned-whitelist fuel-row summation | F1 | Specified in `adapters/F1.md` Amendment 2, v1.0.0; implemented at first ingest 2026-08-21 |
 
 Rules R001, R002, R004, R005, R006, R007 and R008 have their substance committed in the files named above. This registry records their identifiers, versions and dependency edges; it does not restate them, because a rule stated twice is a rule that can diverge from itself.
 

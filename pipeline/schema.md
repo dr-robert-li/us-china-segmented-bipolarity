@@ -142,6 +142,11 @@ Flags are additive and never suppress a record.
 | `partial_year` | Period shorter than the nominal series frequency |
 | `band_applied` | A falsification or error band has been applied |
 | `psd_projected` | Correlation matrix required PSD projection at load |
+| `vintage_revision_large` | Vintage supersession above 10 percent of the earlier value (2026 F3 amendment) |
+| `anchor_absent` | No anchored series; source bias fixed at prior mean (IDENTIFICATION.md section 2) |
+| `capacity_basis=nameplate_family` | Capacity-basis declaration for the reconcile basis guard, F1 test 8 (registered at first ingest, 2026-08-21) |
+| `coarse_precision_1e8_kw` | NEA year-end total published to one decimal in units of 1e8 kW |
+| `negative_numerator` | Negative three-year numerator sum; not_triggered with the sign published as a distinct finding (F1 Amendment 2) |
 
 ---
 

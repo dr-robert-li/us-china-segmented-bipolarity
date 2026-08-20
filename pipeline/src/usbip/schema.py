@@ -95,6 +95,15 @@ FLAGS = frozenset(
         # therefore fixed at the prior mean rather than estimated. See
         # model/IDENTIFICATION.md section 2.
         "anchor_absent",
+        # Registered at F1 first ingest, 2026-08-21 (adapters/F1.md Amendment 2).
+        # Capacity-basis declaration consumed by the reconcile basis guard
+        # (F1 test 8); a comparison across differing declarations fails.
+        "capacity_basis=nameplate_family",
+        # NEA year-end totals are published to one decimal in units of 1e8 kW.
+        "coarse_precision_1e8_kw",
+        # Amendment 2 Decision 2: negative three-year numerator sum. The
+        # verdict is not_triggered and the sign is a distinct published finding.
+        "negative_numerator",
     }
 )
 

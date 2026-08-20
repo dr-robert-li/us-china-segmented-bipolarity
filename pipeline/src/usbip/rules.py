@@ -28,7 +28,7 @@ from .schema import (
 # two cannot drift silently.
 REGISTERED: dict[str, str] = {
     "R001": "1.0.0",
-    "R002": "1.0.0",
+    "R002": "1.1.0",  # 1.1.0: negative-numerator semantics, adapters/F1.md Amendment 2
     "R003": "0.1.0",  # sourced parameters; see rules/R003-nameplate-to-dispatchable.md
     "R004": "1.0.0",
     "R005": "1.0.0",
@@ -48,6 +48,8 @@ REGISTERED: dict[str, str] = {
     # Registered 2026-08-20; rules/R012-naive-benchmark.md. Below 1.0 because
     # the innovation scales are specified by procedure but never yet computed.
     "R012": "0.1.0",
+    # Registered 2026-08-21 at first ingest; adapters/F1.md Amendment 2 Decision 3.
+    "R013": "1.0.0",
 }
 
 
@@ -169,16 +171,21 @@ def r001_net_additions(
 # R002 -- ratio of three-year sums, with the mean-of-ratios sensitivity
 # ---------------------------------------------------------------------------
 
-R002_ID, R002_VERSION = "R002", "1.0.0"
+# 1.1.0: negative-numerator semantics per adapters/F1.md Amendment 2 Decision 2.
+# Minor bump: the change cannot alter any published verdict (none exists, and a
+# negative numerator maps to not_triggered, which a negative ratio already did).
+R002_ID, R002_VERSION = "R002", "1.1.0"
 
 
 @dataclass(frozen=True)
 class RatioResult:
     year: int
     committed: float | None  # ratio of three-year sums
-    sensitivity: float | None  # mean of three annual ratios
+    sensitivity: float | None  # mean of three annual ratios, clamped per Amendment 2
     straddles_threshold: bool
     note: str
+    negative_numerator: bool = False
+    sensitivity_undamped: float | None = None  # published alongside when clamping bit
 
 
 def r002_rolling_ratio(
@@ -219,6 +226,7 @@ def r002_rolling_ratio(
             year, None, None, False, "non-positive PRC three-year sum; ratio undefined"
         )
     committed = num / den
+    negative_numerator = num < 0
 
     annual = []
     for y in window:
@@ -226,19 +234,109 @@ def r002_rolling_ratio(
             annual = []
             break
         annual.append(additions_us[y] / additions_prc[y])
-    sensitivity = sum(annual) / len(annual) if annual else None
+    # Amendment 2 Decision 2: negative annual ratios are clamped to zero for
+    # the reported sensitivity, and the undamped mean is published alongside,
+    # so a single negative year cannot dominate the mean while the sign
+    # information stays visible.
+    sensitivity_undamped = sum(annual) / len(annual) if annual else None
+    clamped = [max(a, 0.0) for a in annual]
+    sensitivity = sum(clamped) / len(clamped) if clamped else None
 
     straddles = (
         sensitivity is not None
         and (committed >= threshold) != (sensitivity >= threshold)
     )
-    note = (
-        "constructions straddle the threshold; verdict is indeterminate per "
-        "adapters/F1.md Test 7"
-        if straddles
-        else "constructions agree on the side of the threshold"
+    if negative_numerator:
+        # "US additions were negative" is a different finding from "US
+        # additions were X percent of China's", reported distinctly. The
+        # negative committed ratio is published as computed, not floored.
+        note = (
+            "negative three-year numerator sum: US net additions were negative "
+            "over the window; not_triggered with the negative_numerator flag "
+            "per adapters/F1.md Amendment 2"
+        )
+    elif straddles:
+        note = (
+            "constructions straddle the threshold; verdict is indeterminate per "
+            "adapters/F1.md Test 7"
+        )
+    else:
+        note = "constructions agree on the side of the threshold"
+    return RatioResult(
+        year, committed, sensitivity, straddles, note,
+        negative_numerator=negative_numerator,
+        sensitivity_undamped=sensitivity_undamped,
     )
-    return RatioResult(year, committed, sensitivity, straddles, note)
+
+
+# ---------------------------------------------------------------------------
+# R013 -- cap_total_installed by pinned-whitelist fuel-row summation
+# ---------------------------------------------------------------------------
+
+R013_ID, R013_VERSION = "R013", "1.0.0"
+
+# The pinned whitelist, adapters/F1.md Amendment 2 Decision 3. Frozen: a new
+# fuel variable in a future vintage must FAIL validation, not silently widen
+# the definitional basis between vintages.
+R013_FUEL_WHITELIST = frozenset(
+    {
+        "Bioenergy",
+        "Coal",
+        "Gas",
+        "Hydro",
+        "Nuclear",
+        "Other Fossil",
+        "Other Renewables",
+        "Solar",
+        "Wind",
+    }
+)
+R013_AGGREGATE_TOLERANCE = 0.005  # within rounding: 0.5 percent of the sum
+
+
+def r013_total_from_fuel_rows(
+    fuel_values: Mapping[str, float],
+    *,
+    clean_plus_fossil: float | None,
+    geography: str,
+    year: int,
+) -> float:
+    """Sum the nine pinned fuel rows and validate against Clean + Fossil.
+
+    Verified against the committed snapshot (sha256 259e1095...) across all 52
+    country-years at specification time; this function makes the verification a
+    standing property of every ingest rather than a one-off check.
+    """
+    seen = set(fuel_values)
+    unknown = seen - R013_FUEL_WHITELIST
+    missing = R013_FUEL_WHITELIST - seen
+    if unknown:
+        raise SchemaError(
+            f"R013 {geography} {year}: fuel rows outside the pinned whitelist: "
+            f"{sorted(unknown)}; a new fuel category is a definitional-basis "
+            f"change and must be adjudicated, not summed"
+        )
+    # A whitelist member ABSENT is an implicit zero, permitted only because the
+    # Clean+Fossil aggregate check below still binds -- Ember omits rows for
+    # fuels a country has none of (first observed: CHN 2022 has no Other
+    # Renewables row), and the dry-run verification that matched all 52
+    # country-years summed present rows exactly this way. An absent member
+    # with a FAILING aggregate check still fails. Correction note in
+    # adapters/F1.md Amendment 2.
+    total = float(sum(fuel_values.values()))
+    if clean_plus_fossil is None:
+        raise SchemaError(
+            f"R013 {geography} {year}: Clean+Fossil aggregate unavailable; the "
+            f"summation check cannot run and the total is not publishable"
+        )
+    if total <= 0:
+        raise SchemaError(f"R013 {geography} {year}: non-positive total")
+    if abs(total - clean_plus_fossil) / total > R013_AGGREGATE_TOLERANCE:
+        raise SchemaError(
+            f"R013 {geography} {year}: whitelist sum {total:.1f} disagrees with "
+            f"Clean+Fossil {clean_plus_fossil:.1f} beyond rounding"
+        )
+    return total
 
 
 # ---------------------------------------------------------------------------

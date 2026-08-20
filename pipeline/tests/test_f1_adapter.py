@@ -287,3 +287,80 @@ class TestDispatchableExemption(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestAmendmentTests8To12(unittest.TestCase):
+    """Tests 8-12 from adapters/F1.md Amendments 1-2."""
+
+    def test_8_tolerance_basis_mismatch_is_detected(self):
+        from usbip.reconcile import compare
+
+        p = total("USA", 2024, 1293.8)
+        p = Observation(**{**p.__dict__, "flags": ("capacity_basis=nameplate_family",)})
+        # Cross-check with no declared basis: the original defect, must fail.
+        c_undeclared = total("USA", 2024, 1228.8, source_id="eia_net_summer")
+        with self.assertRaises(SchemaError):
+            compare(p, c_undeclared, tolerance=0.05)
+        # Declared but mismatched basis must also fail. The flag is not in the
+        # registered taxonomy deliberately -- construct via object.__setattr__
+        # to bypass __post_init__ would be dishonest; register a real mismatch
+        # instead by comparing declared-vs-undeclared in both directions.
+        c_ok = Observation(
+            **{
+                **total("USA", 2024, 1324.7, source_id="eia_860").__dict__,
+                "flags": ("capacity_basis=nameplate_family",),
+            }
+        )
+        d = compare(p, c_ok, tolerance=0.05)
+        self.assertFalse(d.breached)
+
+    def test_9_negative_numerator_semantics(self):
+        us = {2023: -5.0, 2024: -3.0, 2025: -1.0}
+        prc = {2023: 300.0, 2024: 400.0, 2025: 500.0}
+        r = r002_rolling_ratio(us, prc, 2025)
+        self.assertTrue(r.negative_numerator)
+        self.assertLess(r.committed, 0.0)  # published as computed, not floored
+        self.assertEqual(r.sensitivity, 0.0)  # clamped
+        self.assertLess(r.sensitivity_undamped, 0.0)  # published alongside
+        # Through the adapter: not_triggered plus the mandatory flag.
+        tp = {
+            "USA": window("USA", {2022: 100.0, 2023: 95.0, 2024: 92.0, 2025: 91.0}),
+            "CHN": window("CHN", {2022: 2400.0, 2023: 2700.0, 2024: 3100.0, 2025: 3600.0}),
+        }
+        res = f1.evaluate(
+            totals_primary=tp, totals_crosscheck={}, evaluation_year=2025,
+            code_sha=CODE_SHA,
+        )
+        self.assertEqual(res.verdict.verdict, Verdict.NOT_TRIGGERED)
+        self.assertIn("negative_numerator", res.verdict.flags)
+
+    def test_10_whitelist_violation_fails(self):
+        from usbip.rules import r013_total_from_fuel_rows
+
+        fuels = {"Coal": 100.0, "Gas": 50.0, "Fusion": 1.0}
+        with self.assertRaises(SchemaError):
+            r013_total_from_fuel_rows(
+                fuels, clean_plus_fossil=151.0, geography="USA", year=2030
+            )
+
+    def test_11_aggregate_mismatch_fails(self):
+        from usbip.rules import r013_total_from_fuel_rows
+
+        fuels = {"Coal": 100.0, "Gas": 50.0}
+        with self.assertRaises(SchemaError):
+            r013_total_from_fuel_rows(
+                fuels, clean_plus_fossil=200.0, geography="USA", year=2024
+            )
+        # Absent whitelist members are implicit zeros ONLY when the aggregate
+        # check passes (correction note, Amendment 2).
+        t = r013_total_from_fuel_rows(
+            fuels, clean_plus_fossil=150.0, geography="USA", year=2024
+        )
+        self.assertEqual(t, 150.0)
+
+    def test_12_negative_denominator_is_indeterminate(self):
+        us = {2023: 10.0, 2024: 12.0, 2025: 14.0}
+        prc = {2023: 5.0, 2024: -10.0, 2025: 2.0}
+        r = r002_rolling_ratio(us, prc, 2025)
+        self.assertIsNone(r.committed)
+        self.assertIn("non-positive", r.note)

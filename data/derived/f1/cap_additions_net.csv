@@ -1,0 +1,7 @@
+series_id,geography,year,value_gw,basis,flags
+cap_additions_net,USA,2023,29.6,differenced,
+cap_additions_net,USA,2024,39.3,differenced,
+cap_additions_net,USA,2025,39.5,differenced,
+cap_additions_net,CHN,2023,353.4,differenced,
+cap_additions_net,CHN,2024,412.0,differenced,
+cap_additions_net,CHN,2025,533.3,differenced,
