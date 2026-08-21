@@ -56,6 +56,8 @@ from .prior_predictive import (
     STATES,
     SYNTHETIC_BASELINE,
     PriorDraw,
+    ces,
+    sample_prior,
     simulate,
 )
 
@@ -294,17 +296,10 @@ class SyntheticData:
     truth: dict[str, object]
 
 
-def make_synthetic(draw, T: int, seed: int) -> SyntheticData:
-    """Generate observations from prior_predictive.simulate plus Block M noise.
-
-    ``draw`` is a numpy ``PriorDraw``; the latent paths come from the numpy
-    simulator so that recovery is cross-implementation.
-    """
-    rng = np.random.default_rng(seed)
-    traj = simulate(draw, rng, end_year=2026 + T - 1)
-    log_x = np.stack([np.log(traj.x[s]) for s in STATES])  # (n_s, T, n_j)
-    log_Y = np.stack([np.log(traj.Y[s][:, :2]) for s in STATES])  # (n_s, T, 2)
-
+def _measure(
+    log_x: np.ndarray, log_Y: np.ndarray, rng: np.random.Generator
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """Block M measurement layer shared by both synthetic generators."""
     lam = rng.normal(1.0, 0.05, size=len(INPUTS))
     b = np.concatenate(
         [rng.normal(0.0, BIAS_PRIOR_SD, size=(2, 3)), np.zeros((2, 3))], axis=-1
@@ -326,6 +321,26 @@ def make_synthetic(draw, T: int, seed: int) -> SyntheticData:
         + rng.normal(0, 1, size=log_x.shape) * sigma_z[None, None, :]
     )
     z_capability = log_Y + rng.normal(0, Y_OBS_SIGMA, size=log_Y.shape)
+    return z_anchor, z_biased, z_capability, lam, b
+
+
+def make_synthetic(draw, T: int, seed: int) -> SyntheticData:
+    """Generate observations from prior_predictive.simulate plus Block M noise.
+
+    ``draw`` is a numpy ``PriorDraw``; the latent paths come from the numpy
+    simulator so that recovery is cross-implementation.
+
+    NOT suitable for SBC: ``simulate`` fixes x0 at the baseline and both
+    initial growth states at their long-run means, while the model samples all
+    three from the Amendment 2/3 priors. Fine for single-truth recovery
+    (prior wider than generator); rank-uniformity requires ``make_sbc_synthetic``.
+    """
+    rng = np.random.default_rng(seed)
+    traj = simulate(draw, rng, end_year=2026 + T - 1)
+    log_x = np.stack([np.log(traj.x[s]) for s in STATES])  # (n_s, T, n_j)
+    log_Y = np.stack([np.log(traj.Y[s][:, :2]) for s in STATES])  # (n_s, T, 2)
+
+    z_anchor, z_biased, z_capability, lam, b = _measure(log_x, log_Y, rng)
     truth = {
         "sigma_D": draw.sigma_D,
         "sigma_F": draw.sigma_F,
@@ -339,6 +354,106 @@ def make_synthetic(draw, T: int, seed: int) -> SyntheticData:
         # the recovery report can show how little the data inform them.
         "gstar_ai": np.array([draw.gstar_ai[s] for s in STATES]),
         "sigma_ai": draw.sigma_ai,
+    }
+    return SyntheticData(z_anchor, z_biased, z_capability, truth)
+
+
+def make_sbc_synthetic(T: int, seed: int) -> SyntheticData:
+    """Generate one SBC replication: truth drawn from EXACTLY the model prior.
+
+    Registered in ``model/ESTIMATION-SYNTHETIC-RUN-003.md`` section 4:
+    ``make_synthetic`` fixes x0/g0/g_ai0 while the model samples them, which is
+    SBC-invalidating. This generator samples every initial state from the
+    Amendment 2/3 priors and runs the model's own recursion in numpy
+    (cross-implementation is preserved -- parameters come from the numpy
+    ``sample_prior`` and the CES aggregation is the numpy ``ces``).
+    ``prior_predictive.simulate`` is deliberately NOT touched: its frozen init
+    conventions are the gates' record and the PP3 regression baseline.
+    """
+    rng = np.random.default_rng(seed)
+    draw = sample_prior(rng)
+    n_s, n_j = len(STATES), len(INPUTS)
+    baseline = np.array([[SYNTHETIC_BASELINE[s][j] for j in INPUTS] for s in STATES])
+    x0_sd = np.array(X0_PRIOR_SD)
+    gstar = np.stack([draw.gstar[s] for s in STATES])
+    stationary_scale = np.sqrt(max(1.0 - draw.rho_g**2, 1e-4))  # model's clamp, exactly
+
+    log_x = np.zeros((n_s, T, n_j))
+    log_x[:, 0, :] = rng.normal(np.log(baseline), x0_sd[None, :])
+    g = rng.normal(gstar, draw.sigma_v / stationary_scale)  # stationary g0
+    xbar = np.stack([draw.xbar[s] for s in STATES])
+    for t in range(1, T):
+        g = (
+            draw.rho_g * g
+            + (1.0 - draw.rho_g) * gstar
+            + rng.normal(0.0, draw.sigma_v, size=(n_s, n_j))
+        )
+        drag = draw.kappa[None, :] * np.exp(
+            draw.phi[None, :] * (log_x[:, t - 1, :] - np.log(xbar))
+        )
+        log_x[:, t, :] = np.clip(
+            log_x[:, t - 1, :]
+            + g
+            - drag
+            + rng.normal(0.0, draw.sigma_u, size=(n_s, n_j)),
+            -30.0,
+            30.0,
+        )
+
+    # AI latent, stationary g_ai0, same recursion as the model.
+    gstar_ai = np.array([draw.gstar_ai[s] for s in STATES])
+    g_ai = rng.normal(gstar_ai, draw.sigma_ai / stationary_scale)
+    log1p_ai = np.zeros((n_s, T))
+    for t in range(1, T):
+        g_ai = (
+            draw.rho_g * g_ai
+            + (1.0 - draw.rho_g) * gstar_ai
+            + rng.normal(0.0, draw.sigma_ai, size=n_s)
+        )
+        log1p_ai[:, t] = log1p_ai[:, t - 1] + g_ai
+    mean_log1p_ai = log1p_ai.mean(axis=0)
+
+    span = PriorDraw.SIGMA_TOP_MAX - PriorDraw.SIGMA_TOP_MIN
+    p0 = np.clip((draw.sigma_top0 - PriorDraw.SIGMA_TOP_MIN) / span, 1e-4, 1 - 1e-4)
+    ls = np.empty(T)
+    ls[0] = np.log(p0 / (1 - p0))
+    z_w = rng.normal(0.0, draw.tau, size=T - 1)
+    for t in range(1, T):
+        ls[t] = ls[t - 1] + draw.delta * (mean_log1p_ai[t] - mean_log1p_ai[t - 1]) + z_w[t - 1]
+    sigma_top = PriorDraw.SIGMA_TOP_MIN + span / (1.0 + np.exp(-ls))
+
+    x = np.exp(log_x)
+    log_Y = np.zeros((n_s, T, 2))
+    for i in range(n_s):
+        for t in range(T):
+            q_d = ces(x[i, t, :3], draw.alpha_D, draw.sigma_D)
+            q_f = ces(x[i, t, 3:], draw.alpha_F, draw.sigma_F)
+            for m, weight in enumerate(draw.w[:2]):
+                log_Y[i, t, m] = np.log(
+                    max(
+                        ces(
+                            np.array([q_d, q_f]),
+                            np.array([weight, 1.0 - weight]),
+                            sigma_top[t],
+                        ),
+                        1e-12,
+                    )
+                )
+
+    z_anchor, z_biased, z_capability, lam, b = _measure(log_x, log_Y, rng)
+    truth = {
+        "sigma_D": draw.sigma_D,
+        "sigma_F": draw.sigma_F,
+        "delta": draw.delta,
+        "rho_g": draw.rho_g,
+        "sigma_top0": draw.sigma_top0,
+        "sigma_u": draw.sigma_u,
+        "sigma_v": draw.sigma_v,
+        "sigma_ai": draw.sigma_ai,
+        "lam": lam,
+        "b_anchored": b[:, :3],
+        "gstar": gstar,
+        "gstar_ai": gstar_ai,
     }
     return SyntheticData(z_anchor, z_biased, z_capability, truth)
 

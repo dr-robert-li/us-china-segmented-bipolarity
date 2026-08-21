@@ -73,6 +73,27 @@ def test_model_trace_shapes_and_synthetic_generation():
     assert np.all(np.isfinite(np.asarray(jx["log_Y"])))
 
 
+def test_sbc_generator_samples_initial_states_from_the_model_prior():
+    # make_sbc_synthetic exists because make_synthetic fixes x0/g0/g_ai0 while
+    # the model samples them (ESTIMATION-SYNTHETIC-RUN-003.md section 4, an
+    # SBC-invalidating mismatch). The dispersion of the first-year anchor
+    # observation across replications must therefore reflect the Amendment 2
+    # scale (0.5 for anchored inputs), not the fixed baseline (which would
+    # give sd ~ ANCHOR_SIGMA = 0.02).
+    n = 300
+    t0 = np.stack(
+        [est.make_sbc_synthetic(T=2, seed=1000 + i).z_anchor[:, 0, :] for i in range(n)]
+    )  # (n, 2, 3)
+    sd = t0.std(axis=0)
+    assert np.all(sd > 0.4) and np.all(sd < 0.6), sd
+    # Determinism: same seed, same replication.
+    a = est.make_sbc_synthetic(T=4, seed=7)
+    b = est.make_sbc_synthetic(T=4, seed=7)
+    assert np.array_equal(a.z_biased, b.z_biased)
+    assert a.z_anchor.shape == (2, 4, 3) and a.z_capability.shape == (2, 4, 2)
+    assert {"sigma_ai", "sigma_u", "sigma_top0"} <= set(a.truth)
+
+
 def test_anchor_absent_bias_is_fixed_not_sampled():
     # Section 4.2: anchor-absent latents get b FIXED at the prior mean. The
     # sampled bias site must cover only the three anchored inputs.

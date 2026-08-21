@@ -29,3 +29,18 @@ The synthetic truth generator (`make_synthetic` + numpy `simulate`) fixes `x0` a
 ## 5. Environment
 
 numpyro 0.21.0, jax 0.11.1 CPU, Python 3.13.12, x64, `SIGMA_Z_FLOOR = 0.01`. Tests: 53 passing from `pipeline/` (`python3 -m pytest tests/ -q`), including new moment-audit rows for `gstar_ai` (folded-normal mean 0.031173, per-state independence) and `sigma_ai` (HalfNormal at the Amendment 1 scale), and direct mirror-swap pins on the AI stream.
+
+## 6. Full SBC sweep -- protocol, registered before results
+
+The section 4 requirement is implemented: `make_sbc_synthetic` samples every initial state (`log x0` at the Amendment 2 scales, stationary `g0` and `g_ai0` with the model's own 1e-4 clamp) from exactly the model prior and runs the model's recursion in numpy (parameters from the numpy `sample_prior`, CES from the numpy `ces` -- cross-implementation preserved). `simulate` untouched, per section 4. Dispersion of the generator's first-year states is pinned by test (54 passing).
+
+Sweep protocol, committed at launch, 2026-08-22, before any result was seen:
+
+- N = 300 replications, T = 20, demonstration-grade adaptation (D3 config: 4 x (2000+400), target 0.95, floor 0.01).
+- Seeds: base 20260822; per-replication data seed `base + 1000*i`, sampler seed `+2` (run-002 convention).
+- Ranks on every-5th-draw thinned samples (320 of 1600) for `delta`, `rho_g`, `sigma_D`, `sigma_F`, `sigma_u`, `sigma_v`, `sigma_top0`, `sigma_ai` -- the pilot's seven plus the new AI scale.
+- Any replication with divergences is excluded from the rank table and reported, not pooled (run-002 commitment).
+- Incremental record `model/sbc-run-003.jsonl` (one row per replication, resumable); summary `model/sbc-full-run-003.json`.
+- Compute: 16 CPU worker processes (20-core machine; CUDA jaxlib declined -- the model is committed x64 and consumer-Blackwell FP64 throughput would not beat 16 CPU workers; the arithmetic, ~300 x ~600 s / 16 ≈ 3-4 h, made GPU installation moot).
+
+RESULTS-PENDING-SBC
