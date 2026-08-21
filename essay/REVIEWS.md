@@ -44,4 +44,4 @@ notes: |
 
 Both lanes independently rate M3 and M6 as satisfying the fairest-passage requirement (codex with the C4 caveat, now fixed). Both identify M7 as the structurally weakest movement -- one as recap, one as residual tension -- which is consistent with the outline's own design decision to close on cost and caution; the author should read M7 knowing both reviewers paused there.
 
-Word count at review: ~5,900 body words against the 6,000-9,000 target; post-disposition edits leave it at the low end of range. Author read pending.
+Word count after dispositions: 5,851 including front matter, ~5,600 body -- BELOW the outline's 6,000-word floor. Recorded rather than padded: the draft covers every outline commitment, and stretching it to the floor with filler would trade a stated shortfall for a hidden one. Whether to expand (candidates: M2's normalisation treatment, M5's objection table) is an author-read decision. Author read pending.
