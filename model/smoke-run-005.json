@@ -1,0 +1,74 @@
+{
+  "elapsed_s": 525.3,
+  "diagnostics": {
+    "worst_rhat": 1.0366613581862631,
+    "worst_rhat_param": "sigma_z",
+    "min_ess": 103.61226758768827,
+    "divergences": 0,
+    "anchor_absent": [
+      "F1",
+      "F2",
+      "F3"
+    ]
+  },
+  "recovery": {
+    "sigma_D": {
+      "covered": false,
+      "n_outside": 1,
+      "n_total": 1
+    },
+    "sigma_F": {
+      "covered": false,
+      "n_outside": 1,
+      "n_total": 1
+    },
+    "delta": {
+      "covered": true,
+      "n_outside": 0,
+      "n_total": 1
+    },
+    "rho_g": {
+      "covered": false,
+      "n_outside": 1,
+      "n_total": 1
+    },
+    "sigma_top0": {
+      "covered": true,
+      "n_outside": 0,
+      "n_total": 1
+    },
+    "lam": {
+      "covered": true,
+      "n_outside": 0,
+      "n_total": 6
+    },
+    "b_anchored": {
+      "covered": true,
+      "n_outside": 0,
+      "n_total": 6
+    },
+    "gstar": {
+      "covered": false,
+      "n_outside": 2,
+      "n_total": 12
+    },
+    "gstar_ai": {
+      "covered": true,
+      "n_outside": 0,
+      "n_total": 2
+    },
+    "sigma_ai": {
+      "covered": true,
+      "n_outside": 0,
+      "n_total": 1
+    }
+  },
+  "truth_scalars": {
+    "sigma_D": 0.7726561027404727,
+    "sigma_F": 1.558579766900335,
+    "delta": 0.2860772521099984,
+    "rho_g": 0.9866220016257721,
+    "sigma_top0": 0.6766181697279373,
+    "sigma_ai": 0.008109169880398505
+  }
+}

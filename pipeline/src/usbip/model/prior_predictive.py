@@ -124,7 +124,8 @@ class PriorDraw:
     gstar: dict[str, np.ndarray]  # long-run growth per state per input
     rho_g: float
     psi: dict[str, np.ndarray]
-    ai_intensity_growth: float
+    gstar_ai: dict[str, float]  # per-state AI-intensity long-run growth
+    sigma_ai: float  # AI-intensity growth-innovation scale
     sigma_u: float = 0.01
     sigma_v: float = 0.01
 
@@ -139,6 +140,17 @@ def sample_prior(rng: np.random.Generator) -> PriorDraw:
     fixes a bound, the bound is enforced by truncation rather than by clipping
     after the fact, because clipping piles prior mass on the boundary.
     """
+    # AI-intensity parameters draw from a SPAWNED child generator, not the main
+    # stream. SPECIFICATION.md Amendment 03 adopted the stochastic AI form at
+    # the run-005 re-run with the commitment that PP3 be strictly unchanged
+    # from run 004 (AI feeds sigma_top, never the x-paths, so PP3 movement is a
+    # wiring bug). Strict invariance requires the pre-existing draws to consume
+    # the main stream at exactly their run-004 positions across the whole gate
+    # loop; spawning derives the child from the SeedSequence without consuming
+    # parent variates, and is deterministic at a fixed seed. Folding these
+    # draws into the main stream would silently break the regression check.
+    ai_rng = rng.spawn(1)[0]
+
     sigma_D = float(rng.lognormal(np.log(0.5), 0.45))
     sigma_F = float(rng.lognormal(np.log(0.7), 0.50))
 
@@ -154,59 +166,87 @@ def sample_prior(rng: np.random.Generator) -> PriorDraw:
     # would place prior mass on the project's own hypothesis.
     delta = float(rng.normal(0.0, 0.25))
 
+    # Main-stream draws below keep their run-004 ORDER exactly; the order is
+    # load-bearing for the PP3 strict-regression check (see the spawn comment
+    # above), so every draw is a named local in sequence rather than an inline
+    # constructor argument.
+    tau = float(abs(rng.normal(0.0, 0.05)))
+    alpha_D = rng.dirichlet(np.ones(3) * 4.0)
+    alpha_F = rng.dirichlet(np.ones(3) * 4.0)
+    # Element weights on the deployment aggregate. Ordering constraint from
+    # SPECIFICATION.md 6.1: throughput loads primarily on Q_D, frontier
+    # primarily on Q_F, the other two in between. Enforced by construction
+    # so the constraint cannot be violated by a draw.
+    w = np.array(
+        [
+            float(rng.uniform(0.60, 0.90)),  # Y_throughput
+            float(rng.uniform(0.10, 0.40)),  # Y_frontier
+            float(rng.uniform(0.35, 0.65)),  # Y_net
+            float(rng.uniform(0.30, 0.60)),  # Y_fin
+        ]
+    )
+    # kappa ~ HalfNormal(0.05), phi ~ Gamma(2, 1), exactly as PRIORS.md
+    # section 4 commits them. Run 001 and 002 used uniform surrogates,
+    # which truncated the kappa tail at 0.06 and so understated the
+    # attainable saturation drag. Recorded in PRIOR-PREDICTIVE-RUN-001.md.
+    kappa = np.abs(rng.normal(0.0, 0.05, size=len(INPUTS)))
+    phi = rng.gamma(2.0, 1.0, size=len(INPUTS))
+    xbar = {
+        s: np.array(
+            [
+                rng.lognormal(
+                    np.log(ENGINEERING_CEILING_MULTIPLE[j] * SYNTHETIC_BASELINE[s][j]),
+                    0.6,
+                )
+                for j in INPUTS
+            ]
+        )
+        for s in STATES
+    }
+    gstar = {s: rng.normal(0.02, 0.02, size=len(INPUTS)) for s in STATES}
+    rho_g = float(rng.beta(6.0, 2.0))  # centred near 0.75, per PRIORS.md
+    # psi ~ Normal(0, 0.10), sign-free, scale kept small because the PSI
+    # literature supports roughly 18 percent of variance explained.
+    psi = {s: rng.normal(0.0, 0.10, size=len(INPUTS)) for s in STATES}
+    # Run-004 stream-compatibility slot: the superseded deterministic AI form
+    # drew its scalar growth rate from the main stream at exactly this
+    # position. The variate is consumed and DISCARDED so that sigma_u and
+    # sigma_v below keep their run-004 stream positions. Deleting this line
+    # breaks the PP3 strict-regression check for the same reason folding the
+    # AI draws into the main stream would.
+    _ = rng.normal(0.03, 0.02)
+    # u ~ Normal(0, sigma_u^2), sigma_u ~ HalfNormal(0.05): level innovation,
+    # unchanged. v ~ Normal(0, sigma_v^2), sigma_v ~ HalfNormal(S_V): growth
+    # innovation, own scale per PRIORS.md Amendment 1. Runs 001-003 shared
+    # one scale across both streams; the growth stream compounding under
+    # rho_g produced the PP3 runaway recorded in PRIOR-PREDICTIVE-RUN-001.md.
+    sigma_u = float(abs(rng.normal(0.0, 0.05)))
+    sigma_v = float(abs(rng.normal(0.0, S_V)))
+
     return PriorDraw(
         sigma_D=sigma_D,
         sigma_F=sigma_F,
         sigma_top0=s0,
         delta=delta,
-        tau=float(abs(rng.normal(0.0, 0.05))),
-        alpha_D=rng.dirichlet(np.ones(3) * 4.0),
-        alpha_F=rng.dirichlet(np.ones(3) * 4.0),
-        # Element weights on the deployment aggregate. Ordering constraint from
-        # SPECIFICATION.md 6.1: throughput loads primarily on Q_D, frontier
-        # primarily on Q_F, the other two in between. Enforced by construction
-        # so the constraint cannot be violated by a draw.
-        w=np.array(
-            [
-                float(rng.uniform(0.60, 0.90)),  # Y_throughput
-                float(rng.uniform(0.10, 0.40)),  # Y_frontier
-                float(rng.uniform(0.35, 0.65)),  # Y_net
-                float(rng.uniform(0.30, 0.60)),  # Y_fin
-            ]
-        ),
-        # kappa ~ HalfNormal(0.05), phi ~ Gamma(2, 1), exactly as PRIORS.md
-        # section 4 commits them. Run 001 and 002 used uniform surrogates,
-        # which truncated the kappa tail at 0.06 and so understated the
-        # attainable saturation drag. Recorded in PRIOR-PREDICTIVE-RUN-001.md.
-        kappa=np.abs(rng.normal(0.0, 0.05, size=len(INPUTS))),
-        phi=rng.gamma(2.0, 1.0, size=len(INPUTS)),
-        xbar={
-            s: np.array(
-                [
-                    rng.lognormal(
-                        np.log(
-                            ENGINEERING_CEILING_MULTIPLE[j] * SYNTHETIC_BASELINE[s][j]
-                        ),
-                        0.6,
-                    )
-                    for j in INPUTS
-                ]
-            )
-            for s in STATES
-        },
-        gstar={s: rng.normal(0.02, 0.02, size=len(INPUTS)) for s in STATES},
-        rho_g=float(rng.beta(6.0, 2.0)),  # centred near 0.75, per PRIORS.md
-        # psi ~ Normal(0, 0.10), sign-free, scale kept small because the PSI
-        # literature supports roughly 18 percent of variance explained.
-        psi={s: rng.normal(0.0, 0.10, size=len(INPUTS)) for s in STATES},
-        ai_intensity_growth=float(abs(rng.normal(0.03, 0.02))),
-        # u ~ Normal(0, sigma_u^2), sigma_u ~ HalfNormal(0.05): level innovation,
-        # unchanged. v ~ Normal(0, sigma_v^2), sigma_v ~ HalfNormal(S_V): growth
-        # innovation, own scale per PRIORS.md Amendment 1. Runs 001-003 shared
-        # one scale across both streams; the growth stream compounding under
-        # rho_g produced the PP3 runaway recorded in PRIOR-PREDICTIVE-RUN-001.md.
-        sigma_u=float(abs(rng.normal(0.0, 0.05))),
-        sigma_v=float(abs(rng.normal(0.0, S_V))),
+        tau=tau,
+        alpha_D=alpha_D,
+        alpha_F=alpha_F,
+        w=w,
+        kappa=kappa,
+        phi=phi,
+        xbar=xbar,
+        gstar=gstar,
+        rho_g=rho_g,
+        psi=psi,
+        # Per-state AI-intensity long-run growth, iid |N(0.03, 0.02)|, the
+        # per-state promotion of the scalar the deterministic stand-in carried;
+        # sigma_ai ~ HalfNormal(S_V), the seventh growth-innovation stream on
+        # the Amendment 1 scale. Both PRIORS.md Amendment 3 (provisional).
+        # Drawn from the spawned child, never the main stream.
+        gstar_ai={s: float(abs(ai_rng.normal(0.03, 0.02))) for s in STATES},
+        sigma_ai=float(abs(ai_rng.normal(0.0, S_V))),
+        sigma_u=sigma_u,
+        sigma_v=sigma_v,
     )
 
 
@@ -244,6 +284,7 @@ class Trajectory:
     Y: dict[str, np.ndarray]  # state -> (n_years, 4)
     sigma_top: np.ndarray
     unconstrained_Y: dict[str, np.ndarray]
+    ai: dict[str, np.ndarray]  # state -> (n_years,), AI intensity level (expm1)
 
 
 @dataclass(frozen=True)
@@ -261,12 +302,14 @@ class Shocks:
     growth: dict[str, np.ndarray]  # state -> (n_years, n_inputs)
     level: dict[str, np.ndarray]
     sigma_top: np.ndarray
+    ai: dict[str, np.ndarray]  # state -> (n_years,), AI-intensity growth shocks
 
     def mirrored(self) -> "Shocks":
         return Shocks(
             growth={"US": self.growth["CN"], "CN": self.growth["US"]},
             level={"US": self.level["CN"], "CN": self.level["US"]},
             sigma_top=self.sigma_top,
+            ai={"US": self.ai["CN"], "CN": self.ai["US"]},
         )
 
 
@@ -276,12 +319,23 @@ def sample_shocks(
     tau: float,
     sigma_u: float = 0.01,
     sigma_v: float = 0.01,
+    *,
+    sigma_ai: float,
 ) -> Shocks:
+    # sigma_ai is keyword-only with NO default on purpose: a call site that
+    # forgot it would draw AI shocks at a wrong scale that PP4 cannot see
+    # (wrong-but-symmetric mirrors exactly), so the signature makes the miss a
+    # TypeError instead of a silent miscalibration.
+    #
+    # The AI stream draws from a spawned child for the same run-004
+    # stream-preservation reason as in sample_prior.
+    ai_rng = rng.spawn(1)[0]
     n_j = len(INPUTS)
     return Shocks(
         growth={s: rng.normal(0.0, sigma_v, size=(n_years, n_j)) for s in STATES},
         level={s: rng.normal(0.0, sigma_u, size=(n_years, n_j)) for s in STATES},
         sigma_top=rng.normal(0.0, tau, size=n_years),
+        ai={s: ai_rng.normal(0.0, sigma_ai, size=n_years) for s in STATES},
     )
 
 
@@ -299,6 +353,7 @@ def mirror_draw(draw: PriorDraw) -> PriorDraw:
         xbar={"US": draw.xbar["CN"], "CN": draw.xbar["US"]},
         gstar={"US": draw.gstar["CN"], "CN": draw.gstar["US"]},
         psi={"US": draw.psi["CN"], "CN": draw.psi["US"]},
+        gstar_ai={"US": draw.gstar_ai["CN"], "CN": draw.gstar_ai["US"]},
     )
 
 
@@ -329,7 +384,9 @@ def simulate(
     if shocks is None:
         if rng is None:
             raise ValueError("simulate requires either an rng or pre-drawn shocks")
-        shocks = sample_shocks(rng, n_t, draw.tau, draw.sigma_u, draw.sigma_v)
+        shocks = sample_shocks(
+            rng, n_t, draw.tau, draw.sigma_u, draw.sigma_v, sigma_ai=draw.sigma_ai
+        )
 
     x: dict[str, np.ndarray] = {}
     xu: dict[str, np.ndarray] = {}
@@ -352,16 +409,37 @@ def simulate(
                 path[t] = np.exp(np.clip(log_next, -30.0, 30.0))
             target[s] = path
 
-    # sigma_top[t] transition. AI intensity is a normalised latent scalar
-    # growing from a common base; it is deliberately not measured from any
-    # AI-exposure occupation index, per SPECIFICATION.md section 7.
-    ai = np.exp(draw.ai_intensity_growth * (years - BASE_YEAR)) - 1.0
+    # sigma_top[t] transition. AI intensity is a per-state latent local linear
+    # trend per SPECIFICATION.md Amendment 03 -- same form as the Block E
+    # inputs, but with no saturation term (no ceiling was ever committed for
+    # AI; see the Amendment 03 follow-up note). It is deliberately not measured
+    # from any AI-exposure occupation index, per SPECIFICATION.md section 7.
+    log1p_ai: dict[str, np.ndarray] = {}
+    for s in STATES:
+        path_ai = np.zeros(n_t)
+        g_ai = draw.gstar_ai[s]
+        for t in range(1, n_t):
+            g_ai = (
+                draw.rho_g * g_ai
+                + (1.0 - draw.rho_g) * draw.gstar_ai[s]
+                + shocks.ai[s][t]
+            )
+            path_ai[t] = path_ai[t - 1] + g_ai
+        log1p_ai[s] = path_ai
+    # Cross-state MEAN of log(1+AI) drives the shared sigma_top: the only
+    # simple pooling that is exactly swap-invariant, which PP4 requires
+    # structurally. Amendment 03 follow-up note.
+    mean_log1p_ai = np.mean([log1p_ai[s] for s in STATES], axis=0)
     span = PriorDraw.SIGMA_TOP_MAX - PriorDraw.SIGMA_TOP_MIN
     p0 = (draw.sigma_top0 - PriorDraw.SIGMA_TOP_MIN) / span
     ls = np.zeros(n_t)
     ls[0] = logit(min(max(p0, 1e-4), 1 - 1e-4))
     for t in range(1, n_t):
-        ls[t] = ls[t - 1] + draw.delta * (ai[t] - ai[t - 1]) + shocks.sigma_top[t]
+        ls[t] = (
+            ls[t - 1]
+            + draw.delta * (mean_log1p_ai[t] - mean_log1p_ai[t - 1])
+            + shocks.sigma_top[t]
+        )
     sigma_top = PriorDraw.SIGMA_TOP_MIN + span * np.array([inv_logit(v) for v in ls])
 
     def capability(path: np.ndarray) -> np.ndarray:
@@ -383,6 +461,7 @@ def simulate(
         Y={s: capability(x[s]) for s in STATES},
         sigma_top=sigma_top,
         unconstrained_Y={s: capability(xu[s]) for s in STATES},
+        ai={s: np.expm1(log1p_ai[s]) for s in STATES},
     )
 
 
@@ -639,7 +718,12 @@ def pp4_symmetry(n_draws: int, seed: int, *, tolerance: float = 0.05) -> GateRes
     for _ in range(n_draws):
         draw = sample_prior(rng)
         shocks = sample_shocks(
-            rng, 2075 - BASE_YEAR + 1, draw.tau, draw.sigma_u, draw.sigma_v
+            rng,
+            2075 - BASE_YEAR + 1,
+            draw.tau,
+            draw.sigma_u,
+            draw.sigma_v,
+            sigma_ai=draw.sigma_ai,
         )
         a = classify(simulate(draw, shocks=shocks), horizon)
         b = classify(

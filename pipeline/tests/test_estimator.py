@@ -50,6 +50,8 @@ def test_prior_moments_agree_small_n():
         "delta": [d.delta for d in np_draws],
         "rho_g": [d.rho_g for d in np_draws],
         "sigma_v": [d.sigma_v for d in np_draws],
+        "sigma_ai": [d.sigma_ai for d in np_draws],
+        "gstar_ai": [d.gstar_ai[s] for d in np_draws for s in ("US", "CN")],
     }.items():
         a, b = np.asarray(vals), np.asarray(jx[name]).ravel()
         assert abs(a.mean() - b.mean()) / a.std() < 0.25, name

@@ -390,3 +390,20 @@ The prior-predictive harness retains its deterministic exponential for the gates
 
 - model/ESTIMATION-SYNTHETIC-RUN-001.md (internal; registered gap 2)
 - Author Q&A of 2026-08-20 (structured; recommended option adopted)
+
+### Follow-up note to Amendment 03 -- 2026-08-22 -- adoption details: cross-state pooling and the absence of an AI ceiling
+
+Two readings had to be fixed at adoption, both flagged for author override; neither touches any published quantity.
+
+1. **Cross-state pooling.** Amendment 03 commits one AI-intensity latent per state; section 6.3 commits one `sigma_top[t]` shared by both states. The adopted reading: the increments of the **cross-state mean of `log(1 + AI_intensity[i,t])`** drive the `sigma_top` transition through `delta`. Ground: `sigma_top` is a property of the shared technology, so the identical-functional-form commitment in section 5 forbids a per-state `sigma_top`; the mean is the only simple pooling that is exactly swap-invariant, which PP4 requires structurally (max fails differentiability at crossings; sum double-counts a global level).
+2. **No saturation term.** The Block E inputs carry `kappa`, `phi`, `xbar` saturation; the AI-intensity latent carries none. No ceiling was ever committed for AI intensity, and inventing an `xbar_ai` would introduce a new judgement parameter with no committed source. The latent is a local linear trend without drag.
+
+Both readings are adopted as readings of the 6.3-vs-7 ambiguity, not new commitments; the author may override either, and an override before first real estimation changes nothing already published.
+
+### Gate re-run under Amendment 03 -- 2026-08-22 -- run 005: PASS
+
+Amendment 03 committed that the prior-predictive harness adopts the stochastic AI form at the next full re-run, reported either way. Run 005 (n=400, seed 20260819, `model/prior-predictive-run-005.txt`): **all five gates pass.**
+
+- **PP3 is verbatim identical to run 004** (max 2050 multiple 29.3x at US/D1; 0.2% breach rate). This was pre-committed as a strict regression check: AI intensity feeds `sigma_top`, never the x-paths, so any PP3 movement would have been a wiring bug. Strictness is achieved by drawing all AI-related variates from a spawned child generator so pre-existing draws keep their run-004 stream positions; the superseded scalar's stream slot is consumed and discarded (see `sample_prior`).
+- PP4: exact mirror on all 400 paired draws, aggregate deviation 0.0000 -- the AI stream and `gstar_ai` are swapped in `Shocks.mirrored()` and `mirror_draw`, and the cross-state-mean coupling is swap-invariant by construction.
+- PP1/PP2/PP5 masses moved within noise of run 004 (e.g. R4@2050 0.0775 vs 0.07; R1@2050 0.4175 vs 0.42), as expected from `sigma_top` dynamics gaining process noise; all margins clear.

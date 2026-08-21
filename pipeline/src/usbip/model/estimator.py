@@ -18,18 +18,17 @@ Single source of truth: every prior constant is imported from
 ``prior_predictive.py`` rather than re-transcribed from ``model/PRIORS.md``.
 Two transcriptions of one prior can diverge; one cannot.
 
-Registered gaps, per the F1-Amendment-1 convention (register, do not silently
-invent). The specification does not commit:
-
-1. Initial-state priors for the latent inputs at the start of an estimation
-   window. This file uses ``log x0 ~ Normal(log baseline, 0.3)`` for the
-   synthetic exercise only; real estimation requires an authored choice.
-2. The AI-intensity evolution process (SPECIFICATION.md section 7 names the
-   indicators but no process). The synthetic exercise uses the deterministic
-   exponential from ``prior_predictive.py``; real estimation requires an
-   authored choice.
-
-Both are recorded in ``model/ESTIMATION-SYNTHETIC-RUN-001.md``.
+Both gaps registered at first build are now closed by authored commitments and
+adopted here: initial-state priors per ``PRIORS.md`` Amendment 2 (anchored
+0.5 / anchor-absent 1.0 location scales; stationary AR(1) initial growth
+states), and the stochastic AI-intensity process per ``SPECIFICATION.md``
+Amendment 03 with its follow-up note (per-state local linear trend on
+``log(1+AI)``, no saturation term, cross-state MEAN driving ``sigma_top``) and
+``PRIORS.md`` Amendment 3 (``gstar_ai``, ``sigma_ai``, stationary ``g_ai0``;
+provisional pending author ratification). In synthetic scope AI intensity is
+UNOBSERVED -- no section 7 indicator block exists yet -- so delta's
+information path runs through an unmeasured latent and weaker delta behaviour
+is expected, not a defect. Recorded in ``model/ESTIMATION-SYNTHETIC-RUN-003.md``.
 """
 
 from __future__ import annotations
@@ -70,7 +69,9 @@ ANCHORED = ("D1", "D2", "D3")
 ANCHOR_ABSENT = ("F1", "F2", "F3")
 ANCHOR_SIGMA = 0.02  # tier-1: no bias term, small fixed noise scale
 BIAS_PRIOR_SD = 0.10
-X0_PRIOR_SD = 0.30  # registered gap 1: synthetic-scope choice
+# Initial-state location scales per PRIORS.md Amendment 2: 0.5 for anchored
+# series, 1.0 for anchor-absent. Order follows INPUTS = (D1,D2,D3,F1,F2,F3).
+X0_PRIOR_SD = (0.5, 0.5, 0.5, 1.0, 1.0, 1.0)
 # Floor on the biased-series noise scale, applied IDENTICALLY in the model
 # prior and the synthetic truth generator (SBC semantics require the two to
 # match). Divergence diagnosis (run 002) localised the funnel to sigma_z
@@ -146,10 +147,14 @@ def model(
             jnp.array([0.60, 0.10, 0.35, 0.30]), jnp.array([0.90, 0.40, 0.65, 0.60])
         ).to_event(1),
     )
-    ai_growth = numpyro.sample(
-        "ai_intensity_growth",
-        dist.FoldedDistribution(dist.Normal(0.03, 0.02)),
+    # AI-intensity latent parameters, SPECIFICATION.md Amendment 03 +
+    # PRIORS.md Amendment 3 (provisional): per-state long-run growth, own
+    # innovation scale, persistence shared with rho_g below.
+    gstar_ai = numpyro.sample(
+        "gstar_ai",
+        dist.FoldedDistribution(dist.Normal(0.03, 0.02)).expand([n_s]).to_event(1),
     )
+    sigma_ai = numpyro.sample("sigma_ai", dist.HalfNormal(S_V))
 
     # ---- Block E parameters ----
     kappa = numpyro.sample("kappa", dist.HalfNormal(0.05).expand([n_j]).to_event(1))
@@ -167,12 +172,21 @@ def model(
     sigma_v = numpyro.sample("sigma_v", dist.HalfNormal(S_V))
 
     # ---- Block E latent paths, non-centered ----
+    x0_sd = jnp.array(X0_PRIOR_SD)
     log_x0 = numpyro.sample(
-        "log_x0", dist.Normal(jnp.log(baseline), X0_PRIOR_SD).to_event(2)
+        "log_x0", dist.Normal(jnp.log(baseline), x0_sd[None, :]).to_event(2)
     )
     z_u = numpyro.sample("z_u", dist.Normal(0, 1).expand([n_s, T - 1, n_j]).to_event(3))
     z_v = numpyro.sample("z_v", dist.Normal(0, 1).expand([n_s, T - 1, n_j]).to_event(3))
     z_w = numpyro.sample("z_w", dist.Normal(0, 1).expand([T - 1]).to_event(1))
+
+    # Initial growth states at their AR(1) stationary distribution, PRIORS.md
+    # Amendment 2, non-centered. The clamp on 1 - rho_g^2 matters: the
+    # Beta(6, 2) upper tail otherwise explodes the scale factor and reopens
+    # the trapped-chain trap recorded in run 002.
+    stationary = jnp.sqrt(jnp.maximum(1.0 - rho_g**2, 1e-4))
+    z_g0 = numpyro.sample("z_g0", dist.Normal(0, 1).expand([n_s, n_j]).to_event(2))
+    g0 = gstar + sigma_v / stationary * z_g0
 
     gstar_t = gstar[:, None, :] + psi[:, None, :] * stress[:, :, None]  # (n_s,T,n_j)
 
@@ -188,20 +202,37 @@ def model(
         return (log_x, g), log_x
 
     (_, _), log_x_rest = jax.lax.scan(
-        step, (log_x0, gstar), jnp.arange(1, T)
+        step, (log_x0, g0), jnp.arange(1, T)
     )  # (T-1, n_s, n_j)
     log_x = jnp.concatenate(
         [log_x0[None, :, :], log_x_rest], axis=0
     ).transpose(1, 0, 2)  # (n_s, T, n_j)
 
-    # ---- sigma_top walk (registered gap 2: deterministic AI intensity) ----
-    years = jnp.arange(T, dtype=jnp.float32)
-    ai = jnp.exp(ai_growth * years) - 1.0
+    # ---- sigma_top walk, stochastic AI intensity per Amendment 03 ----
+    # Per-state local linear trend on log(1+AI), same form as the Block E
+    # inputs, no saturation term (Amendment 03 follow-up note). UNOBSERVED in
+    # synthetic scope: no indicator block exists yet, so the latent is
+    # informed only through sigma_top's effect on the capability observations.
+    z_gai0 = numpyro.sample("z_gai0", dist.Normal(0, 1).expand([n_s]).to_event(1))
+    g_ai0 = gstar_ai + sigma_ai / stationary * z_gai0
+    z_ai = numpyro.sample("z_ai", dist.Normal(0, 1).expand([n_s, T - 1]).to_event(2))
+
+    def ai_step(g_prev, t):
+        g = rho_g * g_prev + (1.0 - rho_g) * gstar_ai + sigma_ai * z_ai[:, t - 1]
+        return g, g
+
+    _, g_ai_rest = jax.lax.scan(ai_step, g_ai0, jnp.arange(1, T))  # (T-1, n_s)
+    log1p_ai = jnp.concatenate(
+        [jnp.zeros((1, n_s)), jnp.cumsum(g_ai_rest, axis=0)], axis=0
+    )  # (T, n_s)
+    # Cross-state MEAN of log(1+AI) drives the shared sigma_top -- the only
+    # simple swap-invariant pooling, per the Amendment 03 follow-up note.
+    mean_log1p_ai = jnp.mean(log1p_ai, axis=1)  # (T,)
     span = PriorDraw.SIGMA_TOP_MAX - PriorDraw.SIGMA_TOP_MIN
     p0 = (sigma_top0 - PriorDraw.SIGMA_TOP_MIN) / span
     p0 = jnp.clip(p0, 1e-4, 1 - 1e-4)
     ls0 = jnp.log(p0 / (1 - p0))
-    incr = delta * jnp.diff(ai) + tau * z_w
+    incr = delta * jnp.diff(mean_log1p_ai) + tau * z_w
     ls = jnp.concatenate([ls0[None], ls0 + jnp.cumsum(incr)])
     sigma_top = PriorDraw.SIGMA_TOP_MIN + span / (1.0 + jnp.exp(-ls))  # (T,)
 
@@ -304,6 +335,10 @@ def make_synthetic(draw, T: int, seed: int) -> SyntheticData:
         "lam": lam,
         "b_anchored": b[:, :3],
         "gstar": np.stack([draw.gstar[s] for s in STATES]),
+        # AI intensity is unobserved in synthetic scope; these truths exist so
+        # the recovery report can show how little the data inform them.
+        "gstar_ai": np.array([draw.gstar_ai[s] for s in STATES]),
+        "sigma_ai": draw.sigma_ai,
     }
     return SyntheticData(z_anchor, z_biased, z_capability, truth)
 

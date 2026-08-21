@@ -306,3 +306,29 @@ where `z0[j,i]` is the earliest admissible observation of the highest-tier sourc
 
 - model/ESTIMATION-SYNTHETIC-RUN-001.md (internal; registered gap 1, and the synthetic-scope choice this supersedes for real estimation)
 - Author Q&A of 2026-08-20 (structured; recommended option adopted)
+
+## Amendment 3 -- 2026-08-22 -- priors for the stochastic AI-intensity latent -- PROVISIONAL PENDING AUTHOR RATIFICATION
+
+**Appended, not substituted. Provisional.** SPECIFICATION.md Amendment 03 commits a per-state local-linear-trend process for `log(1 + AI_intensity[i,t])` but commits no priors for its parameters. An unregistered prior is the F1-defect-3 shape -- register, do not silently invent -- so the three choices below are registered here rather than buried in a run note. All three are marked provisional and require author ratification before first real estimation.
+
+### The commitment
+
+```
+gstar_ai[i]  ~ |Normal(0.03, 0.02)|      iid per state
+sigma_ai     ~ HalfNormal(0.0191)
+g_ai[i,t0]   ~ Normal( gstar_ai[i], sigma_ai / sqrt(1 - rho_g^2) )   estimation window only
+```
+
+Persistence is `rho_g`, shared with the Block E inputs -- Amendment 03's own text ("persistence inherited from `rho_g`"); no separate `rho_ai` exists to prior.
+
+**Grounds.**
+
+- `gstar_ai`: the per-state promotion of the scalar folded-Normal(0.03, 0.02) that the prior-predictive harness has carried for its deterministic stand-in since run 001; the scale judgement is unchanged, only the indexing changes, per the identical-functional-form commitment.
+- `sigma_ai`: the growth-innovation scale hyperparameter `s_v = 0.0191` from Amendment 1, applied to a seventh growth-innovation stream. Exact precedent: Amendment 1's limitation note already applies the one elicited scale to all six Block E streams; this extends the same accepted asymmetry to the AI stream and inherits the same limitation sentence -- the scale was derived from electricity-capacity growth residuals and its transfer to AI intensity is an analogy, not a derivation.
+- `g_ai[t0]`: the AR(1) stationary form, exactly Amendment 2's treatment of the Block E initial growth states, for the same ground stated there.
+
+### Sources for Amendment 3
+
+- model/SPECIFICATION.md Amendment 03 and its follow-up note of 2026-08-22 (internal)
+- model/PRIORS.md Amendments 1 and 2 (internal; the scale and the initial-state form extended here)
+- HANDOVER.md section 16 (internal; the gap resolutions this registers)

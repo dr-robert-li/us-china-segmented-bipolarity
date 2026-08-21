@@ -173,6 +173,48 @@ class TestSamplerMatchesCommittedPriors(unittest.TestCase):
         self.assertGreater((v < 0).mean(), 0.45)
         self.assertGreater((v > 0).mean(), 0.45)
 
+    def test_gstar_ai_is_per_state_folded_normal(self) -> None:
+        # gstar_ai[i] ~ |Normal(0.03, 0.02)| iid per state, PRIORS.md
+        # Amendment 3 (provisional). Folded-normal mean with mu/sigma = 1.5:
+        # sigma*sqrt(2/pi)*exp(-mu^2/2sigma^2) + mu*(1 - 2*Phi(-mu/sigma))
+        # = 0.031173. Surrogate guarded against: the superseded SHARED scalar
+        # -- the two states must be independent draws, not one value copied.
+        us = np.array([d.gstar_ai["US"] for d in self.draws])
+        cn = np.array([d.gstar_ai["CN"] for d in self.draws])
+        both = np.concatenate([us, cn])
+        self.assertAlmostEqual(both.mean(), 0.031173, delta=0.002)
+        self.assertGreaterEqual(both.min(), 0.0)
+        self.assertTrue(
+            np.all(us != cn),
+            "gstar_ai must be drawn per state; equal values mean the shared "
+            "scalar is back",
+        )
+
+    def test_sigma_ai_is_halfnormal_at_the_amendment_1_scale(self) -> None:
+        # sigma_ai ~ HalfNormal(S_V), the seventh growth-innovation stream on
+        # the Amendment 1 scale, per PRIORS.md Amendment 3 (provisional).
+        # Surrogates guarded against: sharing sigma_u's 0.05 scale, and any
+        # hard-coded scale (zero variance).
+        s = self._scalar("sigma_ai")
+        self.assertAlmostEqual(s.mean(), pp.S_V * np.sqrt(2 / np.pi), delta=0.001)
+        self.assertGreater(s.std(), 0.005, "a hard-coded scale has zero variance")
+        self.assertLess(
+            s.mean(), 0.03, "a 0.05-scale draw would mean the shared prior is back"
+        )
+
+    def test_mirror_swaps_the_ai_stream_and_gstar_ai(self) -> None:
+        # PP4 fails on noise if either swap is missed (run-001 failure mode),
+        # but only diagnosably so; this pins each swap directly.
+        rng = np.random.default_rng(SEED)
+        d = pp.sample_prior(rng)
+        m = pp.mirror_draw(d)
+        self.assertEqual(m.gstar_ai["US"], d.gstar_ai["CN"])
+        self.assertEqual(m.gstar_ai["CN"], d.gstar_ai["US"])
+        sh = pp.sample_shocks(rng, 5, d.tau, d.sigma_u, d.sigma_v, sigma_ai=d.sigma_ai)
+        sm = sh.mirrored()
+        self.assertTrue(np.array_equal(sm.ai["US"], sh.ai["CN"]))
+        self.assertTrue(np.array_equal(sm.ai["CN"], sh.ai["US"]))
+
     def test_sigma_top_2026_is_bounded_as_committed(self) -> None:
         # sigma_top[2026] ~ LogNormal(log 0.6, 0.55), bounded [0.15, 2.5].
         v = self._scalar("sigma_top0")
