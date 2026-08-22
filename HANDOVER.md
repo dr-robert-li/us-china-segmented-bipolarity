@@ -411,3 +411,52 @@ Author closed Decisions A-D by adopting the recommendations of a three-model cou
 - **D (run-book): wording corrected** -- R003 entry reads "confirm the v0.2.0 coarse common partition at ingest", not a re-opened decision. R010/R011/R012 entries unchanged from section 18.
 
 **Item 5 is now unblocked on its author decisions.** Remaining before ingest execution: essay author-read (item 4's last step, still pending); then the ingest run-book (D1 via R003 0.2.0 confirm, D3 via R008 across the IFR break, F1-input via R010/R011 = F8 first ingest, F2/F3 per the new definition files, R012 scale derivation). One provisional flag rides along: the PWT vintage-pinning rule awaits ratification of its exact form at first snapshot.
+
+## 21. Restart handover -- 2026-08-22 -- state snapshot after items 2-4 closed and the section-18 queue ratified
+
+**Read this section first on a cold start; sections 16-20 carry the detail.**
+
+### Where the committed sequence stands
+
+| Item | State |
+|---|---|
+| 2. Adopt Amendment 2 + 03 forms, re-run gates | **CLOSED** (section 17). Run-005 gates 5/5, PP3 verbatim vs run 004; D3 smoke 0 divergences, r_hat 1.037 |
+| 3. Full SBC | **CLOSED** (section 19). 300 reps, no decisive miscalibration on N=169 clean; 44% divergent fraction is a standing author-attention item |
+| 4. Essay | Drafted + cross-reviewed + dispositioned (`essay/DRAFT.md`, `essay/REVIEWS.md`). **Author read is the only remaining step.** 5,851 words, below the 6,000 floor by decision-not-padding; both reviewers paused on M7 |
+| 5. Estimation-grade ingest | **UNBLOCKED** -- section-18 decisions A-D closed by author ratification (section 20). This is the next work item |
+| 6. Backtests -> nesting -> published run | Blocked on 5. The SBC divergence finding feeds its adaptation choice: D3-grade will not reliably meet section-10's zero-divergence bar |
+| 7. Paper B | Blocked on 6 |
+| 8. 2027 queue | Calendar-gated |
+
+### Item 5 run-book (execute in this order)
+
+1. **First snapshot of the pinned PWT vintage** -- and at that moment, surface the vintage rule for author ratification (the one provisional flag from section 20: "newest release at first snapshot, pinned by release number + hash" -- exact form not yet ratified).
+2. D1 via R003 at **0.2.0** -- CONFIRM the coarse common partition, do not re-open (section 20 D).
+3. D3 via R008 across the IFR break (S10 sensitivity already registered).
+4. F1-input via R010/R011 = **F8 first ingest**: five-setting grid, coverage snapshot, band enumeration U -- one work item serving falsifier and estimation input.
+5. F2 per `pipeline/definitions/capital-depth.md`, F3 per `pipeline/definitions/human-capital.md` (S11 sensitivity registered, PRIORS Amendment 4).
+6. R012 benchmark scales derive at first ingest by the pre-committed procedure.
+7. Block M indicator set (SPECIFICATION section 7) -- note the AI-intensity latent becomes observed here, which changes delta's information path from the synthetic-scope caveat in ESTIMATION-SYNTHETIC-RUN-003.md section 2.
+
+Expect F1-Amendment-2-style blocking Q&As on first data contact even for committed rules -- that is the F1 precedent, not a failure.
+
+### Invariants a fresh session must not break
+
+- `prior_predictive.py::sample_prior`: main-stream draw ORDER is load-bearing (ordered locals + the consume-and-discard slot). All AI variates come from `rng.spawn` children. Touching either breaks the PP3 strict-regression baseline. Same for the `sample_shocks` AI child stream.
+- `sample_shocks`'s `sigma_ai` is keyword-only with NO default -- a defaulted miss would be wrong-but-symmetric, invisible to PP4.
+- `simulate`'s init conventions (x0 = baseline, g0 = gstar, g_ai0 = gstar_ai) are FROZEN -- they are the gates' record. SBC truths come from `make_sbc_synthetic` (model-prior initial states), never from `make_synthetic`.
+- Ceiling values are frozen with a recorded rationale weakness (SPECIFICATION corrective note, 2026-08-22); any change is gate-adjacent.
+
+### Provisional flags awaiting author ratification
+
+1. PRIORS.md Amendment 3: `gstar_ai`, `sigma_ai`, stationary `g_ai0` (before first real estimation).
+2. PWT vintage-pinning rule exact form (at first snapshot).
+3. Essay author-read (word-count floor, M7, M2 density -- flagged in `essay/REVIEWS.md`).
+
+### Environment facts
+
+numpyro 0.21.0 / jax 0.11.1 CPU via `python3 -m pip` (miniconda; plain `pip3` shimmed to uv, fails); tests from `pipeline/` as `python3 -m pytest tests/ -q` -- **54 passing**; estimator x64; 20 cores / 121 GB; NVIDIA GB10 present but CUDA jaxlib NOT installed and was evaluated as not worth it (x64 model vs consumer-Blackwell FP64 -- section 19); scratchpad scripts are gone on restart -- the SBC driver is re-derivable from ESTIMATION-SYNTHETIC-RUN-003.md section 6 protocol (its jsonl is resumable by design); cross-AI review lanes: codex needs `-m gpt-5.4-mini` and `< /dev/null`, ollama has gemma4:31b.
+
+### Artefact map for this session's work
+
+`model/`: prior-predictive-run-005.txt, smoke-run-005.json, sbc-run-003.jsonl, sbc-full-run-003.json, sbc-run-003-divergence-analysis.json, ESTIMATION-SYNTHETIC-RUN-003.md (run note incl. SBC protocol + results). `essay/`: DRAFT.md, REVIEWS.md, review-raw-codex.txt, review-raw-ollama.txt. `pipeline/definitions/`: capital-depth.md, human-capital.md. Amendments: SPECIFICATION 03 follow-up + gate report + 01.2 corrective note; PRIORS Amendments 3 and 4; essay/OUTLINE.md two dated corrections.
