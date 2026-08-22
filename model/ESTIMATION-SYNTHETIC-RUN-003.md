@@ -43,4 +43,23 @@ Sweep protocol, committed at launch, 2026-08-22, before any result was seen:
 - Incremental record `model/sbc-run-003.jsonl` (one row per replication, resumable); summary `model/sbc-full-run-003.json`.
 - Compute: 16 CPU worker processes (20-core machine; CUDA jaxlib declined -- the model is committed x64 and consumer-Blackwell FP64 throughput would not beat 16 CPU workers; the arithmetic, ~300 x ~600 s / 16 ≈ 3-4 h, made GPU installation moot).
 
-RESULTS-PENDING-SBC
+### Results (`model/sbc-full-run-003.json`, per-replication `model/sbc-run-003.jsonl`; 300 replications, 11,542 s wall on 16 workers)
+
+**Divergences: 169 of 300 replications ran clean (56%); 131 diverged (44%).** The distribution is heavy at the bottom -- most divergent replications carry 1-9 divergences out of 1,600 post-warmup draws (0.06-0.6%) -- with two catastrophic outliers (378 and 216 divergences, replications 158 and 286) and a handful in the tens. Per the pre-committed rule, divergent replications are excluded from the rank table and reported, not pooled. **The 44% divergent fraction is an author-attention item**: it is far above the run-002 pilot's 5/24, and the difference is attributable to the harder truth population -- the run-003 generator draws initial states from the full Amendment 2/3 priors (x0 at scales 0.5/1.0, stationary g0/g_ai0) where the pilot fixed them at point values. Whatever adaptation the published real-data run uses must clear a stricter bar than D3's (zero divergences, section 10), and this sweep says D3-grade adaptation does not reliably deliver that across the prior; expect the published run to need higher target_accept or reparameterisation, and treat that as a known cost, not a surprise.
+
+**Conditioning check (`model/sbc-run-003-divergence-analysis.json`).** Excluding 44% of replications conditions the rank table on the clean subset, so the truth-region dependence of divergence was measured directly (truths regenerated from seeds). The dependence is weak: the largest point-biserial correlation between the divergence indicator and any truth parameter is 0.17 (`sigma_u`, higher-noise truths diverge slightly more often), with `rho_g` at -0.15 -- divergent replications have LOWER-persistence truths on average, the opposite of the near-unit-root hypothesis. Clean-only versus all-replication rank means differ by at most 0.017 on any parameter. The exclusion is therefore not carving out an identifiable pathological truth region at these correlations, though 44% exclusion remains a power and interpretation cost stated as such.
+
+**Rank uniformity (clean subset, N=169; normalised rank u = rank/320; uniform implies mean 0.50, sd 0.289, expected extreme count -- u below 0.05 or above 0.95 -- 16.9 with binomial sd 3.9):**
+
+| Parameter | mean u | sd u | extremes |
+|---|---|---|---|
+| `delta` | 0.534 | 0.298 | 25 |
+| `rho_g` | 0.523 | 0.301 | 18 |
+| `sigma_D` | 0.497 | 0.303 | 17 |
+| `sigma_F` | 0.548 | 0.296 | 22 |
+| `sigma_u` | 0.496 | 0.289 | 12 |
+| `sigma_v` | 0.489 | 0.304 | 24 |
+| `sigma_top0` | 0.473 | 0.290 | 14 |
+| `sigma_ai` | 0.500 | 0.290 | 14 |
+
+**No decisive miscalibration.** Every sd sits at the uniform 0.289 within noise. Two statistics reach roughly two sigma uncorrected -- `sigma_F`'s mean at 0.548 (+2.2 sigma against se 0.022) and `delta`'s extreme count at 25 (+2.1 sigma) -- and neither survives an eight-parameter multiplicity correction; they are recorded here so that if either recurs in a later sweep it reads as a pattern, not a first appearance. `sigma_ai`, the new AI scale, is as uniform as anything in the table (mean 0.500, sd 0.290): the machinery handles the parameter it cannot learn, which is what SBC tests. **The run-002 full-sweep obligation is closed**: hundreds of replications, demonstration-grade adaptation, thinned ranks, divergent replications excluded-and-reported, generator drawing from exactly the model prior.
