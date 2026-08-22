@@ -1,0 +1,141 @@
+Thinking...
+Expert reader of the peaking-power debate (e.g., Beckley, Thucydides Trap/A
+Trap/Allison) and composite-indicator literature (OECD, Munda & Nardo).
+        *   (1) Internal consistency of numbers/claims.
+        *   (2) Fairness of Movements 3 and 6 to a hostile reader (concessi
+(concession vs. fair passage).
+        *   (3) Argument quality: Identify the weakest movement and explain
+explain why.
+        *   (4) Prose analysis: What would an expert skim?
+Summary paragraph $\rightarrow$ Strengths bullets $\rightarrow$ Concerns bu
+bullets (HIGH/MEDIUM/LOW with one-sentence mechanism).
+Mark review as `[reviewed-without-repo-access]`.
+    *   *Movement 1:* Sets the stage. Contrasts two "ledgers" (decline vs. 
+ascent) for China. Argues that verdicts aren't in the data but in the "exch
+"exchange rate" (weighting/aggregation).
+    *   *Movement 2:* Theoretical attack on composite indices based on the 
+OECD handbook and Arrow's Theorem. Claims weights are substitution rates, n
+not importance. Attacks specific indices (Correlates of War, Lowy, Global F
+Firepower).
+    *   *Movement 3:* The "Strongest Argument Against." Acknowledges that s
+simple scalars (like GDP $\times$ GDP per capita) predict war outcomes bett
+better than complex composites. Concedes the vector approach has no histori
+historical validation record yet.
+    *   *Movement 4:* Contrasts a "best-specified" peaking thesis with the 
+"Thucydides Trap." Argues for nesting the peaking thesis as a parameter spa
+space in the model rather than just refuting it. Mentions Lind's work on gr
+great power normals.
+    *   *Movement 5:* Discusses pre-registration (closing the "garden of fo
+forking paths"). Admits failures/limitations but argues it provides auditab
+auditability.
+    *   *Movement 6:* Details the Bayesian model's failure to pass prior-pr
+prior-predictive gates initially. Describes how this is a feature, not a bu
+bug (shows the model can be wrong).
+    *   *Movement 7:* Discusses the "cost" of the vector approach: it canno
+cannot answer "who is stronger/when is overtaking." Argues that a dashboard
+dashboard is more honest than a scalar. Ends on measurement uncertainty.
+    *   *Test 1 (Internal Consistency):*
+        *   Numbers: GDP growth 14% $\rightarrow$ 6%; TFP -1.3%; Debt $>300
+$>300\%$GDP; Demographics -200m workers/+200m pensioners; Spending $10\% \r
+\rightarrow 30\%$GDP. (Standard China-sceptic numbers).
+        *   Numbers: Electricity 5,802 $\rightarrow$ 10,573 TWh; Solar 58%,
+58%, Wind 72%; Coal $70\% \rightarrow 54\%$; Robots 2.027m (43% stock, 54% 
+flow). (Standard China-optimist numbers).
+        *   Consistency check: The "exchange rate" argument is logically co
+consistent with the data presented. The discussion of pre-registration and 
+gates aligns with Bayesian workflow.
+    *   *Test 2 (Fairness of M3 & M6):*
+        *   Movement 3: Very fair. It doesn't just say "scalars are okay"; 
+it says they *outperform* the complex ones in the only metric that has hist
+historically mattered (war prediction). The admission that the vector lacks
+lacks this record is a genuine concession, not a grudging one.
+        *   Movement 6: This reads as a transparency exercise. To a hostile
+hostile reader, it might look like "the model was broken," but by framing i
+it as "the machine said no" and documenting the logs, it transforms from a 
+flaw into an evidence of rigor (auditability). It feels fair because it pro
+provides the specific mechanism of failure (symmetry gates, prior-predictiv
+prior-predictive checks) rather than vague hand-waving.
+    *   *Test 3 (Argument Quality/Weakest Movement):*
+        *   Movement 4 is potentially the weakest in terms of *structural l
+logic*, though strong on literature knowledge. It spends a lot of time on "
+"nesting" and case counts (5-6 vs 8), which feels like an academic skirmish
+skirmish compared to the high-level philosophical attack on indices in M2 o
+or the systemic rigor of M5/M6. However, Movement 7's admission that one el
+element is still a composite ("net capacity") slightly undermines the "refu
+"refusal" of aggregation argued throughout the piece. *Actually*, the weake
+weakest point might be the jump from "scalars are better for predicting war
+war" (M3) to "we should use vectors to see trajectories" (M7). The bridge—t
+bridge—that these are two different questions—is a bit thin if the hostile 
+reader believes only one question (war/power) actually matters.
+    *   *Test 4 (Expert Skimming):*
+        *   An expert in this field knows the "Thucydides Trap" and basic G
+GDP metrics. They will likely skim the descriptions of the peaking thesis's
+thesis's case-selection rules (M4) and the general explanation of what pre-
+pre-registration is (M5), focusing instead on the *specific* failures of th
+the gates (M6) and the specific "exchange rate" critique (M2).
+    *   *Summary:* The essay is a high-rigor methodological critique. It mo
+moves from an empirical stalemate to a theoretical dismantling of scalar po
+power indices, then pivots to a defense of a Bayesian vector approach based
+based on auditability rather than predictive superiority.
+    *   *Strengths:* Steel-manning the opposition; deep engagement with com
+composite literature (not just political science); transparency regarding m
+model failure.
+    *   *Concerns:* The "net capacity" contradiction in M7; the unresolved 
+tension between predictive utility and trajectory monitoring.
+...done thinking.
+[reviewed-without-repo-access]
+**Summary**
+The essay is a sophisticated methodological intervention that shifts the Ch
+China trajectory debate from an evidentiary dispute to a dispute over aggre
+aggregation logic. It successfully leverages composite-indicator theory to 
+argue that "national power" scalars are not measurements but implicit sets 
+of substitution rates (exchange rates). The author avoids the common trap o
+of simply proposing a "better" index; instead, they propose a vector-based 
+"dashboard" and defend it not on predictive superiority—which they honestly
+honestly concede is absent—but on auditability and the refusal to manufactu
+manufacture precision. The piece transitions from a philosophical critique 
+of indices to a transparent account of Bayesian model failure and recovery,
+recovery, framing this instability as evidence of rigor rather than weaknes
+weakness.
+**Strengths**
+*   **Theoretical Depth:** The application of the OECD/JRC handbook and Arr
+Arrow’s Theorem to power measurement elevates the argument above standard "
+"rising vs. peaking" polemics.
+*   **Intellectual Honesty:** Movement 3 is a genuine steel-man; by admitti
+admitting that simple scalars outperform complex ones in predicting conflic
+conflict, the author gains the credibility necessary to argue for a non-sca
+non-scalar alternative.
+*   **Operational Transparency:** The detailed account of prior-predictive 
+gate failures (Movement 6) transforms potential technical flaws into a demo
+demonstration of the "falsifiable footprint."
+*   **Symmetry of Critique:** The author applies the same sample-size and p
+procedural skepticism to their own programme as they do to the peaking-powe
+peaking-power and Thucydides Trap literatures.
+**Concerns**
+*   **HIGH: Internal Contradiction on Aggregation.** In Movement 7, the adm
+admission that the "net capacity" element is a composite in all but name cr
+creates a logical leak; if additive aggregation is as fundamentally flawed 
+as Movement 2 argues, the author's own vector still contains a hidden "exch
+"exchange rate."
+*   **MEDIUM: The Prediction-Trajectory Gap.** The bridge between Movement 
+3 (scalars predict war) and Movement 7 (vectors monitor domains) relies on 
+the claim that these are different questions; however, a hostile reader may
+may argue that if trajectory monitoring cannot inform war prediction, it is
+is an exercise in descriptive bookkeeping rather than strategic analysis.
+*   **LOW: Case-Count Pedantry.** The debate over "5–6 cases vs. 8 analogue
+analogues" in Movement 4 risks descending into academic skirmishing that ma
+may distract from the more powerful structural arguments regarding nesting 
+and parameter space.
+**Expert Skimming Analysis**
+An expert reader of this literature will likely skim the following:
+1.  **Movement 1's specific data points:** Experts already know the GDP/TFP
+GDP/TFP decline numbers and the Robot/Energy surge numbers; they will skip 
+to the "exchange rate" conclusion.
+2.  **The general definition of pre-registration in Movement 5:** An expert
+expert familiar with the "garden of forking paths" or Olken's work will ski
+skim the theory and jump straight to the author's specific falsification co
+conditions.
+3.  **The detailed rule for peaking-power case selection (Movement 4):** Un
+Unless they are a specialist in that specific sub-thesis, they will skip th
+the "7-year growth/50% decline" specifics to see if the author actually ref
+refutes it or simply nests it.

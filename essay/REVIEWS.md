@@ -12,7 +12,9 @@ notes: |
   hung on stdin, second failed on the default model id; third ran clean.
   ollama ran gemma4:31b locally with no repo access and self-marked
   [reviewed-without-repo-access]; reduced consensus weight, per convention.
-  Raw outputs in the session scratchpad; substance reproduced below.
+  Raw lane outputs committed as essay/review-raw-codex.txt and
+  essay/review-raw-ollama.txt (terminal control noise stripped; the ollama
+  file retains its visible thinking trace); substance reproduced below.
 ---
 
 # Cross-AI Draft Review -- Essay

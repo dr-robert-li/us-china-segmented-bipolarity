@@ -1,0 +1,31 @@
+codex
+The draft mostly executes the outline cleanly and the core quantitative spine is well grounded, but I found one provenance slip, one policy-adjacent sentence that breaks the brief, and a closing movement that repeats more than it advances. Movements 3 and 6 are the strongest sections and mostly satisfy the “fairest passage” requirement.
+
+**Strengths**
+- The movement order matches the outline well, and the self-critique is usually placed where the outline asked for it, especially in [essay/DRAFT.md:25-35], [essay/DRAFT.md:41-47], [essay/DRAFT.md:67-73], and [essay/DRAFT.md:81-91].
+- Movement 6 is the most convincing passage because it stays inside the run log’s own failures and margins instead of laundering them into a general claim.
+- The draft generally keeps numbers tethered to the repository record and avoids the banned teleological vocabulary.
+
+**Concerns**
+- **HIGH** [essay/DRAFT.md:27] The Luxembourg 3rd-to-113th example is not in the paper-a source-draft cluster you cite; the only in-repo location I found is [essay/OUTLINE.md:28], so the provenance claim in [essay/DRAFT.md:3] is broader than the record actually shown here. Mechanism: this imports a quantitative example from outside the stated source chain.
+- **HIGH** [essay/DRAFT.md:101-103] “Force planning” and “alliance accounting” are policy framing, which cuts against the outline’s no-policy/no-investment constraint in [essay/OUTLINE.md:5] and [essay/OUTLINE.md:91]. Mechanism: the close momentarily shifts from methodological argument to downstream policy use.
+- **MEDIUM** [essay/DRAFT.md:95-105] Movement 7 is the weakest movement because it mostly restates the exchange-rate/dashboard point from earlier sections, then ends with a broad caution rather than a sharper new claim. Mechanism: the argument closes by synthesis and recap more than by adding an irreducible final step.
+- **MEDIUM** [essay/DRAFT.md:45-47] The steel-man in Movement 3 reads a bit grudging because the concession that the relevant validation ground lies decades away is immediately followed by “the bet has been placed,” which sounds like a retreat from the concession. Mechanism: the paragraph acknowledges the strongest objection and then pivots back to advocacy before the concession can settle.
+- **LOW** [essay/DRAFT.md:25-31] Movement 2 is technically sound but jargon-dense, with multiple theorem names, quotation stacks, and abstraction layers in one span. Mechanism: an expert reader will probably skim the middle of the paragraph to get back to the essay’s own claim.
+- **LOW** [essay/DRAFT.md:103-105] The ending repeats “exchange rate,” “dashboard,” and the uncertainty caution without much new information. Mechanism: the final paragraph is broad and slightly generic, so it lands less sharply than the body passages before it.
+tokens used
+95,063
+The draft mostly executes the outline cleanly and the core quantitative spine is well grounded, but I found one provenance slip, one policy-adjacent sentence that breaks the brief, and a closing movement that repeats more than it advances. Movements 3 and 6 are the strongest sections and mostly satisfy the “fairest passage” requirement.
+
+**Strengths**
+- The movement order matches the outline well, and the self-critique is usually placed where the outline asked for it, especially in [essay/DRAFT.md:25-35], [essay/DRAFT.md:41-47], [essay/DRAFT.md:67-73], and [essay/DRAFT.md:81-91].
+- Movement 6 is the most convincing passage because it stays inside the run log’s own failures and margins instead of laundering them into a general claim.
+- The draft generally keeps numbers tethered to the repository record and avoids the banned teleological vocabulary.
+
+**Concerns**
+- **HIGH** [essay/DRAFT.md:27] The Luxembourg 3rd-to-113th example is not in the paper-a source-draft cluster you cite; the only in-repo location I found is [essay/OUTLINE.md:28], so the provenance claim in [essay/DRAFT.md:3] is broader than the record actually shown here. Mechanism: this imports a quantitative example from outside the stated source chain.
+- **HIGH** [essay/DRAFT.md:101-103] “Force planning” and “alliance accounting” are policy framing, which cuts against the outline’s no-policy/no-investment constraint in [essay/OUTLINE.md:5] and [essay/OUTLINE.md:91]. Mechanism: the close momentarily shifts from methodological argument to downstream policy use.
+- **MEDIUM** [essay/DRAFT.md:95-105] Movement 7 is the weakest movement because it mostly restates the exchange-rate/dashboard point from earlier sections, then ends with a broad caution rather than a sharper new claim. Mechanism: the argument closes by synthesis and recap more than by adding an irreducible final step.
+- **MEDIUM** [essay/DRAFT.md:45-47] The steel-man in Movement 3 reads a bit grudging because the concession that the relevant validation ground lies decades away is immediately followed by “the bet has been placed,” which sounds like a retreat from the concession. Mechanism: the paragraph acknowledges the strongest objection and then pivots back to advocacy before the concession can settle.
+- **LOW** [essay/DRAFT.md:25-31] Movement 2 is technically sound but jargon-dense, with multiple theorem names, quotation stacks, and abstraction layers in one span. Mechanism: an expert reader will probably skim the middle of the paragraph to get back to the essay’s own claim.
+- **LOW** [essay/DRAFT.md:103-105] The ending repeats “exchange rate,” “dashboard,” and the uncertainty caution without much new information. Mechanism: the final paragraph is broad and slightly generic, so it lands less sharply than the body passages before it.
