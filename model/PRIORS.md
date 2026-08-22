@@ -332,3 +332,18 @@ Persistence is `rho_g`, shared with the Block E inputs -- Amendment 03's own tex
 - model/SPECIFICATION.md Amendment 03 and its follow-up note of 2026-08-22 (internal)
 - model/PRIORS.md Amendments 1 and 2 (internal; the scale and the initial-state form extended here)
 - HANDOVER.md section 16 (internal; the gap resolutions this registers)
+
+## Amendment 4 -- 2026-08-22 -- sensitivity run S11 added: researcher-weighted human-capital variant
+
+**Appended, not substituted. The section 7 list is extended, never shortened.** By author decision of 2026-08-22 closing HANDOVER section 18 Decision C (council review; split recorded in `pipeline/definitions/human-capital.md`):
+
+| # | Prior varied | Alternative | Why it could determine a result |
+|---|---|---|---|
+| S11 | F3 human-capital series | R&D-personnel headcount, tertiary/researcher-weighted (OECD MSTI / UNESCO), over its observable window | The committed PWT hc index is economy-wide and slow-moving; a frontier-labour construct could move differently, and the difference bears on `sigma_F` and the frontier bundle's regime contribution |
+
+S11 inherits the list's standing rule: a headline result that flips under it is reported as **prior-dependent** in the abstract, not in an appendix. The variant's pre-1990s CN coverage gap is the reason it is a sensitivity run and not the primary; the run is scored over the window the series exists.
+
+### Sources for Amendment 4
+
+- pipeline/definitions/human-capital.md (internal; the commitment this registers a sensitivity for, and the recorded council split)
+- HANDOVER.md section 18 Decision C; section 20 (internal)
